@@ -1,6 +1,8 @@
 def getRemoteHEAD(url, branch)
 {
-	def output = "git ls-remote ${url} ${branch}".execute().text
+	def cmd = "git ls-remote ${url} ${branch}"
+	print("cmd = ${cmd}")
+	def output = cmd.execute().text
 	print("output = ${output}")
 	return output
 }
