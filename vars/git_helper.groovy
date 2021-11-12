@@ -18,6 +18,10 @@ def getModifiedFiles(commit_id)
 {
 	def cmd = "git diff --name-only ${commit_id}"
 	def output = cmd.execute().text.trim()
+	print("getModifiedFilesStdout: ${output}")
+	def file_list = output.split('\n')
+	print("getModifiedList: ${file_list}")
+
 	return output
 }
 
