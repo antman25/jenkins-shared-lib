@@ -24,7 +24,7 @@ def getRemoteBranches(url)
 		{
 			def ref_name =line_split[1]
 			def ref_name_split = ref_name.split('/')
-			if (ref_name_split == 3)
+			if (ref_name_split == 2)
 			{
 				result.add(ref_name_split[2])
 			}
