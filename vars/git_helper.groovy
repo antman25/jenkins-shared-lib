@@ -19,9 +19,16 @@ def getRemoteBranches(url)
 		//print("Line: ${line}")
 		def line_split = line.split('\t')
 		print("Line Split: ${line_split}")
+
 		if (line_split.size() == 2)
 		{
-			result.append(line_split[1])
+			def ref_name =line_split[1]
+			def ref_name_split = ref_name.split('/')
+			if (ref_name_split == 3)
+			{
+				result.add(ref_name_split[2])
+			}
+
 		}
 	}
 	return result
