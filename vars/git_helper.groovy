@@ -14,12 +14,12 @@ def getRemoteBranches(url)
 	def result = []
 	print("Output raw: ${output}")
 	def output_lines = output.split('\n')
-	print ("Output Lines: ${output_lines}")
+	//print ("Output Lines: ${output_lines}")
 	output_lines.each { line ->
-		print("Line: ${line}")
+		//print("Line: ${line}")
 		def line_split = line.split('\t')
 		print("Line Split: ${line_split}")
-		if (line_split.size == 2)
+		if (line_split.size() == 2)
 		{
 			result.append(line_split[1])
 		}
