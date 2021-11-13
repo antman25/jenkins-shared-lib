@@ -17,6 +17,8 @@ def getRemoteBranches(url)
 	print ("Output Lines: ${output_lines}")
 	output_lines.each { line ->
 		print("Line: ${line}")
+		def line_split = line.split('\t')
+		print("Line Split: ${line_split}")
 	}
 }
 
