@@ -7,6 +7,19 @@ def getRemoteHEAD(url, branch)
 	return output
 }
 
+def getRemoteBranches(url)
+{
+	def cmd = "git ls-remote ${url} refs/heads/*"
+	def output = cmd.execute().text.trim()
+	def result = [:]
+	print("Output raw: ${output}")
+	def output_lines = output.split('\n')
+	print ("Output Lines: ${output_lines}")
+	output_lines.each { line ->
+		print("Line: ${line}")
+	}
+}
+
 def getLocalHEAD()
 {
 	def cmd = "git rev-parse HEAD"
