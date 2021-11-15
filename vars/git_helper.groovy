@@ -9,7 +9,7 @@ def getRemoteHEAD(url, branch)
 
 def testFunc()
 {
-	print("worked")
+	print("worked again")
 }
 
 def testFunc2(url)
