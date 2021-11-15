@@ -7,6 +7,11 @@ def getRemoteHEAD(url, branch)
 	return output
 }
 
+def testFunc()
+{
+	print("worked")
+}
+
 def getRemoteBranches(url)
 {
 	def cmd = "git ls-remote ${url} refs/heads/*"
