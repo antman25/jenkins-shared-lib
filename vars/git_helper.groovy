@@ -12,7 +12,7 @@ def testFunc()
 	print("worked again")
 }
 
-def testFunc2(url)
+def getRemoteBranches(url)
 {
 	def cmd = "git ls-remote ${url} refs/heads/*"
 	def output = cmd.execute().text.trim()
