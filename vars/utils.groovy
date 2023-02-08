@@ -20,7 +20,7 @@ Map getConfig(key = null) {
   def isMasterBranch = masterBranch == env.BRANCH_NAME
 
   def config = [
-    agentPvcName: env.AGENT_PVC_NAME ?: 'jenkins-agent',
+    agentPvcName: env.AGENT_PVC_NAME ?: 'jenkins-agent-retain',
     apiTestsPath: env.API_TESTS_PATH ?: 'tests/api',
     chartPath: env.CHART_PATH ?: './helm',
     cleanupDeploy: envVarExists('CLEANUP_DEPLOY') ? env.CLEANUP_DEPLOY : true,
