@@ -1,6 +1,6 @@
 def sanitizeBranchName() {
 
-  println("Current ENV: ${env}")
+  println("Current ENV: ${env.getEnvironment()}")
   return env.BRANCH_NAME.replaceAll(/[^\w]/, '-').toLowerCase()
 }
 
