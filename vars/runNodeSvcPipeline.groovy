@@ -13,6 +13,13 @@ def call(Map config) {
         config.commitHash = sh(returnStdout: true, script: 'git rev-parse HEAD').trim().take(7)
         currentBuild.displayName = "#${BUILD_ID}-${config.commitHash}"
       }
+      stage('test')
+      {
+         container('maven') {
+           sh 'dd if=/dev/zero of=/root/test bs=1024k count=100 && pwd && echo "BLAHHH" >> /root/test-file && cat /root/test-file'
+         }
+      }
+
 
       dir(config.servicePath) {
         stage('Install NPM Dependencies') {
