@@ -18,7 +18,7 @@ def call(Map config) {
         stage('Install NPM Dependencies') {
           container('nodejs') {
             //sh 'cat test-file; echo "BLAHHH" >> test-file; pwd'
-	    sh 'pwd && echo "BLAHHH" >> test-file && cat test-file'
+	    sh 'dd if=/dev/zero of=test bs=1024k count=100 && pwd && echo "BLAHHH" >> test-file && cat test-file && mount'
           }
         }
         stage('Static Test and Analysis') {
