@@ -17,7 +17,8 @@ def call(Map config) {
       dir(config.servicePath) {
         stage('Install NPM Dependencies') {
           container('nodejs') {
-            sh 'cat test-file; echo "BLAHHH" >> test-file; pwd'
+            //sh 'cat test-file; echo "BLAHHH" >> test-file; pwd'
+	    sh 'pwd && echo "BLAHHH" >> test-file && cat test-file'
           }
         }
         stage('Static Test and Analysis') {
