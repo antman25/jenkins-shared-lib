@@ -1,4 +1,4 @@
-ef dockerTemplate(Closure body) {
+def dockerTemplate(Closure body) {
   podTemplate(
     containers: [containerTemplate(name: 'docker', image: 'docker:19.03', command: 'cat', ttyEnabled: true)],
     volumes: [hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock')]
