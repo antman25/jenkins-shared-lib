@@ -9,8 +9,7 @@ def dockerTemplate(Closure body) {
 
 def nodejsTemplate(Closure body) {
   podTemplate(
-    containers: [containerTemplate(name: 'nodejs', image: 'coveros/node-puppeteer:12.16-libs', command: 'cat', ttyEnabled: true)],
-    volumes: [ persistentVolumeClaim(mountPath: '/root', claimName: claimName, readOnly: false) ]
+    containers: [containerTemplate(name: 'nodejs', image: 'coveros/node-puppeteer:12.16-libs', command: 'cat', ttyEnabled: true)]
   ) {
     body()
   }
