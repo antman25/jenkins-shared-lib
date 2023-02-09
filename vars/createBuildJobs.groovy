@@ -12,7 +12,8 @@ def call() {
 
         stage('debug')
         {
-            sh 'find .'
+            sh 'pwd'
+            sh 'find /home/jenkins/agent'
         }
 
 
