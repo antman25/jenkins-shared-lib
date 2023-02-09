@@ -18,7 +18,9 @@ def call() {
 
 
         stage ('Job DSL') {
-            def params = ['workspace': "${WORKSPACE}"]
+            def config = readFile 'seed_jobs/config.yaml'
+            def params = ['workspace': "${WORKSPACE}",
+                                       'config' : config ]
             jobDsl targets: ['seed_jobs/main.groovy'].join('\n'),
                     removedJobAction: 'DELETE',
                     removedViewAction: 'DELETE',
