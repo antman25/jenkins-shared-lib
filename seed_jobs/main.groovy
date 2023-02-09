@@ -13,6 +13,22 @@ void buildJobs(config_data)
             {
                 println("GroupName: ${name}")
                 folder("${name}")
+                {
+                    properties {
+                        authorizationMatarix {
+                            inheritanceStrategy { nonInheriting() }
+                            permissions ( ['hudson.model.Item.Read:groupA',
+                                           'hudson.model.Item.Cancel:groupA',
+                                           'hudson.model.Item.Build:groupA',
+                                           'hudson.model.Item.Workspace:groupA'] )
+                        }
+
+                    }
+
+
+                }
+
+
                 if (project_list != null)
                 {
                     project_list.each { cur_project ->
