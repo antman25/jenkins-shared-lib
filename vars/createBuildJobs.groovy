@@ -11,7 +11,7 @@ def call() {
         }
 
         stage ('Job DSL') {
-            def params = [:]
+            def params = ['workspace': "${WORKSPACE}"]
             jobDsl targets: ['seed_jobs/main.groovy'].join('\n'),
                     removedJobAction: 'DELETE',
                     removedViewAction: 'DELETE',
