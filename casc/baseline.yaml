@@ -13,8 +13,10 @@ jenkins:
     - "JNLP4-connect"
     - "Ping"
   authorizationStrategy:
-    loggedInUsersCanDoAnything:
-      allowAnonymousRead: false
+    projectMatrix:
+      permissions:
+        - "USER:Overall/Administer:admin"
+        - "USER:Overall/Administer:amagner"
   clouds:
     - kubernetes:
         containerCap: 10
@@ -89,6 +91,26 @@ jenkins:
             - preferredProvider:
                 providerId: "default"
             - "timezone"
+        - id: "amagner"
+          name: "amagner"
+          properties:
+            - "apiToken"
+            - "myView"
+            - preferredProvider:
+                providerId: "default"
+            - "timezone"
+            - mailer:
+                emailAddress: "amagner@amgner"
+        - id: "groupa"
+          name: "groupa"
+          properties:
+            - "apiToken"
+            - "myView"
+            - preferredProvider:
+                providerId: "default"
+            - "timezone"
+            - mailer:
+                emailAddress: "groupa@groupa"
   slaveAgentPort: 50000
   updateCenter:
     sites:
