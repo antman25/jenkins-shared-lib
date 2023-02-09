@@ -6,14 +6,35 @@ void printConfig(config_data)
     if (config_data.containsKey('groups') == true)
     {
         def groups = config_data['groups']
-        println("Groups: ${groups}")
+        //println("Groups: ${groups}")
 
-        groups.each { current_group ->
-            println("CurGroups: ${current_group}")
-            def name = current_group.get('name')
-            def project_list = current_group.get('project_list')
-            println("Group: ${name}")
-            println("Project List: ${project_list}")
+        groups.each { cur_group ->
+            //println("CurGroups: ${current_group}")
+            def name = cur_group.get('name')
+            def project_list = cur_group.get('project_list')
+            if (name != null)
+            {
+                println("GroupName: ${name}")
+
+                if (project_list != null)
+                {
+                    project_list.each { cur_project ->
+                        println("Project: ${cur_project}")
+                    }
+                }
+                else
+                {
+                    println("No Projects Lists")
+                }
+            }
+            else
+            {
+                println("No group name")
+            }
+
+
+
+            //println("Project List: ${project_list}")
         }
     }
     else
