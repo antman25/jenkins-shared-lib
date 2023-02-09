@@ -4,6 +4,11 @@ def call() {
     properties([disableConcurrentBuilds()])
 
     node() {
+        stage ('debug')
+        {
+            sh 'find .'
+        }
+
         stage ('Run Job DSL') {
             def params = [:]
             jobDsl targets: ['seed_jobs/main.groovy'].join('\n'),
