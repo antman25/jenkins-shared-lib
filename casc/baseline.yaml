@@ -183,7 +183,7 @@ jobs:
           cpsScm {
             scm {
               git {
-                remote { url(repo) }
+                remote { url("$TOOLS_URL") }
                 branches("main")
                 scriptPath('seed_jobs/Jenkinsfile')
                 extensions { }  // required as otherwise it may try to tag the repo, which you may not want
