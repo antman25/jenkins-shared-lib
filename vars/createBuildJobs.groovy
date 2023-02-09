@@ -5,18 +5,12 @@ def call() {
 
     node() {
 
-        stage('Git Clone')
+        stage('Clone code')
         {
             checkout scm
         }
 
-
-        stage ('debug')
-        {
-            sh 'find .'
-        }
-
-        stage ('Run Job DSL') {
+        stage ('Job DSL') {
             def params = [:]
             jobDsl targets: ['seed_jobs/main.groovy'].join('\n'),
                     removedJobAction: 'DELETE',
