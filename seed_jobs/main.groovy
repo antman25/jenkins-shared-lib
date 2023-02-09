@@ -22,6 +22,27 @@ void buildJobs(config_data)
                         folder("${name}/${cur_project}/Builds")
                         folder("${name}/${cur_project}/Sandbox")
 
+                        pipelineJob("${name}/${cur_project}/Sandbox/TestJob") {
+                            displayName('Seed job')
+
+                            def repo = 'https://github.com/antman25/jenkins-shared-lib.git'
+
+                            description("Seed Job")
+
+                            definition {
+                                cpsScm {
+                                    scm {
+                                        git {
+                                            remote { url(repo) }
+                                            branches("main")
+                                            scriptPath('Jenkinsfile')
+                                            extensions { }  // required as otherwise it may try to tag the repo, which you may not want
+                                        }
+
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
                 else
