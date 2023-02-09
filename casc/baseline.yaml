@@ -55,6 +55,11 @@ jenkins:
     standard:
       excludeClientIPFromCrumb: true
   disableRememberMe: false
+  globalNodeProperties:
+    - envVars:
+        env:
+          - key: "TOOLS_URL"
+            value: "https://github.com/antman25/jenkins-shared-lib.git"
   labelAtoms:
     - name: "built-in"
     - name: "jenkins-test-jenkins-agent"
@@ -170,15 +175,15 @@ jobs:
       pipelineJob("seed_job") {
         displayName('Seed job')
 
-        def repo = 'https://github.com/antman25/jenkins-shared-lib.git'
-
+        //def repo = 'https://github.com/antman25/jenkins-shared-lib.git'
+        
         description("Seed Job")
 
         definition {
           cpsScm {
             scm {
               git {
-                remote { url(repo) }
+                remote { url(TOOLS_URL) }
                 branches("main")
                 scriptPath('seed_jobs/Jenkinsfile')
                 extensions { }  // required as otherwise it may try to tag the repo, which you may not want
