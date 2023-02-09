@@ -1,8 +1,7 @@
 import org.yaml.snakeyaml.Yaml
 
-def config_data = new Yaml().load(config)
 
-void printConfig()
+void printConfig(config_data)
 {
     if (config_data.containsKey('groups') == true)
     {
@@ -25,6 +24,7 @@ void printConfig()
 
 }
 
-printConfig()
-println("YAML: ${config_data}")
+def config_yaml = new Yaml().load(config)
+printConfig(config_yaml)
+println("YAML: ${config_yaml}")
 
