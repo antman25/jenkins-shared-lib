@@ -167,7 +167,8 @@ tool:
     settingsProvider: "standard"
 jobs:
   - script: >
-      pipelineJob("Seed Job") {
+      pipelineJob("seed_job") {
+        displayName('Seed job')
 
         def repo = 'https://github.com/antman25/jenkins-shared-lib.git'
 
