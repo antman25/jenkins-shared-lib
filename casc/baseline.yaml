@@ -175,7 +175,7 @@ jobs:
       pipelineJob("seed_job") {
         displayName('Seed job')
 
-        //def repo = 'https://github.com/antman25/jenkins-shared-lib.git'
+        def repo = 'https://github.com/antman25/jenkins-shared-lib.git'
         
         description("Seed Job")
 
@@ -183,7 +183,7 @@ jobs:
           cpsScm {
             scm {
               git {
-                remote { url("$TOOLS_URL") }
+                remote { url(repo) }
                 branches("main")
                 scriptPath('seed_jobs/Jenkinsfile')
                 extensions { }  // required as otherwise it may try to tag the repo, which you may not want
