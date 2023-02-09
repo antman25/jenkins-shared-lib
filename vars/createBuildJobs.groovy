@@ -5,7 +5,7 @@ def call() {
 
     node() {
 
-        tage('Git Clone')
+        stage('Git Clone')
         {
             checkout scm
         }
