@@ -1,5 +1,13 @@
 import org.yaml.snakeyaml.Yaml
 
+List<String> permissionDeveloper(String group)
+{
+    return ["hudson.model.Item.Read:${group}",
+            "hudson.model.Item.Cancel:${group}",
+            "hudson.model.Item.Build:${group}",
+            "hudson.model.Item.Workspace:${group}"];
+}
+
 
 void buildJobs(config_data)
 {
@@ -9,6 +17,7 @@ void buildJobs(config_data)
         groups.each { cur_group ->
             def name = cur_group.get('name')
             def project_list = cur_group.get('project_list')
+            def perm_group = cur_group.get('perm_group')
             if (name != null)
             {
                 println("GroupName: ${name}")
@@ -17,10 +26,17 @@ void buildJobs(config_data)
                     properties {
                         authorizationMatrix {
                             inheritanceStrategy { nonInheriting() }
-                            permissions ( ['hudson.model.Item.Read:groupA',
-                                           'hudson.model.Item.Cancel:groupA',
-                                           'hudson.model.Item.Build:groupA',
-                                           'hudson.model.Item.Workspace:groupA'] )
+
+                            if (perm_group != null)
+                            {
+                                permissions ( permissionDeveloper(perm_group) )
+                            }
+                            else
+                            {
+                                permissions ()
+                            }
+
+
                         }
 
                     }
