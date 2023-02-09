@@ -8,7 +8,10 @@ println("Workspace: ${workspace}")
 //def config_path = "${workspace}/seed_jobs/config.yaml".toString()
 
 println("Config Raw: ${config}")
-def yaml = new Yaml().parse(config)
 
-println("YAML: ${yaml}")
+Yaml parser = new Yaml()
+List config_data = parser.load(config)
+
+
+println("YAML: ${config_data}")
 
