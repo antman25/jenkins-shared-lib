@@ -3,9 +3,8 @@
 def call() {
     properties([disableConcurrentBuilds()])
 
-    node {
-        stage ('Run Job DSL')
-        {
+    node() {
+        stage ('Run Job DSL') {
             def params = [:]
             jobDsl targets: ['main.groovy'].join('\n'),
                     removedJobAction: 'DELETE',
