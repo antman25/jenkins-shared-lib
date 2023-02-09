@@ -15,7 +15,7 @@ void buildJobs(config_data)
                 folder("${name}")
                 {
                     properties {
-                        authorizationMatarix {
+                        authorizationMatrix {
                             inheritanceStrategy { nonInheriting() }
                             permissions ( ['hudson.model.Item.Read:groupA',
                                            'hudson.model.Item.Cancel:groupA',
