@@ -11,3 +11,6 @@ groups:
       - prjC1
       - prjC2
       - prjC3
+  - name: grpD
+    project_list:
+      - prjD1

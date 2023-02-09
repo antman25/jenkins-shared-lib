@@ -18,6 +18,10 @@ void buildJobs(config_data)
                     project_list.each { cur_project ->
                         println("Project: ${cur_project}")
                         folder("${name}/${cur_project}")
+
+                        folder("${name}/${cur_project}/Builds")
+                        folder("${name}/${cur_project}/Sandbox")
+
                     }
                 }
                 else
