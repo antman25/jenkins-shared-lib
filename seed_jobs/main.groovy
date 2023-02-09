@@ -9,8 +9,7 @@ println("Workspace: ${workspace}")
 
 println("Config Raw: ${config}")
 
-Yaml parser = new Yaml()
-List config_data = parser.load(config)
+def config_data = new Yaml().load(config)
 
 
 println("YAML: ${config_data}")
