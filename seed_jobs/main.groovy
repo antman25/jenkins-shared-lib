@@ -25,6 +25,6 @@ void printConfig()
 
 }
 
-
+printConfig()
 println("YAML: ${config_data}")
 
