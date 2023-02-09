@@ -189,3 +189,5 @@ jobs:
         }
       }
       
+      build '/seed_job'
+      
