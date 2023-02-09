@@ -6,7 +6,7 @@ def call() {
     node() {
         stage ('Run Job DSL') {
             def params = [:]
-            jobDsl targets: ['main.groovy'].join('\n'),
+            jobDsl targets: ['seed_jobs/main.groovy'].join('\n'),
                     removedJobAction: 'DELETE',
                     removedViewAction: 'DELETE',
                     lookupStrategy: 'JENKINS_ROOT',
