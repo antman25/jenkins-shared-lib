@@ -4,6 +4,13 @@ def call() {
     properties([disableConcurrentBuilds()])
 
     node() {
+
+        tage('Git Clone')
+        {
+            checkout scm
+        }
+
+
         stage ('debug')
         {
             sh 'find .'
