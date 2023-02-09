@@ -1,0 +1,13 @@
+groups:
+  - name: grpA
+    project_list:
+      - prjA1
+  - name: grpB
+    project_list:
+      - prjB1
+      - prjB2
+  - name: grpC
+    project_list:
+      - prjC1
+      - prjC2
+      - prjC3
