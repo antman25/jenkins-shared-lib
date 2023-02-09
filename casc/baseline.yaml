@@ -188,8 +188,5 @@ jobs:
           }
         }
       }
-      steps {
-        build job : '/seed_job'
-      }
       
       
