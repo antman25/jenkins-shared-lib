@@ -18,7 +18,7 @@ groups:
       - prjC2
       - prjC3
   - name: grpD
-    perm_group:
+    perm_groups:
       - groupd
     project_list:
       - prjD1
