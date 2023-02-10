@@ -9,7 +9,7 @@ List<String> permissionDeveloper(String group)
 }
 
 
-void buildJobs(config_data)
+void buildJobs(HashMap config_data)
 {
     if (config_data.containsKey('groups') == true)
     {
