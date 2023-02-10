@@ -8,6 +8,33 @@ List<String> permissionDeveloper(String group)
             "hudson.model.Item.Workspace:${group}"];
 }
 
+void createRestrictedFolder(String path, List<String> perm_groups)
+{
+    folder(path)
+    {
+        properties {
+            authorizationMatrix {
+                inheritanceStrategy { nonInheriting() }
+
+                if (perm_groups != null)
+                {
+                    //println("perm_groups: ${perm_groups}")
+                    def total_permissions = []
+                    perm_groups.each { cur_perm_group ->
+                        println("cur_perm_group: ${cur_perm_group}")
+                        total_permissions.addAll(permissionDeveloper(cur_perm_group))
+                    }
+                    permissions ( total_permissions )
+                }
+                else
+                {
+                    permissions ()
+                }
+            }
+        }
+    }
+}
+
 
 void buildJobs(HashMap config_data)
 {
