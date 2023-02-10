@@ -7,6 +7,7 @@ groups:
   - name: grpB
     perm_groups:
       - groupb
+      - groupa
     project_list:
       - prjB1
       - prjB2
