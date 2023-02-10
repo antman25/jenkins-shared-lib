@@ -27,20 +27,11 @@ void buildJobs(config_data)
                         authorizationMatrix {
                             inheritanceStrategy { nonInheriting() }
 
-                            if (perm_group != null)
+                            if (perm_groups != null)
                             {
-                                if (perm_group != null)
-                                {
-                                    perm_groups.each { cur_perm_group ->
-                                        permissions ( permissionDeveloper(cur_perm_group) )
-                                    }
+                                perm_groups.each { cur_perm_group ->
+                                    permissions ( permissionDeveloper(cur_perm_group) )
                                 }
-                                else
-                                {
-                                    println("No permission groups defined")
-                                }
-
-
                             }
                             else
                             {
