@@ -29,7 +29,9 @@ void buildJobs(config_data)
 
                             if (perm_groups != null)
                             {
+                                println("perm_groups: ${perm_groups}")
                                 perm_groups.each { cur_perm_group ->
+                                    println("cur_perm_group: ${cur_perm_group}")
                                     permissions ( permissionDeveloper(cur_perm_group) )
                                 }
                             }
