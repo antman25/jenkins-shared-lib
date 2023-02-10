@@ -31,8 +31,8 @@ void buildJobs(config_data)
                             {
                                 if (perm_group != null)
                                 {
-                                    perm_groups.each { cur_group ->
-                                        permissions ( permissionDeveloper(cur_group) )
+                                    perm_groups.each { cur_perm_group ->
+                                        permissions ( permissionDeveloper(cur_perm_group) )
                                     }
                                 }
                                 else
