@@ -1,20 +1,24 @@
 groups:
   - name: grpA
-    perm_group: groupa
+    perm_groups:
+      - groupa
     project_list:
       - prjA1
   - name: grpB
-    perm_group: groupb
+    perm_groups:
+      - groupb
     project_list:
       - prjB1
       - prjB2
   - name: grpC
-    perm_group: groupc
+    perm_groups:
+      - groupc
     project_list:
       - prjC1
       - prjC2
       - prjC3
   - name: grpD
-    perm_group: groupd
+    perm_group:
+      - groupd
     project_list:
       - prjD1

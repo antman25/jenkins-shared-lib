@@ -17,7 +17,7 @@ void buildJobs(config_data)
         groups.each { cur_group ->
             def name = cur_group.get('name')
             def project_list = cur_group.get('project_list')
-            def perm_group = cur_group.get('perm_group')
+            def perm_groups = cur_group.get('perm_groups')
             if (name != null)
             {
                 println("GroupName: ${name}")
@@ -29,7 +29,18 @@ void buildJobs(config_data)
 
                             if (perm_group != null)
                             {
-                                permissions ( permissionDeveloper(perm_group) )
+                                if (perm_group != null)
+                                {
+                                    perm_groups.each { cur_group ->
+                                        permissions ( permissionDeveloper(cur_group) )
+                                    }
+                                }
+                                else
+                                {
+                                    println("No permission groups defined")
+                                }
+
+
                             }
                             else
                             {
