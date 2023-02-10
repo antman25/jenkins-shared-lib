@@ -30,10 +30,12 @@ void buildJobs(config_data)
                             if (perm_groups != null)
                             {
                                 println("perm_groups: ${perm_groups}")
+                                def all_group_permissions = []
                                 perm_groups.each { cur_perm_group ->
                                     println("cur_perm_group: ${cur_perm_group}")
-                                    permissions ( permissionDeveloper(cur_perm_group) )
+                                    all_group_permissions.addAll(permissionDeveloper(cur_perm_group))
                                 }
+                                permissions ( all_group_permissions )
                             }
                             else
                             {
