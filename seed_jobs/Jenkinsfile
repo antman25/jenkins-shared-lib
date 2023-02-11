@@ -1,3 +1,5 @@
-library 'jenkins-shared-lib'
+//library 'jenkins-shared-lib'
+
+git branch: 'main', url: 'https://github.com/antman25/jenkins-shared-lib.git'
 
 createBuildJobs()

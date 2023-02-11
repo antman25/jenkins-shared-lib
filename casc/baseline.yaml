@@ -1,25 +1,127 @@
+credentials:
+    system:
+        domainCredentials:
+            - credentials:
+                  - usernamePassword:
+                        description: "NEXUS_CREDS"
+                        id: "NEXUS_CREDS"
+                        password: this-isnt-my-password
+                        scope: GLOBAL
+                        username: "packer"
+jenkins:
+    agentProtocols:
+        - "JNLP4-connect"
+        - "Ping"
+    authorizationStrategy:
+        projectMatrix:
+            permissions:
+                - "USER:Overall/Administer:admin"
+                - "USER:Overall/Administer:antman"
+    clouds:
+        - kubernetes:
+              containerCap: 10
+              containerCapStr: "10"
+              jenkinsTunnel: "jenkins-test-agent.default.svc.cluster.local:50000"
+              jenkinsUrl: "http://jenkins-test.default.svc.cluster.local:8080"
+              name: "kubernetes"
+              namespace: "default"
+              podLabels:
+                  - key: "jenkins/jenkins-test-jenkins-agent"
+                    value: "true"
+              serverUrl: "https://kubernetes.default"
+    crumbIssuer:
+        standard:
+            excludeClientIPFromCrumb: true
+    disableRememberMe: false
+    globalNodeProperties:
+        - envVars:
+              env:
+                  - key: "TOOLS_URL"
+                    value: "https://github.com/antman25/jenkins-shared-lib.git"
+
+    markupFormatter: "plainText"
+    mode: NORMAL
+    myViewsTabBar: "standard"
+    numExecutors: 0
+    primaryView:
+        all:
+            name: "all"
+    projectNamingStrategy: "standard"
+    quietPeriod: 1
+    remotingSecurity:
+        enabled: true
+    scmCheckoutRetryCount: 0
+    securityRealm:
+        local:
+            allowsSignup: false
+            enableCaptcha: false
+            users:
+                - id: "admin"
+                  name: "Jenkins Admin"
+                  properties:
+                      - "apiToken"
+                      - "mailer"
+                      - "myView"
+                      - preferredProvider:
+                            providerId: "default"
+                      - "timezone"
+
+    slaveAgentPort: 50000
+    updateCenter:
+        sites:
+            - id: "default"
+              url: "https://updates.jenkins.io/update-center.json"
+    views:
+        - all:
+              name: "all"
+    viewsTabBar: "standard"
+globalCredentialsConfiguration:
+    configuration:
+        providerFilter: "none"
+        typeFilter: "none"
+unclassified:
+    buildDiscarders:
+        configuredBuildDiscarders:
+            - "jobBuildDiscarder"
+    location:
+        adminAddress: "address not configured yet <nobody@nowhere>"
+        url: "http://jenkins-test:8080/"
+    mailer:
+        charset: "UTF-8"
+        useSsl: false
+        useTls: false
+    pollSCM:
+        pollingThreadCount: 10
+tool:
+    git:
+        installations:
+            - home: "git"
+              name: "Default"
+    mavenGlobalConfig:
+        globalSettingsProvider: "standard"
+        settingsProvider: "standard"
 jobs:
-  - script: >
-      pipelineJob("seed_job") {
-        displayName('Seed job')
-
-        def repo = 'https://github.com/antman25/jenkins-shared-lib.git'
-        
-        description("Seed Job")
-
-        definition {
-          cpsScm {
-            scm {
-              git {
-                remote { url(repo) }
-                branches("main")
-                scriptPath('seed_jobs/Jenkinsfile')
-                extensions { }  // required as otherwise it may try to tag the repo, which you may not want
+    - script: >
+          pipelineJob("seed_job") {
+            displayName('Seed job')
+          
+            def repo = 'https://github.com/antman25/jenkins-shared-lib.git'
+          
+            description("Seed Job")
+          
+            definition {
+              cpsScm {
+                scm {
+                  git {
+                    remote { url(repo) }
+                    branches("main")
+                    scriptPath('seed_jobs/Jenkinsfile')
+                    extensions { }  // required as otherwise it may try to tag the repo, which you may not want
+                  }
+          
+                }
               }
-
             }
           }
-        }
-      }
       
       
