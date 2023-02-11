@@ -5,66 +5,13 @@ credentials:
           - usernamePassword:
               description: "NEXUS_CREDS"
               id: "NEXUS_CREDS"
-              password: "{AQAAABAAAAAgiraSVM7QynZinmlQQWtdINiMAebgYThmdT0OP0O7XzKyEc8wBZf6RNberTH9svjc}"
+              password: changeme
               scope: GLOBAL
               username: "packer"
-          - fileSystemServiceAccountCredential:
-              id: "7487a078-31c7-4023-a0e8-80f766082acb"
-              scope: GLOBAL
 jenkins:
   agentProtocols:
     - "JNLP4-connect"
     - "Ping"
-  authorizationStrategy:
-    projectMatrix:
-      permissions:
-        - "USER:Overall/Administer:admin"
-        - "USER:Overall/Administer:antman"
-  clouds:
-    - kubernetes:
-        containerCap: 10
-        containerCapStr: "10"
-        credentialsId: "7487a078-31c7-4023-a0e8-80f766082acb"
-        jenkinsTunnel: "jenkins-test-agent.default.svc.cluster.local:50000"
-        jenkinsUrl: "http://jenkins-test.default.svc.cluster.local:8080"
-        name: "kubernetes"
-        namespace: "workflow"
-        podLabels:
-          - key: "jenkins/jenkins-test-jenkins-agent"
-            value: "true"
-        serverUrl: "https://kubernetes.default"
-        skipTlsVerify: true
-        templates:
-          - containers:
-              - args: "^${computer.jnlpmac} ^${computer.name}"
-                command: "sleep"
-                envVars:
-                  - envVar:
-                      key: "JENKINS_URL"
-                      value: "http://jenkins-test.default.svc.cluster.local:8080/"
-                image: "jenkins/inbound-agent:4.11.2-4"
-                livenessProbe:
-                  failureThreshold: 0
-                  initialDelaySeconds: 0
-                  periodSeconds: 0
-                  successThreshold: 0
-                  timeoutSeconds: 0
-                name: "jnlp"
-                resourceLimitCpu: "512m"
-                resourceLimitMemory: "512Mi"
-                resourceRequestCpu: "512m"
-                resourceRequestMemory: "512Mi"
-                workingDir: "/home/jenkins/agent"
-            id: "682b16ba5da08f7e7943c84672950ecb58545a090d259587b3f90fe97220a7ba"
-            label: "k8s-agent"
-            name: "default"
-            namespace: "workflow"
-            nodeUsageMode: "NORMAL"
-            podRetention: "never"
-            serviceAccount: "default"
-            slaveConnectTimeout: 100
-            slaveConnectTimeoutStr: "100"
-            yamlMergeStrategy: "override"
   crumbIssuer:
     standard:
       excludeClientIPFromCrumb: true
@@ -76,7 +23,6 @@ jenkins:
             value: "https://github.com/antman25/jenkins-shared-lib.git"
   labelAtoms:
     - name: "built-in"
-    - name: "k8s-agent"
   markupFormatter: "plainText"
   mode: NORMAL
   myViewsTabBar: "standard"
@@ -86,31 +32,7 @@ jenkins:
       name: "all"
   projectNamingStrategy: "standard"
   quietPeriod: 1
-  remotingSecurity:
-    enabled: true
   scmCheckoutRetryCount: 0
-  securityRealm:
-    local:
-      allowsSignup: false
-      enableCaptcha: false
-      users:
-        - id: "admin"
-          name: "Jenkins Admin"
-          properties:
-            - "apiToken"
-            - "mailer"
-            - "myView"
-            - preferredProvider:
-                providerId: "default"
-            - "timezone"
-        - id: "antman"
-          name: "antman"
-          properties:
-            - "apiToken"
-            - mailer:
-                emailAddress: "antman@antlinux.local"
-            - preferredProvider:
-                providerId: "default"
   slaveAgentPort: 50000
   updateCenter:
     sites:
@@ -120,24 +42,6 @@ jenkins:
     - all:
         name: "all"
   viewsTabBar: "standard"
-globalCredentialsConfiguration:
-  configuration:
-    providerFilter: "none"
-    typeFilter: "none"
-security:
-  apiToken:
-    creationOfLegacyTokenEnabled: false
-    tokenGenerationOnCreationEnabled: false
-    usageStatisticsEnabled: true
-  gitHooks:
-    allowedOnAgents: false
-    allowedOnController: false
-  gitHostKeyVerificationConfiguration:
-    sshHostKeyVerificationStrategy: "knownHostsFileVerificationStrategy"
-  globalJobDslSecurityConfiguration:
-    useScriptSecurity: false
-  sSHD:
-    port: -1
 unclassified:
   buildDiscarders:
     configuredBuildDiscarders:
@@ -147,14 +51,6 @@ unclassified:
   fingerprints:
     fingerprintCleanupDisabled: false
     storage: "file"
-  gitSCM:
-    addGitTagAction: false
-    allowSecondFetch: false
-    createAccountBasedOnEmail: false
-    disableGitToolChooser: false
-    hideCredentials: false
-    showEntireCommitSummaryInChanges: false
-    useExistingAccountWithSameEmail: false
   globalLibraries:
     libraries:
       - defaultVersion: "main"
@@ -163,7 +59,7 @@ unclassified:
           modernSCM:
             scm:
               git:
-                id: "064ed352-9b76-4856-960d-fe7e96554fc3"
+                id: "1c85d9ac-3326-4e95-b5a3-737b601e701a"
                 remote: "https://github.com/antman25/jenkins-shared-lib.git"
                 traits:
                   - "gitBranchDiscovery"
@@ -188,3 +84,28 @@ tool:
   mavenGlobalConfig:
     globalSettingsProvider: "standard"
     settingsProvider: "standard"
+jobs:
+  - script: >
+      pipelineJob("seed_job") {
+        displayName('Seed job')
+
+        def repo = 'https://github.com/antman25/jenkins-shared-lib.git'
+      
+        description("Seed Job")
+
+        definition {
+          cpsScm {
+            scm {
+              git {
+                remote { url(repo) }
+                branches("main")
+                scriptPath('seed_jobs/Jenkinsfile')
+                extensions { }  // required as otherwise it may try to tag the repo, which you may not want
+              }
+
+            }
+          }
+        }
+      }
+      
+      
