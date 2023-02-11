@@ -49,24 +49,6 @@ globalCredentialsConfiguration:
   configuration:
     providerFilter: "none"
     typeFilter: "none"
-security:
-  apiToken:
-    creationOfLegacyTokenEnabled: false
-    tokenGenerationOnCreationEnabled: false
-    usageStatisticsEnabled: true
-  envInject:
-    enableLoadingFromMaster: false
-    enablePermissions: false
-    hideInjectedVars: false
-  gitHooks:
-    allowedOnAgents: false
-    allowedOnController: false
-  gitHostKeyVerificationConfiguration:
-    sshHostKeyVerificationStrategy: "knownHostsFileVerificationStrategy"
-  globalJobDslSecurityConfiguration:
-    useScriptSecurity: false
-  sSHD:
-    port: -1
 unclassified:
   buildDiscarders:
     configuredBuildDiscarders:
