@@ -12,6 +12,11 @@ jenkins:
   agentProtocols:
     - "JNLP4-connect"
     - "Ping"
+  authorizationStrategy:
+    projectMatrix:
+      permissions:
+        - "USER:Overall/Administer:admin"
+        - "USER:Overall/Administer:antman"
   crumbIssuer:
     standard:
       excludeClientIPFromCrumb: true
@@ -32,6 +37,20 @@ jenkins:
       name: "all"
   projectNamingStrategy: "standard"
   quietPeriod: 1
+  securityRealm:
+    local:
+      allowsSignup: false
+      enableCaptcha: false
+      users:
+        - id: "admin"
+          name: "Jenkins Admin"
+          properties:
+            - "apiToken"
+            - "mailer"
+            - "myView"
+            - preferredProvider:
+                providerId: "default"
+            - "timezone"
   scmCheckoutRetryCount: 0
   slaveAgentPort: 50000
   updateCenter:
