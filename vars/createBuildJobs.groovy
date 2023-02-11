@@ -3,7 +3,7 @@
 def call() {
     properties([disableConcurrentBuilds()])
 
-    node() {
+    node(POD_LABEL) {
 
         stage('Clone code')
         {
