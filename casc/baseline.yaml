@@ -12,11 +12,6 @@ jenkins:
   agentProtocols:
     - "JNLP4-connect"
     - "Ping"
-  authorizationStrategy:
-    projectMatrix:
-      permissions:
-        - "USER:Overall/Administer:admin"
-        - "USER:Overall/Administer:antman"
   crumbIssuer:
     standard:
       excludeClientIPFromCrumb: true
