@@ -17,18 +17,6 @@ jenkins:
       permissions:
         - "USER:Overall/Administer:admin"
         - "USER:Overall/Administer:antman"
-  clouds:
-    - kubernetes:
-        containerCap: 10
-        containerCapStr: "10"
-        jenkinsTunnel: "jenkins-test-agent.default.svc.cluster.local:50000"
-        jenkinsUrl: "http://jenkins-test.default.svc.cluster.local:8080"
-        name: "kubernetes"
-        namespace: "default"
-        podLabels:
-          - key: "jenkins/jenkins-test-jenkins-agent"
-            value: "true"
-        serverUrl: "https://kubernetes.default"
   crumbIssuer:
     standard:
       excludeClientIPFromCrumb: true
@@ -114,18 +102,6 @@ unclassified:
     hideCredentials: false
     showEntireCommitSummaryInChanges: false
     useExistingAccountWithSameEmail: false
-  globalLibraries:
-    libraries:
-      - defaultVersion: "main"
-        name: "jenkins-shared-lib"
-        retriever:
-          modernSCM:
-            scm:
-              git:
-                id: "1c85d9ac-3326-4e95-b5a3-737b601e701a"
-                remote: "https://github.com/antman25/jenkins-shared-lib.git"
-                traits:
-                  - "gitBranchDiscovery"
   hashicorpVault:
     configuration:
       engineVersion: 2
