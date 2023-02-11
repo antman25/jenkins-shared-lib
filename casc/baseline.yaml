@@ -1,26 +1,3 @@
-credentials:
-  system:
-    domainCredentials:
-      - credentials:
-          - usernamePassword:
-              description: "NEXUS_CREDS"
-              id: "NEXUS_CREDS"
-              password: this-isnt-my-password
-              scope: GLOBAL
-              username: "packer"
-jenkins:
-  agentProtocols:
-    - "JNLP4-connect"
-    - "Ping"
-  crumbIssuer:
-    standard:
-      excludeClientIPFromCrumb: true
-  disableRememberMe: false
-  globalNodeProperties:
-  - envVars:
-      env:
-      - key: "TOOLS_URL"
-        value: "https://github.com/antman25/jenkins-shared-lib.git"
 jobs:
   - script: >
       pipelineJob("seed_job") {
