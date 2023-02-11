@@ -3,7 +3,7 @@
 def call() {
     properties([disableConcurrentBuilds()])
 
-    node(POD_LABEL) {
+    node('k8s-agent') {
 
         stage('Clone code')
         {
