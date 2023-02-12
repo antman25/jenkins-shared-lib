@@ -21,7 +21,7 @@ List<String> permissionDeveloper(String group)
             "hudson.model.Item.Workspace:${group}"];
 }
 
-boolean createRestrictedFolder(String path, List<String> perm_groups)
+boolean createTenantFolder(String path, List<String> perm_groups)
 {
     try
     {
@@ -35,7 +35,7 @@ boolean createRestrictedFolder(String path, List<String> perm_groups)
         }
         else
         {
-            println("createRestrictedFolder(): Permission groups was null")
+            println("createTenantFolder(): Permission groups was null")
             return false
         }
 
@@ -52,7 +52,7 @@ boolean createRestrictedFolder(String path, List<String> perm_groups)
     }
     catch (Exception ex)
     {
-        println("createRestrictedFolder() Exception: ${ex.toString()}")
+        println("createTenantFolder() Exception: ${ex.toString()}")
         return false
     }
     return true
@@ -75,7 +75,7 @@ boolean buildTentantRoot(String path_prefix, HashMap config_data)
                 if (name != null)
                 {
                     def path = "${path_prefix}/${name}"
-                    def create_folder_result = createRestrictedFolder (path, perm_groups)
+                    def create_folder_result = createTenantFolder (path, perm_groups)
                     if (create_folder_result == false)
                         return false
                 }
@@ -134,23 +134,23 @@ boolean main()
         boolean create_test_path = createTestBranchFolder(branch_name, delivery_branch)
         if (create_test_path)
         {
-            println("Create branch folder SUCCESS")
+            println("Create branch folder: SUCCESS")
             String path_prefix = getPathPrefix(branch_name, delivery_branch)
             boolean build_tenant_root = buildTentantRoot(path_prefix, config_yaml)
 
             if (build_tenant_root == true)
             {
-                println("Tenant folder creation SUCCESS")
+                println("Tenant folder creation: SUCCESS")
             }
             else
             {
-                println("Tenant folder creation FAILURE")
+                println("Tenant folder creation: FAILURE")
                 return false
             }
         }
         else
         {
-            println("Create branch folder FAILURE")
+            println("Create branch folder: FAILURE")
             return false
         }
     }

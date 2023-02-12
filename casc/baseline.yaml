@@ -18,6 +18,7 @@ jenkins:
   authorizationStrategy:
     projectMatrix:
       permissions:
+        - "GROUP:Overall/Read:authenticated"
         - "USER:Overall/Administer:admin"
         - "USER:Overall/Administer:antman"
   clouds:
