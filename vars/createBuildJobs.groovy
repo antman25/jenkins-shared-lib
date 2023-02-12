@@ -20,7 +20,7 @@ def call() {
                 try  {
                     String branch_name = env.getEnvironment().getOrDefault('BRANCH_NAME', 'main')
                     String sanitized_branch_name = utils.sanitizeBranchName(branch_name)
-
+                    println("Sanitized branch name: ${sanitized_branch_name}")
                     def config_data = readFile 'config/config.yaml'
                     def config_yaml = new Yaml().load(config_data)
 
