@@ -163,8 +163,8 @@ tool:
 jobs:
   - script: >
    
-      pipelineJob("seed_job") {
-        displayName("Initial Seed Job")
+      pipelineJob("bootstrap-seed-job") {
+        displayName("Bootstrap Seed Job")
         description("Initial seed job to bootstrap the rest of the jenkins jobs. Safe to remove once successfully ran.")
         def repo = 'https://github.com/antman25/jenkins-shared-lib.git'
         authorization {
