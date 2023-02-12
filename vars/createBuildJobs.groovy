@@ -1,4 +1,4 @@
-#!/usr/bin/env groovy
+import org.yaml.snakeyaml.Yaml
 
 def call() {
     properties([disableConcurrentBuilds()])
@@ -12,20 +12,24 @@ def call() {
             }
 
             stage('Job DSL') {
-                def branch_name = env.getEnvironment().getOrDefault('BRANCH_NAME', 'main')
-                def sanitized_branch_name = utils.sanitizeBranchName(branch_name)
+                String branch_name = env.getEnvironment().getOrDefault('BRANCH_NAME', 'main')
+                String sanitized_branch_name = utils.sanitizeBranchName(branch_name)
 
                 def config_data = readFile 'config/config.yaml'
+                def config_yaml = new Yaml().load(config_data)
+
                 def params = [  'pipeline_root_folder' : 'pipeline_root',
                                              'job_testing_folder' : 'job_testing',
                                              'branch_name' : sanitized_branch_name,
                                              'delivery_branch' : 'main',
                                              'config_data' : config_data,
+                                             'config_data_yaml' : config_yaml,
                                              'workspace_path' : "${WORKSPACE}",
                                              'tools_url' : "${TOOLS_URL}"]
 
-                jobDsl targets: ['job_automation/pipeline/build_pipeline_root.groovy',
-                                 'job_automation/tenants/build_tenant_root.groovy'].join('\n'),
+                jobDsl targets: ['job_automation/pipeline/create_pipeline_jobs.groovy',
+                                 'job_automation/tenants/create_tenant_root.groovy',
+                                 'job_automation/tenants/create_tenant_build_jobs.groovy'].join('\n'),
                         removedJobAction: 'DELETE',
                         removedViewAction: 'DELETE',
                         lookupStrategy: 'JENKINS_ROOT',

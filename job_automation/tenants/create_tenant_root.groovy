@@ -12,13 +12,39 @@ String getPathPrefix(String branch_name, String delivery_branch)
     }
 }
 
-
 List<String> permissionDeveloper(String group)
 {
     return ["hudson.model.Item.Read:${group}",
             "hudson.model.Item.Cancel:${group}",
             "hudson.model.Item.Build:${group}",
             "hudson.model.Item.Workspace:${group}"];
+}
+
+boolean createTestBranchFolder(String branch_name, String delivery_branch)
+{
+    try
+    {
+        String path_prefix = getPathPrefix(branch_name, delivery_branch)
+        if (path_prefix != "")
+        {
+            folder(path_prefix)
+            {
+                displayName("${branch_name}")
+                description("Root folder for Job testing. Branch: ${branch_name}")
+            }
+        }
+        else
+        {
+            println("Root path - Skipping folder creation")
+        }
+
+    }
+    catch (Exception ex)
+    {
+        println("createTestBranchFolder() Exception: ${ex.toString()}")
+        return false
+    }
+    return true
 }
 
 boolean createTenantFolder(String path, List<String> perm_groups)
@@ -60,7 +86,7 @@ boolean createTenantFolder(String path, List<String> perm_groups)
 
 
 
-boolean buildTentantRoot(String path_prefix, HashMap config_data)
+boolean createTentantRoot(String path_prefix, HashMap config_data)
 {
     if (config_data.containsKey('tenants') == true)
     {
@@ -81,50 +107,25 @@ boolean buildTentantRoot(String path_prefix, HashMap config_data)
                 }
                 else
                 {
-                    println("buildTentantRoot(): No tenant name defined")
+                    println("createTentantRoot(): No tenant name defined")
                 }
             }
         }
         catch (Exception ex)
         {
-            println("buildTentantRoot(): Exception ${ex.toString()}")
+            println("createTentantRoot(): Exception ${ex.toString()}")
             return false
         }
     }
     else
     {
-        println("buildTentantRoot(): Missing tenants key")
+        println("createTentantRoot(): Missing tenants key")
         return false
     }
     return true
 }
 
-boolean createTestBranchFolder(String branch_name, String delivery_branch)
-{
-    try
-    {
-        String path_prefix = getPathPrefix(branch_name, delivery_branch)
-        if (path_prefix != "")
-        {
-            folder(path_prefix)
-            {
-                displayName("${branch_name}")
-                description("Root folder for Job testing. Branch: ${branch_name}")
-            }
-        }
-        else
-        {
-            println("Root path - Skipping folder creation")
-        }
 
-    }
-    catch (Exception ex)
-    {
-        println("createTestBranchFolder() Exception: ${ex.toString()}")
-        return false
-    }
-    return true
-}
 
 boolean main()
 {
@@ -136,11 +137,14 @@ boolean main()
         {
             println("Create branch folder: SUCCESS")
             String path_prefix = getPathPrefix(branch_name, delivery_branch)
-            boolean build_tenant_root = buildTentantRoot(path_prefix, config_yaml)
+            boolean create_tenant_root_result = createTentantRoot(path_prefix, config_yaml)
 
-            if (build_tenant_root == true)
+            if (create_tenant_root_result == true)
             {
                 println("Tenant folder creation: SUCCESS")
+
+                //String build_buildjobs_result =
+
             }
             else
             {
@@ -156,7 +160,7 @@ boolean main()
     }
     catch (Exception ex)
     {
-        println("build_tenant_root.groovy main() Exception: ${ex.toString()}")
+        println("create_tenant_root.groovy main() Exception: ${ex.toString()}")
         return false
     }
     return true
@@ -165,11 +169,11 @@ boolean main()
 boolean result = main()
 if (result == true)
 {
-    println("build_tenant_root.groovy execution SUCCESS")
+    println("create_tenant_root.groovy execution SUCCESS")
 }
 else
 {
-    throw new Exception("build_tenant_root.groovy execution FAILURE")
+    throw new Exception("create_tenant_root.groovy execution FAILURE")
 }
 
 
