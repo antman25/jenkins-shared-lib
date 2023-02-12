@@ -164,7 +164,7 @@ jobs:
   - script: >
    
       pipelineJob("seed_job") {
-              displayName("Seed Job")
+              displayName("Seed Job - Delete After Success")
               def repo = 'https://github.com/antman25/jenkins-shared-lib.git'
 
               definition {
