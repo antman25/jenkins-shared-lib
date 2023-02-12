@@ -65,12 +65,22 @@ boolean createDeployJob(String path)
 
 
             branchSources {
-
+                branchSource {
+                    strategy {
+                        allBranchesSame {
+                            props {
+                                suppressAutomaticTriggering {
+                                    triggeredBranchesRegex ('^$.')
+                                }
+                            }
+                        }
+                    }
+                }
                 git {
                     remote(tools_url)
                     // branch source id must be unique
                     id ('pipeline-root-job-deploy-branch-source')
-                    if (branch_name == delivery_branch) {
+                    /*if (branch_name == delivery_branch) {
                         includes('*')
                         excludes('')
                     }
@@ -78,7 +88,7 @@ boolean createDeployJob(String path)
                     {
                         includes('')
                         excludes('*')
-                    }
+                    }*/
 
                 }
             }
