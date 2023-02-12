@@ -51,7 +51,6 @@ boolean createPipelineRootFolder(String path)
 
 boolean createDeployJob(String path)
 {
-    println("ANT- ${path}")
     try
     {
         def tools_url = getBinding().getVariables().getOrDefault('TOOLS_URL', 'NotSet')
@@ -79,10 +78,15 @@ boolean createDeployJob(String path)
                             remote (tools_url)
                             id ('pipeline-root-job-deploy-branch-source-2')
                             traits {
-                                //if (main_branch)
-                                //{
-                                    gitBranchDiscovery()
-                                //}
+                                gitBranchDiscovery()
+                                if (main_branch)
+                                {
+                                    headRegxFilter('^(?!.*main).*$')
+                                }
+                                else
+                                {
+                                    headRegxFilter('.*')
+                                }
 
                             }
 
@@ -104,11 +108,11 @@ boolean createDeployJob(String path)
                         }
                     }
                 }
-                git {
+                /*git {
                     remote(tools_url)
                     // branch source id must be unique
                     id ('pipeline-root-job-deploy-branch-source')
-                }
+                }*/
             }
             orphanedItemStrategy {
                 discardOldItems {
