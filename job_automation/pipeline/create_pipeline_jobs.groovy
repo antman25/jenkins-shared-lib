@@ -44,6 +44,7 @@ boolean createPipelineRootFolder(String path)
 
 boolean createDeployJob(String path)
 {
+    println("ANT- ${path}")
     try
     {
         def tools_url = getBinding().getVariables().getOrDefault('TOOLS_URL', 'NotSet')
