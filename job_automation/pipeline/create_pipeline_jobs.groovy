@@ -72,10 +72,10 @@ boolean createDeployJob(String path)
                             remote (tools_url)
                             id ('pipeline-root-job-deploy-branch-source-2')
                             traits {
-                                if (main_branch)
-                                {
+                                //if (main_branch)
+                                //{
                                     gitBranchDiscovery()
-                                }
+                                //}
 
                             }
 
