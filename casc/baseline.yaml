@@ -145,7 +145,7 @@ unclassified:
       timeout: 60
   location:
     adminAddress: "address not configured yet <nobody@nowhere>"
-    url: "http://jenkins-test:8080/"
+    url: "http://jenkins.antlinux.local:31039/"
   mailer:
     charset: "UTF-8"
     useSsl: false
