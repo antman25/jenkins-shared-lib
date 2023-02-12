@@ -1,3 +1,4 @@
+// https://faun.pub/how-to-get-jenkins-build-job-details-b8c918087030
 podTemplate {
     node(POD_LABEL) {
 
@@ -9,7 +10,7 @@ podTemplate {
         {
             echo "clean old folders"
             def root_items = Hudson.instance.items
-            def pipeline_root_items = Hudson.instance.items
+            def pipeline_root_items = Hudson.instance.items.getItem("${PIPELINE}")
 
             items.each { item ->
                 if (item.class.canonicalName == 'com.cloudbees.hudson.plugins.folder.Folder')
