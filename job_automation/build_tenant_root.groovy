@@ -12,28 +12,30 @@ boolean createRestrictedFolder(String path, List<String> perm_groups)
 {
     try
     {
+        def total_permissions = []
+        if (perm_groups != null)
+        {
+            perm_groups.each { cur_perm_group ->
+                total_permissions.addAll(permissionDeveloper(cur_perm_group))
+            }
+            println("Path: ${path} -- Permission Groups: ${perm_groups.toString()}")
+        }
+        else
+        {
+            println("createRestrictedFolder(): Permission groups was null")
+            return false
+        }
+
         folder(path)
         {
             properties {
                 authorizationMatrix {
                     inheritanceStrategy { nonInheriting() }
-
-                    if (perm_groups != null)
-                    {
-                        def total_permissions = []
-                        perm_groups.each { cur_perm_group ->
-                            total_permissions.addAll(permissionDeveloper(cur_perm_group))
-                        }
-                        println("Applying permission groups ${perm_groups.toString()} to path ${path}")
-                        permissions ( total_permissions )
-                    }
-                    else
-                    {
-                        permissions ()
-                    }
+                    permissions ( total_permissions )
                 }
             }
         }
+
     }
     catch (Exception ex)
     {
@@ -45,7 +47,6 @@ boolean createRestrictedFolder(String path, List<String> perm_groups)
 
 String getPathPrefix(String branch_name, String delivery_branch)
 {
-
     if (branch_name == delivery_branch)
     {
         return "/"
@@ -98,7 +99,10 @@ boolean buildTentantRoot(String branch_name, HashMap config_data)
 }
 
 def config_yaml = new Yaml().load(config_data)
+def path_prefix = getPathPrefix(branch_name, delivery_branch)
 def result = buildTentantRoot(branch_name, config_yaml)
+
+
 if (result == true)
 {
     println("Tenant folder creation SUCCESS")

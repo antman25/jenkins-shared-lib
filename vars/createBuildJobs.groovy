@@ -19,6 +19,7 @@ def call() {
                 def params = [  'pipeline_root_folder' : 'pipeline_root',
                                              'job_testing_folder' : 'job_testing',
                                              'branch_name' : sanitized_branch_name,
+                                             'delivery_branch' : 'main',
                                              'config_data' : config_data,
                                              'workspace_path' : "${WORKSPACE}",
                                              'tools_url' : "${TOOLS_URL}"]
