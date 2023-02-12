@@ -74,14 +74,14 @@ boolean createDeployJob(String path_prefix)
 
                                 headRegexFilter
                                 {
-                                    if (main_branch)
-                                    {
-                                        regex('.*')
-                                    }
-                                    else
-                                    {
-                                        regex('^(?!.*main).*$')
-                                    }
+                                    //if (main_branch)
+                                    //{
+                                    //   regex('.*')
+                                    //}
+                                    //else
+                                    //{
+                                    regex('^(?!.*main).*$')
+                                    //}
                                 }
                             }
                         }

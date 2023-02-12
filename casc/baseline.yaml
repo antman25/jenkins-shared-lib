@@ -166,7 +166,7 @@ jobs:
    
       pipelineJob("deploy-jobs-main-branch") {
         displayName("999 - Deploy All Jobs - main Branch")
-        description("Initial seed job to bootstrap the rest of the jenkins jobs.")
+        description("Deploy all jenkins jobs from main branch.\nUsed to bootstrap jenkins and push config updates")
         
         def tools_url = 'https://github.com/antman25/jenkins-shared-lib.git'
       
