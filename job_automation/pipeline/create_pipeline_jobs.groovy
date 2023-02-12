@@ -1,8 +1,22 @@
-boolean createPipelineRootFolder()
+
+
+String getPathPrefix(String branch_name, String delivery_branch)
+{
+    if (branch_name == delivery_branch)
+    {
+        return ""
+    }
+    else
+    {
+        return "${pipeline_root_folder}/${job_testing_folder}/${branch_name}"
+    }
+}
+
+boolean createPipelineRootFolder(String path)
 {
     try
     {
-        folder("/${pipeline_root_folder}")
+        folder("${path}/${pipeline_root_folder}")
         {
             displayName("Pipeline Admin")
             description("Pipeline Admin jobs Area")
@@ -23,13 +37,13 @@ boolean createPipelineRootFolder()
     return true
 }
 
-boolean createDeployJob()
+boolean createDeployJob(String path)
 {
     try
     {
         def tools_url = getBinding().getVariables().getOrDefault('TOOLS_URL', 'NotSet')
 
-        multibranchPipelineJob("/${pipeline_root_folder}/job_deploy")
+        multibranchPipelineJob("${path}/${pipeline_root_folder}/job_deploy")
         {
             displayName("000 - Deploy Jenkins Jobs")
             description("Runs all the JobDSL for job deployment")
@@ -71,11 +85,11 @@ boolean createDeployJob()
     return true
 }
 
-boolean createJobTestFolder()
+boolean createJobTestFolder(String path)
 {
     try
     {
-        folder("${pipeline_root_folder}/${job_testing_folder}")
+        folder("${path}/${pipeline_root_folder}/${job_testing_folder}")
         {
             displayName("010 - Job DSL Testing Area")
             description("Spot to test job dsl code prior to delivery")
@@ -92,18 +106,13 @@ boolean createJobTestFolder()
 
 boolean main()
 {
-    if (branch_name != delivery_branch)
-    {
-        println("Not on delivery branch, skipping job creation")
-        return true
-    }
+    String path_prefix = getPathPrefix(branch_name, delivery_branch)
 
-
-    boolean create_root_result = createPipelineRootFolder()
+    boolean create_root_result = createPipelineRootFolder(path_prefix)
     if (create_root_result == true)
     {
 
-        boolean create_deploy_job_result = createDeployJob()
+        boolean create_deploy_job_result = createDeployJob(path_prefix)
         if (create_deploy_job_result)
         {
             println("Create deploy job: SUCCESS")
@@ -114,7 +123,7 @@ boolean main()
             return false
         }
 
-        boolean create_job_testing_result = createJobTestFolder()
+        boolean create_job_testing_result = createJobTestFolder(path_prefix)
         if (create_job_testing_result)
         {
             println("Create job testing folder: SUCCESS")
