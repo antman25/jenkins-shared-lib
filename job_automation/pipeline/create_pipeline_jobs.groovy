@@ -19,10 +19,14 @@ boolean createPipelineRootFolder(String path)
 {
     try
     {
-        folder("${path}")
+        if (path != "")
         {
+            folder("${path}")
+            {
 
+            }
         }
+
 
         folder("${path}/${pipeline_root_folder}")
         {
