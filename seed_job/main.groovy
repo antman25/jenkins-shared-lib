@@ -67,9 +67,9 @@ void buildJobs(String branch_name, HashMap config_data)
 
 }
 
-println("Config Dump:\n${config}")
+println("Config Dump:\n${config_data}")
 
-//def config_yaml = new Yaml().load(config)
+def config_yaml = new Yaml().load(config_data)
 //buildJobs(config_yaml)
-buildJobs(config)
+buildJobs(config_yaml)
 
