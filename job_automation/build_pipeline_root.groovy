@@ -44,7 +44,7 @@ boolean createDeployJob()
             }
             orphanedItemStrategy {
                 discardOldItems {
-                    numToKeep(20)
+                    numToKeep(0)
                 }
             }
             factory {
