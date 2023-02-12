@@ -110,7 +110,7 @@ boolean createDeployJob(String path_prefix)
             }
             factory {
                 workflowBranchProjectFactory {
-                    scriptPath("job-automation/jenkinsfiles/create-jobs/Jenkinsfile")
+                    scriptPath("Jenkinsfile")
                 }
             }
             triggers {
