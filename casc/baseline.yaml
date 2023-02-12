@@ -172,7 +172,6 @@ jobs:
       
         authorization {
           blocksInheritance()
-          permissionAll('admin') 
         }
         definition {
           cpsScm {
