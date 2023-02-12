@@ -19,6 +19,9 @@ podTemplate {
                 println("CurVar: ${cur_var}")
                 //println("Key: ${key}  Value: ${env_test[key]}")
             }
+
+            def branch_name = env_test.get('BRANCH_NAME')
+            println("Branch: ${branch_name}")
         }
 
         stage ('test stage')
