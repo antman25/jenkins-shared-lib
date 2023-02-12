@@ -30,7 +30,7 @@ multibranchPipelineJob("/${pipeline_root_folder}/job_deploy")
     }
     factory {
         workflowBranchProjectFactory {
-            scriptPath("pipeline_root/Jenkinsfile")
+            scriptPath("job_automation/Jenkinsfile")
         }
     }
 }
