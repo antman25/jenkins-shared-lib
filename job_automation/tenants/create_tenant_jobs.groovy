@@ -86,45 +86,61 @@ boolean createTenantFolder(String path, List<String> perm_groups)
 
 
 
-boolean createTentantRoot(String path_prefix)
+boolean createTenantJobs()
 {
-    if (config_yaml.containsKey('tenants') == true)
+    try
     {
-        def tenants = config_yaml['tenants']
-
-        try
+        String path_prefix = getPathPrefix(branch_name, delivery_branch)
+        if (config_yaml.containsKey('tenants') == true)
         {
+            def tenants = config_yaml['tenants']
+
+
             tenants.each { cur_tenant ->
                 def name = cur_tenant.get('name')
                 def perm_groups = cur_tenant.get('perm_groups')
                 if (name != null)
                 {
-                    def path = "${path_prefix}/${name}"
-                    def create_folder_result = createTenantFolder (path, perm_groups)
+                    def tenant_root_path = "${path_prefix}/${name}"
+                    def create_folder_result = createTenantFolder (tenant_root_path, perm_groups)
                     if (create_folder_result == false)
                         return false
                 }
                 else
                 {
-                    println("createTentantRoot(): No tenant name defined")
+                    println("createTenantJobs(): No tenant name defined")
                 }
             }
         }
-        catch (Exception ex)
+        else
         {
-            println("createTentantRoot(): Exception ${ex.toString()}")
+            println("createTenantJobs(): Missing tenants key")
             return false
         }
     }
-    else
+    catch (Exception ex)
     {
-        println("createTentantRoot(): Missing tenants key")
+        println("createTenantJobs(): Exception ${ex.toString()}")
         return false
     }
+
     return true
 }
 
+boolean createTentantBuildRoot(string path_prefix)
+{
+    try
+    {
 
+    }
+    catch (Exception ex)
+    {
+        println("createTentantBuildRoot() Exception: ${ex.toString()}")
+        return false
+    }
+
+    return true
+}
 
 boolean main()
 {
@@ -134,15 +150,12 @@ boolean main()
         if (create_test_path)
         {
             println("Create branch folder: SUCCESS")
-            String path_prefix = getPathPrefix(branch_name, delivery_branch)
-            boolean create_tenant_root_result = createTentantRoot(path_prefix)
 
-            if (create_tenant_root_result == true)
+            boolean create_tenant_jobs_result = createTenantJobs()
+
+            if (create_tenant_jobs_result == true)
             {
-                println("Tenant folder creation: SUCCESS")
-
-                //String build_buildjobs_result =
-
+                println("Tenant jobs: SUCCESS")
             }
             else
             {
@@ -158,7 +171,7 @@ boolean main()
     }
     catch (Exception ex)
     {
-        println("create_tenant_root.groovy main() Exception: ${ex.toString()}")
+        println("create_tenant_jobs.groovy main() Exception: ${ex.toString()}")
         return false
     }
     return true
@@ -167,11 +180,11 @@ boolean main()
 boolean result = main()
 if (result == true)
 {
-    println("create_tenant_root.groovy execution SUCCESS")
+    println("create_tenant_jobs.groovy execution SUCCESS")
 }
 else
 {
-    throw new Exception("create_tenant_root.groovy execution FAILURE")
+    throw new Exception("create_tenant_jobs.groovy execution FAILURE")
 }
 
 

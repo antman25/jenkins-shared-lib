@@ -22,7 +22,7 @@ Map getConfig(key = null) {
   // these are the configurable options that can be overridden by passing in config to the
   // run actions. Some also have corresponding environment variables.
 
-  def masterBranch = env.MASTER_BRANCH ?: 'create_tenant_root'
+  def masterBranch = env.MASTER_BRANCH ?: 'create_tenant_jobs'
   def isMasterBranch = masterBranch == env.BRANCH_NAME
 
   def config = [
