@@ -92,6 +92,13 @@ boolean createJobTestFolder()
 
 boolean main()
 {
+    if (branch_name != delivery_branch)
+    {
+        println("Not on delivery branch, skipping job creation")
+        return true
+    }
+
+
     boolean create_root_result = createPipelineRootFolder()
     if (create_root_result == true)
     {
