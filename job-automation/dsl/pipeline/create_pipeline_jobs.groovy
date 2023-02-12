@@ -138,6 +138,10 @@ boolean createJobTestFolder(String path_prefix)
             displayName("000 - Branch Cleanup")
             description("Run to clean up all branches without an active remote origin")
 
+            if (branch_name != delivery_branch) {
+                disabled()
+            }
+
             definition {
                 cpsScm {
                     scm {
