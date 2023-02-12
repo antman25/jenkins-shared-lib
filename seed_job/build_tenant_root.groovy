@@ -8,34 +8,44 @@ List<String> permissionDeveloper(String group)
             "hudson.model.Item.Workspace:${group}"];
 }
 
-void createRestrictedFolder(String path, List<String> perm_groups)
+boolean createRestrictedFolder(String path, List<String> perm_groups)
 {
-    folder(path)
+    try
     {
-        properties {
-            authorizationMatrix {
-                inheritanceStrategy { nonInheriting() }
+        folder(path)
+        {
+            properties {
+                authorizationMatrix {
+                    inheritanceStrategy { nonInheriting() }
 
-                if (perm_groups != null)
-                {
-                    def total_permissions = []
-                    perm_groups.each { cur_perm_group ->
-                        total_permissions.addAll(permissionDeveloper(cur_perm_group))
+                    if (perm_groups != null)
+                    {
+                        def total_permissions = []
+                        perm_groups.each { cur_perm_group ->
+                            total_permissions.addAll(permissionDeveloper(cur_perm_group))
+                        }
+                        println("Applying permission groups ${perm_groups.toString()} to path ${path}")
+                        permissions ( total_permissions )
                     }
-                    println("Applying permission groups ${perm_groups.toString()} to path ${path}")
-                    permissions ( total_permissions )
-                }
-                else
-                {
-                    permissions ()
+                    else
+                    {
+                        permissions ()
+                    }
                 }
             }
         }
     }
+    catch (Exception ex)
+    {
+        println("createRestrictedFolder() Exception: ${ex.toString()}")
+        return false
+    }
+    return true
 }
 
 boolean buildTentantRoot(String branch_name, HashMap config_data)
 {
+    boolean result = true
     if (config_data.containsKey('tenants') == true)
     {
         def tenants = config_data['tenants']
@@ -48,11 +58,14 @@ boolean buildTentantRoot(String branch_name, HashMap config_data)
                 def perm_groups = cur_tenant.get('perm_groups')
                 if (name != null)
                 {
-                    createRestrictedFolder (name, perm_groups)
+                    def path = "/${seed_jobs_root}/${name}"
+                    def create_folder_result = createRestrictedFolder (name, perm_groups)
+                    if (create_folder_result == false)
+                        result = false
                 }
                 else
                 {
-                    println("buildTentantRoot(): No name defined")
+                    println("buildTentantRoot(): No tenant name defined")
                 }
             }
         }
