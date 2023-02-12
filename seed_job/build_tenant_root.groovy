@@ -45,13 +45,14 @@ boolean createRestrictedFolder(String path, List<String> perm_groups)
 
 String getPathPrefix(String branch_name, String delivery_branch)
 {
+
     if (branch_name == delivery_branch)
     {
         return "/"
     }
     else
     {
-
+        return "${root_folder}/${job_testing_folder}/${branch_name}"
     }
 }
 
