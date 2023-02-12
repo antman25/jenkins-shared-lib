@@ -88,39 +88,39 @@ boolean createTenantFolder(String path, List<String> perm_groups)
 boolean createTenantJobs() {
     try {
         String path_prefix = getPathPrefix(branch_name, delivery_branch)
-        if (config_yaml.containsKey('tenants') == true) {
-            def tenants = config_yaml['tenants']
+        boolean  create_test_branch_folder = createTestBranchFolder(path_prefix)
+        if (create_test_branch_folder == true) {
+            println("Create test branch folder: SUCCESS")
 
-            tenants.each { cur_tenant ->
-                def tenant_name = cur_tenant.get('tenant_name')
-                def perm_groups = cur_tenant.get('perm_groups')
-                if (tenant_name != null) {
-                    boolean  create_test_branch_folder = createTestBranchFolder(path_prefix)
-                    if (create_test_branch_folder == true)
-                    {
-                        println("Create test branch folder: SUCCESS")
+            if (config_yaml.containsKey('tenants') == true) {
+                def tenants = config_yaml['tenants']
+
+                tenants.each { cur_tenant ->
+                    def tenant_name = cur_tenant.get('tenant_name')
+                    def perm_groups = cur_tenant.get('perm_groups')
+                    if (tenant_name != null) {
+
+
                         def tenant_root_path = "${path_prefix}/${tenant_name}"
                         boolean create_root_folder_result = createTenantFolder (tenant_root_path, perm_groups)
                         if (create_root_folder_result == true) {
 
                         }
                     }
-                    else
-                    {
-                        println("Create test branch folder: FAILURE")
+                    else {
+                        println("createTenantJobs(): No tenant name defined")
+                        return false
                     }
-
-
-
-
                 }
-                else {
-                    println("createTenantJobs(): No tenant name defined")
-                }
+
+            }
+            else {
+                println("createTenantJobs(): Missing tenants key in config")
+                return false
             }
         }
         else {
-            println("createTenantJobs(): Missing tenants key")
+            println("createTenantJobs(): Failed to create test branch folder")
             return false
         }
     }
