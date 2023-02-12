@@ -1,8 +1,5 @@
 import groovy.transform.Field
 
-@Field final String DEPLOY_JOB_PATH = 'deploy-job'
-
-
 String getPathPrefix(String branch_name, String delivery_branch)
 {
     if (branch_name == delivery_branch)
@@ -15,17 +12,17 @@ String getPathPrefix(String branch_name, String delivery_branch)
     }
 }
 
-boolean createPipelineRootFolder(String path)
+boolean createPipelineRootFolder(String path_prefix)
 {
     try
     {
-        if (path != "")
+        if (path_prefix != "")
         {
-            folder("${path}")
+            folder("${path_prefix}")
         }
 
 
-        folder("${path}/${pipeline_root_folder}")
+        folder("${path_prefix}/${pipeline_root_folder}")
         {
             displayName("Pipeline Admin")
             description("Pipeline Admin jobs Area")
@@ -46,14 +43,14 @@ boolean createPipelineRootFolder(String path)
     return true
 }
 
-boolean createDeployJob(String path)
+boolean createDeployJob(String path_prefix)
 {
     try
     {
         def tools_url = getBinding().getVariables().getOrDefault('TOOLS_URL', 'NotSet')
         def desc = "Runs all the JobDSL for job deployment"
         def main_branch = branch_name == delivery_branch
-        multibranchPipelineJob("${path}/${pipeline_root_folder}/${DEPLOY_JOB_PATH}")
+        multibranchPipelineJob("${path_prefix}/${pipeline_root_folder}/deploy-all-jobs")
         {
             //if (branch_name != delivery_branch)
             //   disabled()
@@ -127,14 +124,32 @@ boolean createDeployJob(String path)
     return true
 }
 
-boolean createJobTestFolder(String path)
+boolean createJobTestFolder(String path_prefix)
 {
     try
     {
-        folder("${path}/${pipeline_root_folder}/${job_testing_folder}")
+        folder("${path_prefix}/${pipeline_root_folder}/${job_testing_folder}")
         {
             displayName("010 - Job DSL Testing Area")
             description("Spot to test job dsl code prior to delivery")
+        }
+
+        pipelineJob("${path_prefix}/${pipeline_root_folder}/${job_testing_folder}/branch-cleanup") {
+            displayName("Branch Cleanup")
+            description("Run to clean up all branches without an active remote origin")
+
+            definition {
+                cpsScm {
+                    scm {
+                        git {
+                            remote { url(tools_url) }
+                            branches(branch_name)
+                            scriptPath('job-automation/jenkinsfiles/branch-cleanup/Jenkinsfile')
+                            extensions { }  // required as otherwise it may try to tag the repo, which you may not want
+                        }
+                    }
+                }
+            }
         }
     }
     catch (Exception ex)
