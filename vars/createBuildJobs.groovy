@@ -16,15 +16,15 @@ def call() {
                 def sanitized_branch_name = utils.sanitizeBranchName(branch_name)
 
                 def config_data = readFile 'config/config.yaml'
-                def params = [  'pipeline_root_folder' : 'pipeline_jobs',
+                def params = [  'pipeline_root_folder' : 'pipeline_root',
                                              'job_testing_folder' : 'job_testing',
                                              'branch_name' : sanitized_branch_name,
                                              'config_data' : config_data,
                                              'workspace_path' : "${WORKSPACE}",
                                              'tools_url' : "${TOOLS_URL}"]
 
-                jobDsl targets: ['seed_job/build_seed_jobs.groovy',
-                                 'seed_job/build_tenant_root.groovy'].join('\n'),
+                jobDsl targets: ['job_automation/build_pipeline_root.groovy',
+                                 'job_automation/build_tenant_root.groovy'].join('\n'),
                         removedJobAction: 'DELETE',
                         removedViewAction: 'DELETE',
                         lookupStrategy: 'JENKINS_ROOT',
