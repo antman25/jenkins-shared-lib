@@ -70,7 +70,7 @@ boolean createDeployJob(String path)
                     }
                     else
                     {
-                        exclude('*')
+                        excludes('*')
                     }
 
                 }
