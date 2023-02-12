@@ -49,7 +49,14 @@ boolean createDeployJob(String path)
             //   disabled()
 
             displayName("000 - Deploy Jenkins Jobs")
-            description(desc)
+            if (branch_name == release_branch) {
+                description(desc)
+            }
+            else {
+                description(desc + "\n!!! JOB DISABLED - this job is intentionally disabled due to development branch !!!")
+            }
+
+
 
             branchSources {
 
@@ -84,7 +91,6 @@ boolean createDeployJob(String path)
                         branches("(?!.*)")
                         // Determines events for which branches with matched names should not be triggered automatically.
                         strategy("NONE")
-                        description(desc + "\n!!! JOB DISABLED - this job is intentionally disabled due to development branch !!!")
                     }
                 }
             }
