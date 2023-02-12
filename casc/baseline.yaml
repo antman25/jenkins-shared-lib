@@ -180,7 +180,7 @@ jobs:
               git {
                 remote { url(tools_url) }
                 branches("main")
-                scriptPath('pipeline_root/Jenkinsfile')
+                scriptPath('job_automation/Jenkinsfile')
                 extensions { }  // required as otherwise it may try to tag the repo, which you may not want
               }
             }
