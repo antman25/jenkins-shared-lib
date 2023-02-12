@@ -94,6 +94,13 @@ boolean createTenantJobs() {
         boolean  create_test_branch_folder = createTestBranchFolder(path_prefix)
         if (create_test_branch_folder == true) {
             println("Create test branch folder: SUCCESS")
+            def bitbucket_url = ""
+            def artifactory_url = ""
+            if (config_yaml.containsKey('global') == true) {
+                def global_cfg = config_yaml['global']
+                bitbucket_url = global_cfg.get('bitbucket_url')
+                artifactory_url = global_cfg.get('artifactory_url')
+            }
 
             if (config_yaml.containsKey('tenants') == true) {
                 def tenants = config_yaml['tenants']
@@ -113,7 +120,7 @@ boolean createTenantJobs() {
                                 if (project_list != null) {
                                     boolean create_buildjobs_project = true
                                     project_list.each { cur_project ->
-                                        create_buildjobs_project |= createTentantProjectFolder(tenant_root_path, cur_project)
+                                        create_buildjobs_project |= createTentantProjectFolder(tenant_root_path, bitbucket_url, cur_project)
                                     }
 
                                     if (create_buildjobs_project == true) {
