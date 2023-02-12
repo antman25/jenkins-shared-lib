@@ -192,7 +192,7 @@ boolean createTentantProjectFolder(String path, String bitbucket_url, String pro
     try {
         organizationFolder("${path}/${BUILDJOB_PATH}/${project}")
         {
-            if (branch_name != release_branch)
+            if (branch_name != delivery_branch)
                 diabled()
 
             displayName(project)
