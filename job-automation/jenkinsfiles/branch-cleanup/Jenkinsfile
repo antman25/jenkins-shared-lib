@@ -1,3 +1,10 @@
+import jenkins.model.*
+import hudson.model.*
+import com.cloudbees.hudson.plugins.folder.*
+import jenkins.branch.*
+import org.jenkinsci.plugins.workflow.job.*
+import org.jenkinsci.plugins.workflow.multibranch.*
+
 podTemplate {
     node(POD_LABEL) {
         stage('Clone code') {
@@ -7,6 +14,10 @@ podTemplate {
         stage('Clean Testing Area')
         {
             echo "clean old folders"
+
+            for (job in Jenkins.instance.items) {
+                println("Clean: getClass(): ${job.getClass()}")
+            }
         }
     }
 }
