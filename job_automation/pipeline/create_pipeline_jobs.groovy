@@ -81,7 +81,10 @@ boolean createDeployJob(String path)
                     }
                     else
                     {
-
+                        branches("(?!.*)")
+                        // Determines events for which branches with matched names should not be triggered automatically.
+                        strategy("NONE")
+                        description(desc + "\n!!! JOB DISABLED - this job is intentionally disabled due to development branch !!!")
                     }
                 }
             }
