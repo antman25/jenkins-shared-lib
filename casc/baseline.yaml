@@ -5,9 +5,12 @@ credentials:
           - usernamePassword:
               description: "NEXUS_CREDS"
               id: "NEXUS_CREDS"
-              password: packer
+              password: "{AQAAABAAAAAQeeWWCJpyjkR3GYZMPpdfHGvBBsbj5BN1j7rZAxc4zPY=}"
               scope: GLOBAL
               username: "packer"
+          - fileSystemServiceAccountCredential:
+              id: "4b4a14ec-77fd-4a82-b1f3-0d9154b2f44c"
+              scope: GLOBAL
 jenkins:
   agentProtocols:
     - "JNLP4-connect"
@@ -21,14 +24,32 @@ jenkins:
     - kubernetes:
         containerCap: 10
         containerCapStr: "10"
-        jenkinsTunnel: "jenkins-test-agent.default.svc.cluster.local:50000"
-        jenkinsUrl: "http://jenkins-test.default.svc.cluster.local:8080"
+        credentialsId: "4b4a14ec-77fd-4a82-b1f3-0d9154b2f44c"
+        jenkinsTunnel: "jenkins-agent.workflow.svc.cluster.local:50000"
+        jenkinsUrl: "http://jenkins.workflow.svc.cluster.local:8080"
         name: "k8s-agent-k3s-cluster1"
         namespace: "workflow"
         podLabels:
           - key: "jenkins/jenkins-agent-podlbl"
             value: "true"
+        serverCertificate: |
+          -----BEGIN CERTIFICATE-----
+          MIIBdzCCAR2gAwIBAgIBADAKBggqhkjOPQQDAjAjMSEwHwYDVQQDDBhrM3Mtc2Vy
+          dmVyLWNhQDE2NzU3NTAxNjcwHhcNMjMwMjA3MDYwOTI3WhcNMzMwMjA0MDYwOTI3
+          WjAjMSEwHwYDVQQDDBhrM3Mtc2VydmVyLWNhQDE2NzU3NTAxNjcwWTATBgcqhkjO
+          PQIBBggqhkjOPQMBBwNCAASQ1a4PXs/g0AezNNH6HlTdi9An74mfSwY5EnEfLHh3
+          ud+k0k5kOAPaQhwcKtDS+yQEf+ot4+5Jbzs0QtXv7aYMo0IwQDAOBgNVHQ8BAf8E
+          BAMCAqQwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUT3Hi7SHFkF8Hewp6FB7E
+          vvS+4UkwCgYIKoZIzj0EAwIDSAAwRQIgGIQ9t8NXHXAVaJOIWOHr0+ffu+xgySFU
+          OOKtvrHl/2kCIQCpKlxjcILLbACC/leH0gNLRWx/HOKYkp0gMvmjnWuTTg==
+          -----END CERTIFICATE-----
         serverUrl: "https://kubernetes.default"
+        templates:
+          - id: "e2b3aa84-5ca9-4336-b8e7-a64203ba3f66"
+            label: "k8s-agent"
+            name: "default-jnlp"
+            namespace: "workflow"
+            yamlMergeStrategy: "override"
   crumbIssuer:
     standard:
       excludeClientIPFromCrumb: true
@@ -40,6 +61,7 @@ jenkins:
             value: "https://github.com/antman25/jenkins-shared-lib.git"
   labelAtoms:
     - name: "built-in"
+    - name: "k8s-agent"
   markupFormatter: "plainText"
   mode: NORMAL
   myViewsTabBar: "standard"
@@ -63,7 +85,16 @@ jenkins:
             - preferredProvider:
                 providerId: "default"
             - "timezone"
-  scmCheckoutRetryCount: 0
+        - id: "antman"
+          name: "antman"
+          properties:
+            - "myView"
+            - "timezone"
+            - "apiToken"
+            - mailer:
+                emailAddress: "antman@antlinux.local"
+            - preferredProvider:
+                providerId: "default"
   slaveAgentPort: 50000
   updateCenter:
     sites:
@@ -138,5 +169,3 @@ jobs:
           }
         }
       }
-      
-      
