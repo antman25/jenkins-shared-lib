@@ -117,7 +117,7 @@ boolean createDeployJob(String path)
             }
             factory {
                 workflowBranchProjectFactory {
-                    scriptPath("job_automation/main-pipeline/Jenkinsfile")
+                    scriptPath("job-automation/jenkinsfiles/create-jobs/Jenkinsfile")
                 }
             }
         }
