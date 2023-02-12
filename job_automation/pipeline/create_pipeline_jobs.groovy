@@ -165,9 +165,8 @@ boolean main()
     String path_prefix = getPathPrefix(branch_name, delivery_branch)
 
     boolean create_root_result = createPipelineRootFolder(path_prefix)
-    if (create_root_result == true)
-    {
-
+    if (create_root_result == true) {
+        println("Create pipeline root folder: SUCCESS")
         boolean create_deploy_job_result = createDeployJob(path_prefix)
         if (create_deploy_job_result)
         {
