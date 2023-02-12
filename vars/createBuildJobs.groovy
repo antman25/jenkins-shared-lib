@@ -12,11 +12,10 @@ def call() {
 
             stage('Build Config')
             {
-                println("Executing command in python3 container") {
-                    container('python')
-                    {
-                        sh 'python3 config/build_config.py'
-                    }
+                println("Executing command in python3 container")
+                container('python')
+                {
+                    sh 'python3 config/build_config.py'
                 }
             }
 
