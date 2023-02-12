@@ -94,7 +94,7 @@ boolean createTenantJobs() {
             tenants.each { cur_tenant ->
                 def tenant_name = cur_tenant.get('tenant_name')
                 def perm_groups = cur_tenant.get('perm_groups')
-                if (name != null) {
+                if (tenant_name != null) {
                     def tenant_root_path = "${path_prefix}/${tenant_name}"
                     boolean create_root_folder_result = createTenantFolder (tenant_root_path, perm_groups)
                     if (create_root_folder_result == true) {
