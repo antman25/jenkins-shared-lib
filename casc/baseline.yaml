@@ -164,20 +164,23 @@ jobs:
   - script: >
    
       pipelineJob("seed_job") {
-              displayName("Seed Job - Delete After Success")
-              def repo = 'https://github.com/antman25/jenkins-shared-lib.git'
-
-              definition {
-                cpsScm {
-                  scm {
-                    git {
-                      remote { url(repo) }
-                      branches("main")
-                      scriptPath('seed_job/Jenkinsfile')
-                      extensions { }  // required as otherwise it may try to tag the repo, which you may not want
-                    }
-                  }
-                }
+        displayName("Initial Seed Job")
+        def repo = 'https://github.com/antman25/jenkins-shared-lib.git'
+        authorization {
+          blocksInheritance()
+          permissionAll('admin') 
+        }
+        definition {
+          cpsScm {
+            scm {
+              git {
+                remote { url(repo) }
+                branches("main")
+                scriptPath('seed_job/Jenkinsfile')
+                extensions { }  // required as otherwise it may try to tag the repo, which you may not want
               }
             }
+          }
+        }
+      }
       
