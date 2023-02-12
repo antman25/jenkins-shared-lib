@@ -79,14 +79,19 @@ boolean createDeployJob(String path)
                             id ('pipeline-root-job-deploy-branch-source-2')
                             traits {
                                 gitBranchDiscovery()
-                                if (main_branch)
-                                {
-                                    headRegxFilter('^(?!.*main).*$')
-                                }
-                                else
-                                {
-                                    headRegxFilter('.*')
-                                }
+
+                                    headRegxFilter
+                                    {
+                                        if (main_branch)
+                                        {
+                                            headRegxFilter('.*')
+                                        }
+                                        else
+                                        {
+                                            regex('^(?!.*main).*$')
+                                        }
+                                    }
+
 
                             }
 
