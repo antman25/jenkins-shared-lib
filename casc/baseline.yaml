@@ -169,7 +169,6 @@ jobs:
         description("Initial seed job to bootstrap the rest of the jenkins jobs. Safe to remove once successfully ran.")
         
         def tools_url = 'https://github.com/antman25/jenkins-shared-lib.git'
-        //def tools_url = getBinding().getVariables().getOrDefault('TOOLS_URL', 'NotSet')
       
         authorization {
           blocksInheritance()
@@ -180,8 +179,8 @@ jobs:
             scm {
               git {
                 remote { url(tools_url) }
-                branches("main")
-                scriptPath('job_automation/Jenkinsfile')
+                branches('main')
+                scriptPath('job-automation/jenkinsfiles/create-jobs/Jenkinsfile')
                 extensions { }  // required as otherwise it may try to tag the repo, which you may not want
               }
             }

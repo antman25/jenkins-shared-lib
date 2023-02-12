@@ -23,7 +23,8 @@ boolean createPipelineRootFolder(String path)
         {
             folder("${path}")
             {
-
+                displayName(path)
+                description("Testing Job Root")
             }
         }
 
@@ -69,8 +70,6 @@ boolean createDeployJob(String path)
                 description(desc + "\n!!! Intentionally ignoring main branch from scanning while on a development branch !!!")
             }
 
-
-
             branchSources {
                 branchSource {
                     source {
@@ -91,10 +90,7 @@ boolean createDeployJob(String path)
                                         regex('^(?!.*main).*$')
                                     }
                                 }
-
-
                             }
-
                         }
                     }
                     strategy {
@@ -121,26 +117,9 @@ boolean createDeployJob(String path)
             }
             factory {
                 workflowBranchProjectFactory {
-                    scriptPath("job_automation/Jenkinsfile")
+                    scriptPath("job_automation/main-pipeline/Jenkinsfile")
                 }
             }
-            /*properties{
-                suppressFolderAutomaticTriggering {
-                    // Defines a regular expression of branch names which will be triggered automatically, for example (?!
-                    if (branch_name == delivery_branch)
-                    {
-                        branches("(?!main.*)")
-                        // Determines events for which branches with matched names should not be triggered automatically.
-                        strategy("INDEXING")
-                    }
-                    else
-                    {
-                        branches("(?!.*)")
-                        // Determines events for which branches with matched names should not be triggered automatically.
-                        strategy("NONE")
-                    }
-                }
-            }*/
         }
     }
     catch (Exception ex)
