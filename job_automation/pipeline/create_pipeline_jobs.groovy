@@ -1,3 +1,6 @@
+import groovy.transform.Field
+
+@Field final String DEPLOY_JOB_PATH = 'deploy-job'
 
 
 String getPathPrefix(String branch_name, String delivery_branch)
@@ -50,7 +53,7 @@ boolean createDeployJob(String path)
         def tools_url = getBinding().getVariables().getOrDefault('TOOLS_URL', 'NotSet')
         def desc = "Runs all the JobDSL for job deployment"
         def main_branch = branch_name == delivery_branch
-        multibranchPipelineJob("${path}/${pipeline_root_folder}/job_deploy")
+        multibranchPipelineJob("${path}/${pipeline_root_folder}/${DEPLOY_JOB_PATH}")
         {
             //if (branch_name != delivery_branch)
             //   disabled()
