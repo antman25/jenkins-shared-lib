@@ -13,11 +13,11 @@ def call() {
 
             stage('Job DSL') {
                 def branch_name = env.getEnvironment().getOrDefault('BRANCH_NAME', 'main')
-                //def config = readFile 'config/config.yaml'
-                def config = readYaml 'config/config.yaml'
+                def config_data = readFile 'config/config.yaml'
+
                 def params = [  'workspace_path' : "${WORKSPACE}",
                                              'branch_name': branch_name,
-                                             'config'    : config]
+                                             'config_data'    : config_data]
                 jobDsl targets: ['seed_jobs/main.groovy'].join('\n'),
                         removedJobAction: 'DELETE',
                         removedViewAction: 'DELETE',
