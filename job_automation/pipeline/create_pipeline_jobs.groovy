@@ -66,7 +66,7 @@ boolean createDeployJob(String path)
                 description(desc)
             }
             else {
-                description(desc + "\n!!! JOB DISABLED - this job is intentionally disabled due to development branch !!!")
+                description(desc + "\n!!! Intentionally ignoring main branch from scanning while on a development branch !!!")
             }
 
 
@@ -113,11 +113,6 @@ boolean createDeployJob(String path)
                         }
                     }
                 }
-                /*git {
-                    remote(tools_url)
-                    // branch source id must be unique
-                    id ('pipeline-root-job-deploy-branch-source')
-                }*/
             }
             orphanedItemStrategy {
                 discardOldItems {
