@@ -12,7 +12,7 @@ def call() {
             }
 
             stage('Job DSL') {
-                def branch_name = env_test.getOrDefault('BRANCH_NAME', 'main')
+                def branch_name = env.getEnvironment().getOrDefault('BRANCH_NAME', 'main')
                 //def config = readFile 'config/config.yaml'
                 def config = readYaml 'config/config.yaml'
                 def params = [  'workspace_path' : "${WORKSPACE}",
