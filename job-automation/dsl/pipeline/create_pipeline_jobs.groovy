@@ -135,7 +135,7 @@ boolean createJobTestFolder(String path_prefix)
         }
 
         pipelineJob("${path_prefix}/${pipeline_root_folder}/${job_testing_folder}/branch-cleanup") {
-            displayName("Branch Cleanup")
+            displayName("000 - Branch Cleanup")
             description("Run to clean up all branches without an active remote origin")
 
             definition {
