@@ -135,6 +135,7 @@ void main()
         if (create_test_path)
         {
             println("Create branch folder SUCCESS")
+            String path_prefix = getPathPrefix(branch_name, delivery_branch)
             boolean build_tenant_root = buildTentantRoot(path_prefix, config_yaml)
 
             if (build_tenant_root == true)
