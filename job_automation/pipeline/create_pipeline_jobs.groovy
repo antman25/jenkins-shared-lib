@@ -16,6 +16,11 @@ boolean createPipelineRootFolder(String path)
 {
     try
     {
+        folder("${path}")
+        {
+
+        }
+
         folder("${path}/${pipeline_root_folder}")
         {
             displayName("Pipeline Admin")
