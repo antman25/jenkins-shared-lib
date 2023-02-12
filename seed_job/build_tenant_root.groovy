@@ -34,7 +34,7 @@ void createRestrictedFolder(String path, List<String> perm_groups)
     }
 }
 
-bool buildTentantRoot(String branch_name, HashMap config_data)
+boolean buildTentantRoot(String branch_name, HashMap config_data)
 {
     if (config_data.containsKey('tenants') == true)
     {
