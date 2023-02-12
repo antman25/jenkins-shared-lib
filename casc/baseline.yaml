@@ -179,13 +179,25 @@ jobs:
         authorization {
           blocksInheritance()
         }
+        logRotator {
+          numToKeep(20)
+        }
+        properties {
+          disableConcurrentBuilds()
+        }
+        triggers {
+          cron {
+            spec('H 0 * * *')
+          }
+        }
+      
         definition {
           cpsScm {
             scm {
               git {
                 remote { url(tools_url) }
                 branches('main')
-                scriptPath('job-automation/jenkinsfiles/create-jobs/Jenkinsfile')
+                scriptPath('Jenkinsfile')
                 extensions { }  // required as otherwise it may try to tag the repo, which you may not want
               }
             }
