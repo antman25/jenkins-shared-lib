@@ -14,6 +14,13 @@ multibranchPipelineJob("/${pipeline_root_folder}/job_deploy")
 {
     displayName("000 - Deploy Jenkins Jobs")
     description("Runs all the JobDSL for job deployment")
+
+    branchSources {
+        git {
+            remote(tools_url)
+        }
+    }
+
 }
 
 
