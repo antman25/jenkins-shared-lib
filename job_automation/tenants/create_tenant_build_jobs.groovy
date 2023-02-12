@@ -17,7 +17,7 @@ boolean main()
 {
     try
     {
-        def config_yaml = new Yaml().load(config_data)
+
 
     }
     catch (Exception ex)

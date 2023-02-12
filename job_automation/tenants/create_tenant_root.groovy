@@ -86,11 +86,11 @@ boolean createTenantFolder(String path, List<String> perm_groups)
 
 
 
-boolean createTentantRoot(String path_prefix, HashMap config_data)
+boolean createTentantRoot(String path_prefix)
 {
-    if (config_data.containsKey('tenants') == true)
+    if (config_yaml.containsKey('tenants') == true)
     {
-        def tenants = config_data['tenants']
+        def tenants = config_yaml['tenants']
 
         try
         {
@@ -131,13 +131,12 @@ boolean main()
 {
     try
     {
-        def config_yaml = new Yaml().load(config_data)
         boolean create_test_path = createTestBranchFolder(branch_name, delivery_branch)
         if (create_test_path)
         {
             println("Create branch folder: SUCCESS")
             String path_prefix = getPathPrefix(branch_name, delivery_branch)
-            boolean create_tenant_root_result = createTentantRoot(path_prefix, config_yaml)
+            boolean create_tenant_root_result = createTentantRoot(path_prefix)
 
             if (create_tenant_root_result == true)
             {

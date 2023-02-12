@@ -22,7 +22,7 @@ def call() {
                                                 'job_testing_folder' : 'job_testing',
                                                 'branch_name' : sanitized_branch_name,
                                                 'delivery_branch' : 'main',
-                                                'config_data' : config_yaml,
+                                                'config_yaml' : config_yaml,
                                                 'workspace_path' : "${WORKSPACE}",
                                                 'tools_url' : "${TOOLS_URL}"]
 
