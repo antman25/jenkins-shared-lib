@@ -1,3 +1,17 @@
+String getPathPrefix(String branch_name, String delivery_branch)
+{
+    if (branch_name == delivery_branch)
+    {
+        return "/${pipeline_root_folder}"
+    }
+    else
+    {
+        return "${root_folder}/${job_testing_folder}/${branch_name}"
+    }
+}
+
+def path_prefix = getPathPrefix(branch_name, )
+
 folder("/${pipeline_root_folder}")
 {
     displayName("Pipeline Admin")
@@ -33,6 +47,15 @@ multibranchPipelineJob("/${pipeline_root_folder}/job_deploy")
             scriptPath("job_automation/Jenkinsfile")
         }
     }
+    properties{
+        suppressFolderAutomaticTriggering {
+            // Defines a regular expression of branch names which will be triggered automatically, for example (?!
+            branches("(?!main.*)")
+            // Determines events for which branches with matched names should not be triggered automatically.
+            strategy("INDEXING")
+        }
+    }
+
 }
 
 folder("${pipeline_root_folder}/${job_testing_folder}")

@@ -52,7 +52,7 @@ String getPathPrefix(String branch_name, String delivery_branch)
     }
     else
     {
-        return "${root_folder}/${job_testing_folder}/${branch_name}"
+        return "${pipeline_root_folder}/${job_testing_folder}/${branch_name}"
     }
 }
 
