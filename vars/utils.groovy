@@ -1,18 +1,30 @@
-def sanitizeBranchName(String branch_name) {
+String sanitizeBranchName(String branch_name) {
   return branch_name.replaceAll(/[^\w]/, '-').toLowerCase()
 }
 
-Map envVarExists(key) {
+String getPathPrefix(String branch_name, String delivery_branch, String root_path, String test_path)
+{
+  if (branch_name == delivery_branch)
+  {
+    return "/"
+  }
+  else
+  {
+    return "${root_path}/${test_path}/${branch_name}"
+  }
+}
+
+Map envVarExists(String key) {
   return env.getProperty(key) != null
 }
 
-def getShortCommit()
+String getShortCommit()
 {
   return sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
 }
 
 
-def toBoolean(def value) {
+boolean toBoolean(def value) {
   return (value instanceof java.lang.String) ? value.toBoolean() : value
 }
 
