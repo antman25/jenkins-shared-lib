@@ -129,7 +129,7 @@ unclassified:
     storage: "file"
   globalLibraries:
     libraries:
-      - defaultVersion: "main"
+      - defaultVersion: "build_tenant_root"
         name: "jenkins-shared-lib"
         retriever:
           modernSCM:

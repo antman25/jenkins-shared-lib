@@ -18,7 +18,6 @@ void createRestrictedFolder(String path, List<String> perm_groups)
 
                 if (perm_groups != null)
                 {
-                    //println("perm_groups: ${perm_groups}")
                     def total_permissions = []
                     perm_groups.each { cur_perm_group ->
                         println("cur_perm_group: ${cur_perm_group}")
@@ -35,41 +34,50 @@ void createRestrictedFolder(String path, List<String> perm_groups)
     }
 }
 
-
-void buildJobs(String branch_name, HashMap config_data)
+bool buildTentantRoot(String branch_name, HashMap config_data)
 {
-    if (config_data.containsKey('groups') == true)
+    if (config_data.containsKey('tenants') == true)
     {
-        def groups = config_data['groups']
-        groups.each { cur_group ->
-            def name = cur_group.get('name')
-            def project_list = cur_group.get('project_list')
-            def perm_groups = cur_group.get('perm_groups')
-            if (name != null)
-            {
-                println("GroupName: ${name}")
-                createRestrictedFolder (name, perm_groups)
+        def tenants = config_data['tenants']
 
-
-
+        try
+        {
+            tenants.each { cur_tenant ->
+                def name = cur_tenant.get('name')
+                def project_list = cur_tenant.get('project_list')
+                def perm_groups = cur_tenant.get('perm_groups')
+                if (name != null)
+                {
+                    createRestrictedFolder (name, perm_groups)
+                }
+                else
+                {
+                    println("buildTentantRoot(): No name defined")
+                }
             }
-            else
-            {
-                println("No group name")
-            }
+        }
+        catch (Exception ex)
+        {
+            println("buildTentantRoot(): Exception ${ex.toString()}")
+            return false
         }
     }
     else
     {
-        println("Missing groups key")
+        println("buildTentantRoot(): Missing tenants key")
+        return false
     }
-
-
+    return true
 }
 
-println("Config Dump:\n${config_data}")
-
 def config_yaml = new Yaml().load(config_data)
-//buildJobs(config_yaml)
-buildJobs(branch_name, config_yaml)
+def result = buildTentantRoot(branch_name, config_yaml)
+if (result == true)
+{
+    println("Tenant folder creation SUCCESS")
+}
+else
+{
+    println("Tenant folder creation FAILURE")
+}
 

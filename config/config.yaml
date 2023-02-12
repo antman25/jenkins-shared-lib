@@ -1,4 +1,7 @@
-groups:
+global:
+  bitbucket_url: http://bitbucket.antlinux.local:7990
+  nexus_url: http://nexus.antlinux.local:8443
+tenants:
   - name: grpA
     perm_groups:
       - groupa

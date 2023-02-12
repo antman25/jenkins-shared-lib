@@ -20,7 +20,7 @@ def call() {
                 def params = [  'workspace_path' : "${WORKSPACE}",
                                              'branch_name': branch_name,
                                              'config_data'    : config_data]
-                jobDsl targets: ['seed_job/main.groovy'].join('\n'),
+                jobDsl targets: ['seed_job/build_tenant_root.groovy'].join('\n'),
                         removedJobAction: 'DELETE',
                         removedViewAction: 'DELETE',
                         lookupStrategy: 'JENKINS_ROOT',
