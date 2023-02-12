@@ -5,7 +5,7 @@ credentials:
           - usernamePassword:
               description: "NEXUS_CREDS"
               id: "NEXUS_CREDS"
-              password: "{AQAAABAAAAAQQLX9TNZpbgAKiv/PbG3L9upYlbcXn9Rtmnf6lW8vHIo=}"
+              password: "{AQAAABAAAAAQ7H81M3yPhFykPf1Dg5mrLH76Nkro0PzjMor/p3zKQtM=}"
               scope: GLOBAL
               username: "packer"
           - fileSystemServiceAccountCredential:
@@ -52,7 +52,7 @@ jenkins:
               dynamicPVC:
                 accessModes: "ReadWriteOnce"
                 requestsSize: "13Gi"
-                storageClassName: "longhorn"
+                storageClassName: "longhorn-retain"
             yamlMergeStrategy: "override"
   crumbIssuer:
     standard:
@@ -129,7 +129,7 @@ unclassified:
     storage: "file"
   globalLibraries:
     libraries:
-      - defaultVersion: "build_tenant_root"
+      - defaultVersion: "main"
         name: "jenkins-shared-lib"
         retriever:
           modernSCM:
@@ -175,7 +175,7 @@ jobs:
               git {
                 remote { url(repo) }
                 branches("main")
-                scriptPath('seed_jobs/Jenkinsfile')
+                scriptPath('seed_job/Jenkinsfile')
                 extensions { }  // required as otherwise it may try to tag the repo, which you may not want
               }
 
