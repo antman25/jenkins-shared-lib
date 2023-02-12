@@ -12,7 +12,10 @@ def call() {
 
             stage('Build Config')
             {
-                sh 'python3 config/build_config.py'
+                podTemplates.pythonTemplate {
+                    sh 'python3 config/build_config.py'
+                }
+
             }
 
 
