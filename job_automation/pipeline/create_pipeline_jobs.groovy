@@ -52,7 +52,7 @@ boolean createDeployJob(String path)
             description(desc)
 
             branchSources {
-                buildStrategies {}
+
                 git {
                     remote(tools_url)
                     // branch source id must be unique
