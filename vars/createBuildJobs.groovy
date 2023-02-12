@@ -16,7 +16,7 @@ def call() {
                 def sanitized_branch_name = utils.sanitizeBranchName(branch_name)
 
                 def config_data = readFile 'config/config.yaml'
-                def params = [  'root_folder' : 'pipeline_jobs',
+                def params = [  'pipeline_root_folder' : 'pipeline_jobs',
                                              'job_testing_folder' : 'job_testing',
                                              'branch_name' : sanitized_branch_name,
                                              'config_data' : config_data,

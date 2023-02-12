@@ -1,7 +1,7 @@
-folder(seed_jobs_root)
+folder(pipeline_root_folder)
 {
-    displayName("Jenkins Admin Jobs")
-    description("Jenkins admin jobs")
+    displayName("Pipeline Admin Jobs")
+    description("Pipeline admin jobs")
 
     properties {
         authorizationMatrix {
@@ -10,7 +10,7 @@ folder(seed_jobs_root)
     }
 }
 
-folder("${seed_jobs_root}/${job_testing_folder}")
+folder("${pipeline_root_folder}/${job_testing_folder}")
 {
     displayName("Job Testing")
     description("Test Area")
