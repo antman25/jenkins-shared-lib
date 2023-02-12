@@ -21,7 +21,7 @@ List<String> permissionDeveloper(String group)
             "hudson.model.Item.Workspace:${group}"];
 }
 
-boolean createRestrictedFolder(String path, List<String> perm_groups)
+boolean createTenantFolder(String path, List<String> perm_groups)
 {
     try
     {
@@ -35,7 +35,7 @@ boolean createRestrictedFolder(String path, List<String> perm_groups)
         }
         else
         {
-            println("createRestrictedFolder(): Permission groups was null")
+            println("createTenantFolder(): Permission groups was null")
             return false
         }
 
@@ -52,7 +52,7 @@ boolean createRestrictedFolder(String path, List<String> perm_groups)
     }
     catch (Exception ex)
     {
-        println("createRestrictedFolder() Exception: ${ex.toString()}")
+        println("createTenantFolder() Exception: ${ex.toString()}")
         return false
     }
     return true
@@ -75,7 +75,7 @@ boolean buildTentantRoot(String path_prefix, HashMap config_data)
                 if (name != null)
                 {
                     def path = "${path_prefix}/${name}"
-                    def create_folder_result = createRestrictedFolder (path, perm_groups)
+                    def create_folder_result = createTenantFolder (path, perm_groups)
                     if (create_folder_result == false)
                         return false
                 }
