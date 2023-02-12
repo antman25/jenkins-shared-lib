@@ -96,7 +96,6 @@ boolean createTentantRoot(String path_prefix)
         {
             tenants.each { cur_tenant ->
                 def name = cur_tenant.get('name')
-                def project_list = cur_tenant.get('project_list')
                 def perm_groups = cur_tenant.get('perm_groups')
                 if (name != null)
                 {
