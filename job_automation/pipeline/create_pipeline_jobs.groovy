@@ -49,13 +49,14 @@ boolean createDeployJob(String path)
     {
         def tools_url = getBinding().getVariables().getOrDefault('TOOLS_URL', 'NotSet')
         def desc = "Runs all the JobDSL for job deployment"
+        def main_branch = branch_name == delivery_branch
         multibranchPipelineJob("${path}/${pipeline_root_folder}/job_deploy")
         {
             //if (branch_name != delivery_branch)
             //   disabled()
 
             displayName("000 - Deploy Jenkins Jobs")
-            if (branch_name == delivery_branch) {
+            if (main_branch) {
                 description(desc)
             }
             else {
@@ -75,7 +76,13 @@ boolean createDeployJob(String path)
                         allBranchesSame {
                             props {
                                 suppressAutomaticTriggering {
-                                    triggeredBranchesRegex ('^$.')
+                                    if (main_branch) {
+                                        triggeredBranchesRegex ('.*')
+                                    }
+                                    else {
+                                        triggeredBranchesRegex ('^$.')
+                                    }
+
                                 }
                             }
                         }
