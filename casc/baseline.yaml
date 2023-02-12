@@ -214,9 +214,8 @@ jobs:
               }
           }
           triggers {
-            cron {
-              spec('H 0 * * *')
-            }
+            periodicFolderTrigger {
+              interval("24h")
           }
       }
    
