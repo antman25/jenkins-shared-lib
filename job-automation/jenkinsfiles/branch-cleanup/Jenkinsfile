@@ -8,7 +8,8 @@ podTemplate {
         stage('Clean Testing Area')
         {
             echo "clean old folders"
-            def items = Hudson.instance.items
+            def root_items = Hudson.instance.items
+            def pipeline_root_items = Hudson.instance.items
 
             items.each { item ->
                 if (item.class.canonicalName == 'com.cloudbees.hudson.plugins.folder.Folder')
