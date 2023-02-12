@@ -93,8 +93,7 @@ boolean createDeployJob(String path)
                             props {
                                 suppressAutomaticTriggering {
                                     if (main_branch) {
-                                        //triggeredBranchesRegex ('*')
-                                        triggeredBranchesRegex ('^$.')
+                                        triggeredBranchesRegex ('.*')
                                     }
                                     else {
                                         triggeredBranchesRegex ('^$.')
