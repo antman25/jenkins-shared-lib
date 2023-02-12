@@ -90,37 +90,40 @@ boolean createJobTestFolder()
     return true
 }
 
-
-
-
-
-boolean create_root_result = createPipelineRootFolder()
-if (create_root_result == true)
+void main()
 {
-
-    boolean create_deploy_job_result = createDeployJob()
-    if (create_deploy_job_result)
+    boolean create_root_result = createPipelineRootFolder()
+    if (create_root_result == true)
     {
-        println("Create deploy job SUCCESS")
+
+        boolean create_deploy_job_result = createDeployJob()
+        if (create_deploy_job_result)
+        {
+            println("Create deploy job SUCCESS")
+        }
+        else
+        {
+            println("Create deploy job FAILURE")
+        }
+
+        boolean create_job_testing_result = createJobTestFolder()
+        if (create_job_testing_result)
+        {
+            println("Create job testing folder SUCCESS")
+        }
+        else
+        {
+            println("Create job testing folder FAILURE")
+        }
     }
     else
     {
-        println("Create deploy job FAILURE")
+        println("Failure to create pipeline root folder")
     }
-
-    boolean create_job_testing_result = createJobTestFolder()
-    if (create_job_testing_result)
-    {
-        println("Create job testing folder SUCCESS")
-    }
-    else
-    {
-        println("Create job testing folder FAILURE")
-    }
-
 }
-else
-{
-    println("Failure to create pipeline root folder")
-}
+
+main()
+
+
+
 

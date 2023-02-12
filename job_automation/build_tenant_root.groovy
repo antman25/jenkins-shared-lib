@@ -1,5 +1,8 @@
 import org.yaml.snakeyaml.Yaml
 
+
+
+
 List<String> permissionDeveloper(String group)
 {
     return ["hudson.model.Item.Read:${group}",
@@ -45,17 +48,6 @@ boolean createRestrictedFolder(String path, List<String> perm_groups)
     return true
 }
 
-String getPathPrefix(String branch_name, String delivery_branch)
-{
-    if (branch_name == delivery_branch)
-    {
-        return "/"
-    }
-    else
-    {
-        return "${pipeline_root_folder}/${job_testing_folder}/${branch_name}"
-    }
-}
 
 
 boolean buildTentantRoot(String branch_name, HashMap config_data)
@@ -98,17 +90,24 @@ boolean buildTentantRoot(String branch_name, HashMap config_data)
     return true
 }
 
-def config_yaml = new Yaml().load(config_data)
-def path_prefix = getPathPrefix(branch_name, delivery_branch)
-def result = buildTentantRoot(branch_name, config_yaml)
+void main()
+{
+    def config_yaml = new Yaml().load(config_data)
+    def common_util = load('job_automation/common.groovy')
+    def path_prefix = common_util.getPathPrefix(branch_name, delivery_branch)
+    def result = buildTentantRoot(path_prefix, config_yaml)
 
 
-if (result == true)
-{
-    println("Tenant folder creation SUCCESS")
+    if (result == true)
+    {
+        println("Tenant folder creation SUCCESS")
+    }
+    else
+    {
+        println("Tenant folder creation FAILURE")
+    }
 }
-else
-{
-    println("Tenant folder creation FAILURE")
-}
+
+main()
+
 
