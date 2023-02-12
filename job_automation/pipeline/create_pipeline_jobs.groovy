@@ -77,7 +77,7 @@ boolean createDeployJob(String path)
                     scriptPath("job_automation/Jenkinsfile")
                 }
             }
-            properties{
+            /*properties{
                 suppressFolderAutomaticTriggering {
                     // Defines a regular expression of branch names which will be triggered automatically, for example (?!
                     if (branch_name == delivery_branch)
@@ -93,7 +93,7 @@ boolean createDeployJob(String path)
                         strategy("NONE")
                     }
                 }
-            }
+            }*/
         }
     }
     catch (Exception ex)
