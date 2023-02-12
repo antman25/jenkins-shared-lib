@@ -106,6 +106,35 @@ boolean createTenantJobs() {
                         boolean create_root_folder_result = createTenantFolder (tenant_root_path, perm_groups)
                         if (create_root_folder_result == true) {
                             boolean create_buildjobs_root_result = createTentantBuildRoot(tenant_root_path)
+
+
+                            if (create_buildjobs_root_result) {
+                                def project_list = cur_tenant.get('project_list')
+                                if (project_list != null) {
+                                    boolean create_buildjobs_project = true
+                                    project_list.each { cur_project ->
+                                        create_buildjobs_project |= createTentantProjectFolder(tenant_root_path, cur_project)
+                                    }
+
+                                    if (create_buildjobs_project == true) {
+                                        println("createTenantJobs(): Create project build folder: SUCCESS")
+                                    }
+                                    else
+                                    {
+                                        println("createTenantJobs(): Create project build folder: FAILURE")
+                                        return false
+                                    }
+
+                                }
+                                else
+                                {
+                                    println("createTenantJobs(): Project List Empty")
+                                    return false
+                                }
+
+
+
+                            }
                         }
                         else {
                             println("createTenantJobs(): failed to create build job root")
@@ -154,10 +183,16 @@ boolean createTentantBuildRoot(String path)
     return true
 }
 
-boolean createTentantBuildProject(String path, String project)
+boolean createTentantProjectFolder(String path, String bitbucket_url, String project)
 {
     try {
+        organizationFolder("${path}/${BUILDJOB_PATH}/${project}")
+        {
+            displayName(project)
+            description("Project: ${project}\nBitbucket URL: ${bitbucket_url}")
 
+
+        }
     }
     catch (Exception ex) {
         println("createTentantBuildProject() Exception: ${ex.toString()}")
