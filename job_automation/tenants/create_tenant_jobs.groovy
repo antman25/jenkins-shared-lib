@@ -34,7 +34,7 @@ boolean createTestBranchFolder(String path_prefix)
         }
         else
         {
-            println("Root path - Skipping folder creation")
+            println("createTestBranchFolder(): Skipping folder creation for root")
         }
 
     }
@@ -99,12 +99,14 @@ boolean createTenantJobs() {
                     def tenant_name = cur_tenant.get('tenant_name')
                     def perm_groups = cur_tenant.get('perm_groups')
                     if (tenant_name != null) {
-
-
                         def tenant_root_path = "${path_prefix}/${tenant_name}"
                         boolean create_root_folder_result = createTenantFolder (tenant_root_path, perm_groups)
                         if (create_root_folder_result == true) {
-
+                            boolean create_buildjobs_root_result = createTentantBuildRoot(tenant_root_path)
+                        }
+                        else {
+                            println("createTenantJobs(): No tenant name defined")
+                            return false
                         }
                     }
                     else {
@@ -167,7 +169,7 @@ boolean main()
     }
     catch (Exception ex)
     {
-        println("create_tenant_jobs.groovy Exception: ${ex.toString()}")
+        println("Exception: ${ex.toString()}")
         return false
     }
     return true
