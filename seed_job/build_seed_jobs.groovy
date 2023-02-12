@@ -10,8 +10,8 @@ folder(seed_jobs_root)
     }
 }
 
-folder("${seed_jobs_root}/job_testing")
+folder("${seed_jobs_root}/${job_testing_folder}")
 {
     displayName("Job Testing")
-    description("Test Area for job dsl changes")
+    description("Test Area")
 }
