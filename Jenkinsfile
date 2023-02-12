@@ -1,14 +1,15 @@
-node()
-{
-    stage('clone')
+podTemplate {
+    node(POD_LABEL)
     {
-        checkout scm
+        stage('clone')
+        {
+            checkout scm
+        }
+
+        stage ('test stage')
+        {
+            echo "blah"
+        }
     }
-
-    stage ('casc config lint')
-    {
-
-    }
-
-
 }
+
