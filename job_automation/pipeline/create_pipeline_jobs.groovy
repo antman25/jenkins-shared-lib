@@ -49,7 +49,7 @@ boolean createDeployJob(String path)
             //   disabled()
 
             displayName("000 - Deploy Jenkins Jobs")
-            if (branch_name == release_branch) {
+            if (branch_name == delivery_branch) {
                 description(desc)
             }
             else {
