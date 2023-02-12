@@ -99,22 +99,56 @@ boolean buildTentantRoot(String path_prefix, HashMap config_data)
     return true
 }
 
+boolean createTestBranchFolder(String branch_name, String delivery_branch)
+{
+    try
+    {
+        String path_prefix = getPathPrefix(branch_name, delivery_branch)
+        if (path_prefix != "")
+        {
+            folder(path_prefix)
+            {
+                displayName("${branch_name}")
+                description("Root folder for Job testing. Branch: ${branch_name}")
+            }
+        }
+        else
+        {
+            println("Root path - Skipping folder creation")
+        }
+
+    }
+    catch (Exception ex)
+    {
+        println("createTestBranchFolder() Exception: ${ex.toString()}")
+        return false
+    }
+    return true
+}
+
 void main()
 {
     try
     {
         def config_yaml = new Yaml().load(config_data)
-        String path_prefix = getPathPrefix(branch_name, delivery_branch)
-        boolean result = buildTentantRoot(path_prefix, config_yaml)
-
-
-        if (result == true)
+        boolean create_test_path = createTestBranchFolder(branch_name, delivery_branch)
+        if (create_test_path)
         {
-            println("Tenant folder creation SUCCESS")
+            println("Create branch folder SUCCESS")
+            boolean build_tenant_root = buildTentantRoot(path_prefix, config_yaml)
+
+            if (build_tenant_root == true)
+            {
+                println("Tenant folder creation SUCCESS")
+            }
+            else
+            {
+                println("Tenant folder creation FAILURE")
+            }
         }
         else
         {
-            println("Tenant folder creation FAILURE")
+            println("Create branch folder FAILURE")
         }
     }
     catch (Exception ex)
