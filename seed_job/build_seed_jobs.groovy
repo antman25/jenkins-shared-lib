@@ -12,14 +12,14 @@ folder("/${pipeline_root_folder}")
 
 multibranchPipelineJob("/${pipeline_root_folder}/job_deploy")
 {
-    displayName("Deploy Jenkins Jobs")
+    displayName("000 - Deploy Jenkins Jobs")
     description("Runs all the JobDSL for job deployment")
 }
 
 
 folder("${pipeline_root_folder}/${job_testing_folder}")
 {
-    displayName("Job DSL Testing Area")
+    displayName("010 - Job DSL Testing Area")
     description("Spot to test job dsl prior to delivery")
 }
 
