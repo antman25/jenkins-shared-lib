@@ -18,8 +18,8 @@ def call() {
                     def config_data = readFile 'config/config.yaml'
                     def config_yaml = new Yaml().load(config_data)
 
-                    def params = [ 'pipeline_root_folder' : 'pipeline_root',
-                                                'job_testing_folder' : 'job_testing',
+                    def params = [ 'pipeline_root_folder' : 'pipeline-root',
+                                                'job_testing_folder' : 'job-testing',
                                                 'branch_name' : sanitized_branch_name,
                                                 'delivery_branch' : 'main',
                                                 'config_yaml' : config_yaml,
