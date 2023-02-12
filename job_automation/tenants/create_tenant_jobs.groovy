@@ -95,11 +95,23 @@ boolean createTenantJobs() {
                 def tenant_name = cur_tenant.get('tenant_name')
                 def perm_groups = cur_tenant.get('perm_groups')
                 if (tenant_name != null) {
-                    def tenant_root_path = "${path_prefix}/${tenant_name}"
-                    boolean create_root_folder_result = createTenantFolder (tenant_root_path, perm_groups)
-                    if (create_root_folder_result == true) {
+                    boolean  create_test_branch_folder = createTestBranchFolder(path_prefix)
+                    if (create_test_branch_folder == true)
+                    {
+                        println("Create test branch folder: SUCCESS")
+                        def tenant_root_path = "${path_prefix}/${tenant_name}"
+                        boolean create_root_folder_result = createTenantFolder (tenant_root_path, perm_groups)
+                        if (create_root_folder_result == true) {
 
+                        }
                     }
+                    else
+                    {
+                        println("Create test branch folder: FAILURE")
+                    }
+
+
+
 
                 }
                 else {
