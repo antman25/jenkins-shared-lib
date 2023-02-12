@@ -24,6 +24,12 @@ podTemplate {
             println("Branch: ${branch_name}")
         }
 
+        def ('test commit')
+        {
+            println(utils.getShortCommit())
+        }
+
+
         stage ('test stage')
         {
             echo "blah"

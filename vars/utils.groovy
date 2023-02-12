@@ -1,16 +1,22 @@
-def sanitizeBranchName() {
-
-  println("Current ENV: ${env.getEnvironment()}")
-  return env.BRANCH_NAME.replaceAll(/[^\w]/, '-').toLowerCase()
+def sanitizeBranchName(String branch_name) {
+  return branch_name.replaceAll(/[^\w]/, '-').toLowerCase()
 }
 
 Map envVarExists(key) {
   return env.getProperty(key) != null
 }
 
+def getShortCommit()
+{
+  return sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
+}
+
+
 def toBoolean(def value) {
   return (value instanceof java.lang.String) ? value.toBoolean() : value
 }
+
+def
 
 Map getConfig(key = null) {
   // these are the configurable options that can be overridden by passing in config to the

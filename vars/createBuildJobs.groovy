@@ -11,6 +11,8 @@ def call() {
                 checkout scm
             }
 
+
+
             stage('Job DSL') {
                 def branch_name = env.getEnvironment().getOrDefault('BRANCH_NAME', 'main')
                 def config_data = readFile 'config/config.yaml'
