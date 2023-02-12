@@ -20,9 +20,9 @@ void createRestrictedFolder(String path, List<String> perm_groups)
                 {
                     def total_permissions = []
                     perm_groups.each { cur_perm_group ->
-                        println("Adding permission group: ${cur_perm_group} to path ${path}")
                         total_permissions.addAll(permissionDeveloper(cur_perm_group))
                     }
+                    println("Applying permission groups ${perm_groups.toString()} to path ${path}")
                     permissions ( total_permissions )
                 }
                 else
