@@ -18,17 +18,27 @@ multibranchPipelineJob("/${pipeline_root_folder}/job_deploy")
     branchSources {
         git {
             remote(tools_url)
-            id ('job-deploy-branch-source')
+            // branch source id must be unique
+            id ('pipeline-root-job-deploy-branch-source')
+
         }
     }
-
+    orphanedItemStrategy {
+        discardOldItems {
+            numToKeep(20)
+        }
+    }
+    factory {
+        workflowBranchProjectFactory {
+            scriptPath("pipeline_root/Jenkinsfile")
+        }
+    }
 }
-
 
 folder("${pipeline_root_folder}/${job_testing_folder}")
 {
     displayName("010 - Job DSL Testing Area")
-    description("Spot to test job dsl prior to delivery")
+    description("Spot to test job dsl code prior to delivery")
 }
 
 
