@@ -122,7 +122,16 @@ void main()
     }
 }
 
-main()
+boolean result = main()
+if (result == true)
+{
+    println("build_pipeline_root.groovy execution SUCCESS")
+}
+else
+{
+    throw new Exception("build_pipeline_root.groovy execution FAILURE")
+}
+
 
 
 

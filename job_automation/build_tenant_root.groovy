@@ -126,7 +126,7 @@ boolean createTestBranchFolder(String branch_name, String delivery_branch)
     return true
 }
 
-void main()
+boolean main()
 {
     try
     {
@@ -145,19 +145,33 @@ void main()
             else
             {
                 println("Tenant folder creation FAILURE")
+                return false
             }
         }
         else
         {
             println("Create branch folder FAILURE")
+            return false
         }
     }
     catch (Exception ex)
     {
         println("build_tenant_root.groovy main() Exception: ${ex.toString()}")
+        return false
     }
+    return true
 }
 
-main()
+boolean result = main()
+if (result == true)
+{
+    println("build_tenant_root.groovy execution SUCCESS")
+}
+else
+{
+    throw new Exception("build_tenant_root.groovy execution FAILURE")
+}
+
+
 
 
