@@ -1,4 +1,12 @@
-library 'jenkins-shared-lib'
+try
+{
+    library "jenkins-shared-lib@${BRANCH_NAME}"
+}
+catch (Exception ex)
+{
+    println("Problem using BRANCH_NAME, trying main")
+    library "jenkins-shared-lib@main"
+}
 
 //git branch: 'main', url: 'https://github.com/antman25/jenkins-shared-lib.git'
 
