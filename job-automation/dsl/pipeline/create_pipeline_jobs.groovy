@@ -113,6 +113,11 @@ boolean createDeployJob(String path_prefix)
                     scriptPath("job-automation/jenkinsfiles/create-jobs/Jenkinsfile")
                 }
             }
+            triggers {
+                periodicFolderTrigger {
+                    interval("1h")
+                }
+            }
         }
     }
     catch (Exception ex)
