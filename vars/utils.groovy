@@ -2,18 +2,6 @@ String sanitizeBranchName(String branch_name) {
   return branch_name.replaceAll(/[^\w]/, '-').toLowerCase()
 }
 
-String getPathPrefix(String branch_name, String delivery_branch, String root_path, String test_path)
-{
-  if (branch_name == delivery_branch)
-  {
-    return "/"
-  }
-  else
-  {
-    return "${root_path}/${test_path}/${branch_name}"
-  }
-}
-
 Map envVarExists(String key) {
   return env.getProperty(key) != null
 }

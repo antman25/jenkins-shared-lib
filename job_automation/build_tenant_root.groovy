@@ -1,6 +1,16 @@
 import org.yaml.snakeyaml.Yaml
 
-
+String getPathPrefix(String branch_name, String delivery_branch)
+{
+    if (branch_name == delivery_branch)
+    {
+        return ""
+    }
+    else
+    {
+        return "${pipeline_root_folder}/${job_testing_folder}/${branch_name}"
+    }
+}
 
 
 List<String> permissionDeveloper(String group)
@@ -50,9 +60,8 @@ boolean createRestrictedFolder(String path, List<String> perm_groups)
 
 
 
-boolean buildTentantRoot(String branch_name, HashMap config_data)
+boolean buildTentantRoot(String path_prefix, HashMap config_data)
 {
-    boolean result = true
     if (config_data.containsKey('tenants') == true)
     {
         def tenants = config_data['tenants']
@@ -65,10 +74,10 @@ boolean buildTentantRoot(String branch_name, HashMap config_data)
                 def perm_groups = cur_tenant.get('perm_groups')
                 if (name != null)
                 {
-                    def path = "${name}"
-                    def create_folder_result = createRestrictedFolder (name, perm_groups)
+                    def path = "${path_prefix}/${name}"
+                    def create_folder_result = createRestrictedFolder (path, perm_groups)
                     if (create_folder_result == false)
-                        result = false
+                        return false
                 }
                 else
                 {
@@ -95,8 +104,8 @@ void main()
     try
     {
         def config_yaml = new Yaml().load(config_data)
-        def path_prefix = utils.getPathPrefix(branch_name, delivery_branch, pipeline_root_folder, job_testing_folder)
-        def result = buildTentantRoot(path_prefix, config_yaml)
+        String path_prefix = getPathPrefix(branch_name, delivery_branch)
+        boolean result = buildTentantRoot(path_prefix, config_yaml)
 
 
         if (result == true)
