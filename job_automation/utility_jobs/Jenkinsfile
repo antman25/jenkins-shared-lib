@@ -1,0 +1,13 @@
+podTemplate {
+    node(POD_LABEL) {
+        stage('Clone code') {
+            checkout scm
+        }
+
+        stage('Clean Testing Area')
+        {
+            echo "clean old folders"
+        }
+    }
+}
+

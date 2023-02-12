@@ -35,7 +35,7 @@ def call() {
                             additionalParameters: params
                 }
                 catch (Exception ex) {
-                    println("createBuildJobs.groovy Exception: ${ex.toString()}")
+                    println("Exception: ${ex.toString()}")
                     sh('exit 1')
                 }
             }
