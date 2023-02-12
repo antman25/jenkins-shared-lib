@@ -136,7 +136,7 @@ boolean main()
 boolean result = main()
 if (result == false)
 {
-    throw new Exception("execution: FAILURE")
+    throw new Exception("Execution: FAILURE")
 }
 
 

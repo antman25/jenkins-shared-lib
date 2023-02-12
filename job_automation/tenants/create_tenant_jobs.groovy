@@ -162,13 +162,9 @@ boolean main()
 }
 
 boolean result = main()
-if (result == true)
+if (result == false)
 {
-    println("create_tenant_jobs.groovy execution SUCCESS")
-}
-else
-{
-    throw new Exception("create_tenant_jobs.groovy execution FAILURE")
+    throw new Exception("Execution FAILURE")
 }
 
 
