@@ -1,3 +1,6 @@
+def test = getBinding().getVariables().get("TOOLS_URL")
+println("Test: ${test}")
+
 folder(pipeline_root_folder)
 {
     displayName("Pipeline Admin Jobs")
