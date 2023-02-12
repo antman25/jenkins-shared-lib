@@ -164,7 +164,6 @@ jobs:
   - script: >
       folder("seed_jobs")
       {
-        displayName('Seed Jobs')
         properties {
           authorizationMatrix {
             inheritanceStrategy { nonInheriting() }
