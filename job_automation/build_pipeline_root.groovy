@@ -99,28 +99,28 @@ boolean main()
         boolean create_deploy_job_result = createDeployJob()
         if (create_deploy_job_result)
         {
-            println("Create deploy job SUCCESS")
+            println("Create deploy job: SUCCESS")
         }
         else
         {
-            println("Create deploy job FAILURE")
+            println("Create deploy job: FAILURE")
             return false
         }
 
         boolean create_job_testing_result = createJobTestFolder()
         if (create_job_testing_result)
         {
-            println("Create job testing folder SUCCESS")
+            println("Create job testing folder: SUCCESS")
         }
         else
         {
-            println("Create job testing folder FAILURE")
+            println("Create job testing folder: FAILURE")
             return false
         }
     }
     else
     {
-        println("Failure to create pipeline root folder")
+        println("Create pipeline root folder: FAILURE")
         return false
     }
     return true
@@ -129,11 +129,11 @@ boolean main()
 boolean result = main()
 if (result == true)
 {
-    println("build_pipeline_root.groovy execution SUCCESS")
+    println("build_pipeline_root.groovy execution: SUCCESS")
 }
 else
 {
-    throw new Exception("build_pipeline_root.groovy execution FAILURE")
+    throw new Exception("build_pipeline_root.groovy execution: FAILURE")
 }
 
 
