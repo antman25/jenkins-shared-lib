@@ -84,7 +84,7 @@ boolean createDeployJob(String path)
                                     {
                                         if (main_branch)
                                         {
-                                            headRegxFilter('.*')
+                                            regex('.*')
                                         }
                                         else
                                         {
