@@ -24,8 +24,8 @@ def call() {
                                              'workspace_path' : "${WORKSPACE}",
                                              'tools_url' : "${TOOLS_URL}"]
 
-                jobDsl targets: ['job_automation/build_pipeline_root.groovy',
-                                 'job_automation/build_tenant_root.groovy'].join('\n'),
+                jobDsl targets: ['job_automation/pipeline/build_pipeline_root.groovy',
+                                 'job_automation/tenants/build_tenant_root.groovy'].join('\n'),
                         removedJobAction: 'DELETE',
                         removedViewAction: 'DELETE',
                         lookupStrategy: 'JENKINS_ROOT',
