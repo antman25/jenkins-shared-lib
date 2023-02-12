@@ -12,6 +12,7 @@ def call() {
 
             stage('Build Config')
             {
+                println("Executing command in python3 container")
                 podTemplates.pythonTemplate {
                     sh 'python3 config/build_config.py'
                 }
