@@ -92,19 +92,26 @@ boolean buildTentantRoot(String branch_name, HashMap config_data)
 
 void main()
 {
-    def config_yaml = new Yaml().load(config_data)
-    def common_util = load('job_automation/common.groovy')
-    def path_prefix = common_util.getPathPrefix(branch_name, delivery_branch)
-    def result = buildTentantRoot(path_prefix, config_yaml)
-
-
-    if (result == true)
+    try
     {
-        println("Tenant folder creation SUCCESS")
+        def config_yaml = new Yaml().load(config_data)
+        def common_util = load('job_automation/common.groovy')
+        def path_prefix = common_util.getPathPrefix(branch_name, delivery_branch)
+        def result = buildTentantRoot(path_prefix, config_yaml)
+
+
+        if (result == true)
+        {
+            println("Tenant folder creation SUCCESS")
+        }
+        else
+        {
+            println("Tenant folder creation FAILURE")
+        }
     }
-    else
+    catch (Exception ex)
     {
-        println("Tenant folder creation FAILURE")
+        println("build_tenant_root.groovy main() Exception: ${ex.toString()}")
     }
 }
 
