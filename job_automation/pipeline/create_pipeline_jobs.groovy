@@ -65,11 +65,12 @@ boolean createDeployJob(String path)
                     // branch source id must be unique
                     id ('pipeline-root-job-deploy-branch-source')
                     if (branch_name == delivery_branch) {
-                        include('*')
-
+                        includes('*')
+                        excludes('')
                     }
                     else
                     {
+                        includes('')
                         excludes('*')
                     }
 
