@@ -70,6 +70,7 @@ boolean createDeployJob(String path)
                     source {
                         git {
                             remote (tools_url)
+                            id ('pipeline-root-job-deploy-branch-source-2')
                         }
                     }
                     strategy {
