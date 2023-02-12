@@ -1,17 +1,5 @@
 podTemplate {
     node(POD_LABEL) {
-        def deleteChildren(items) {
-          items.each { item ->
-            /*if (item.class.canonicalName == 'com.cloudbees.hudson.plugins.folder.Folder') {
-              if (jobsToDelete.contains(item.fullName)) {
-                println(item.fullName)
-                //item.delete()
-              }
-            } else {
-            deleteChildren(((com.cloudbees.hudson.plugins.folder.Folder) item).getItems())
-            }*/
-          }
-        }
 
         stage('Clone code') {
             checkout scm
