@@ -80,7 +80,7 @@ jenkins:
     all:
       name: "all"
   projectNamingStrategy: "standard"
-  quietPeriod: 1
+  quietPeriod: 15
   securityRealm:
     local:
       allowsSignup: false
@@ -205,7 +205,7 @@ jobs:
           }
           orphanedItemStrategy {
               discardOldItems {
-                  numToKeep(0)
+                  numToKeep(20)
               }
           }
           factory {
@@ -216,41 +216,6 @@ jobs:
           triggers {
             periodicFolderTrigger {
               interval("24h")
-          }
-      }
-   
-      /*pipelineJob("deploy-jobs-main-branch-old") {
-        displayName("999 - Deploy All Jobs - main Branch OLD")
-        description("Deploy all jenkins jobs from main branch.\nUsed to bootstrap jenkins and push config updates")
-        
-        def tools_url = 'https://github.com/antman25/jenkins-shared-lib.git'
-      
-        authorization {
-          blocksInheritance()
-        }
-        logRotator {
-          numToKeep(20)
-        }
-        properties {
-          disableConcurrentBuilds()
-        }
-        triggers {
-          cron {
-            spec('H 0 * * *')
-          }
-        }
-      
-        definition {
-          cpsScm {
-            scm {
-              git {
-                remote { url(tools_url) }
-                branches('main')
-                scriptPath('Jenkinsfile')
-                extensions { }  // required as otherwise it may try to tag the repo, which you may not want
-              }
             }
           }
-        }
-      }*/
-      
+      }
