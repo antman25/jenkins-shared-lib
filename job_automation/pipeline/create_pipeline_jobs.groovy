@@ -134,13 +134,9 @@ boolean main()
 }
 
 boolean result = main()
-if (result == true)
+if (result == false)
 {
-    println("create_pipeline_jobs.groovy execution: SUCCESS")
-}
-else
-{
-    throw new Exception("create_pipeline_jobs.groovy execution: FAILURE")
+    throw new Exception("execution: FAILURE")
 }
 
 
