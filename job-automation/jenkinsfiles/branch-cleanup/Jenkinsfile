@@ -8,13 +8,6 @@ podTemplate {
         stage('Clean Testing Area')
         {
             echo "clean old folders"
-
-            import hudson.model.*
-
-            jobsToDelete = ["aFolder/aJobInFolder","topLevelJob"]
-
-            deleteChildren()
-
             def items = Hudson.instance.items
 
             items.each { item ->
