@@ -1,10 +1,7 @@
-def test = getBinding().getVariables().get("TOOLS_URL")
-println("Test: ${test}")
-
-folder(pipeline_root_folder)
+folder("/${pipeline_root_folder}")
 {
-    displayName("Pipeline Admin Jobs")
-    description("Pipeline admin jobs")
+    displayName("Pipeline Admin")
+    description("Pipeline Admin jobs Area")
 
     properties {
         authorizationMatrix {
@@ -13,8 +10,17 @@ folder(pipeline_root_folder)
     }
 }
 
+multibranchPipelineJob("/${pipeline_root_folder}/job_deploy")
+{
+    displayName("Deploy Jenkins Jobs")
+    description("Runs all the JobDSL for job deployment")
+}
+
+
 folder("${pipeline_root_folder}/${job_testing_folder}")
 {
-    displayName("Job Testing")
-    description("Test Area")
+    displayName("Job DSL Testing Area")
+    description("Spot to test job dsl prior to delivery")
 }
+
+

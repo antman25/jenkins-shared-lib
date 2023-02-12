@@ -20,7 +20,8 @@ def call() {
                                              'job_testing_folder' : 'job_testing',
                                              'branch_name' : sanitized_branch_name,
                                              'config_data' : config_data,
-                                             'workspace_path' : "${WORKSPACE}"]
+                                             'workspace_path' : "${WORKSPACE}",
+                                             'tools_url' : "${TOOLS_URL}"]
 
                 jobDsl targets: ['seed_job/build_seed_jobs.groovy',
                                  'seed_job/build_tenant_root.groovy'].join('\n'),
