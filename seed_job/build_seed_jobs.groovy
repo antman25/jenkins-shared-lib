@@ -18,6 +18,7 @@ multibranchPipelineJob("/${pipeline_root_folder}/job_deploy")
     branchSources {
         git {
             remote(tools_url)
+            id ('job-deploy-branch-source')
         }
     }
 
