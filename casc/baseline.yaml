@@ -169,9 +169,59 @@ tool:
     settingsProvider: "standard"
 jobs:
   - script: >
+      multibranchPipelineJob("deploy-jobs-main-branch-old")
+      {
+          displayName("999 - Deploy Jenkins Jobs")
+          description("Use this job to deploy production jenkins jobs")
+
+
+          branchSources {
+              branchSource {
+                  source {
+                      git {
+                          remote ('https://github.com/antman25/jenkins-shared-lib.git')
+                          // all id's must be unique according to docs
+                          id ('deploy-production-jobs-source-id')
+                          traits {
+                              gitBranchDiscovery()
+
+                              headRegexFilter
+                              {
+                                  regex('^(.*main).*$')
+                              }
+                          }
+                      }
+                  }
+                  strategy {
+                      allBranchesSame {
+                          props {
+                              suppressAutomaticTriggering {
+                                  triggeredBranchesRegex ('^(.*main).*$')
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+          orphanedItemStrategy {
+              discardOldItems {
+                  numToKeep(0)
+              }
+          }
+          factory {
+              workflowBranchProjectFactory {
+                  scriptPath('Jenkinsfile')
+              }
+          }
+          triggers {
+            cron {
+              spec('H 0 * * *')
+            }
+          }
+      }
    
-      pipelineJob("deploy-jobs-main-branch") {
-        displayName("999 - Deploy All Jobs - main Branch")
+      /*pipelineJob("deploy-jobs-main-branch-old") {
+        displayName("999 - Deploy All Jobs - main Branch OLD")
         description("Deploy all jenkins jobs from main branch.\nUsed to bootstrap jenkins and push config updates")
         
         def tools_url = 'https://github.com/antman25/jenkins-shared-lib.git'
@@ -203,5 +253,5 @@ jobs:
             }
           }
         }
-      }
+      }*/
       
