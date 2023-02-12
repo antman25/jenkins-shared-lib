@@ -80,17 +80,17 @@ boolean createDeployJob(String path)
                             traits {
                                 gitBranchDiscovery()
 
-                                    headRegxFilter
+                                headRegexFilter
+                                {
+                                    if (main_branch)
                                     {
-                                        if (main_branch)
-                                        {
-                                            regex('.*')
-                                        }
-                                        else
-                                        {
-                                            regex('^(?!.*main).*$')
-                                        }
+                                        regex('.*')
                                     }
+                                    else
+                                    {
+                                        regex('^(?!.*main).*$')
+                                    }
+                                }
 
 
                             }
