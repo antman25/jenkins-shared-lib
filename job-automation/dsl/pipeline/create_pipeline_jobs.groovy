@@ -24,7 +24,7 @@ boolean createPipelineRootFolder(String path_prefix)
 
         folder("${path_prefix}/${pipeline_root_folder}")
         {
-            displayName("Pipeline Admin")
+            displayName("000 - Pipeline Admin")
             description("Pipeline Admin jobs Area")
 
             properties {
