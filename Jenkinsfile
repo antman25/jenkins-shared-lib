@@ -24,7 +24,7 @@ podTemplate {
             println("Branch: ${branch_name}")
         }
 
-        def ('test commit')
+        stage ('test commit')
         {
             println(utils.getShortCommit())
         }
