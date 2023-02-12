@@ -20,11 +20,10 @@ List<String> permissionDeveloper(String group)
             "hudson.model.Item.Workspace:${group}"];
 }
 
-boolean createTestBranchFolder(String branch_name, String delivery_branch)
+boolean createTestBranchFolder(String path_prefix)
 {
     try
     {
-        String path_prefix = getPathPrefix(branch_name, delivery_branch)
         if (path_prefix != "")
         {
             folder(path_prefix)
@@ -86,40 +85,34 @@ boolean createTenantFolder(String path, List<String> perm_groups)
 
 
 
-boolean createTenantJobs()
-{
-    try
-    {
+boolean createTenantJobs() {
+    try {
         String path_prefix = getPathPrefix(branch_name, delivery_branch)
-        if (config_yaml.containsKey('tenants') == true)
-        {
+        if (config_yaml.containsKey('tenants') == true) {
             def tenants = config_yaml['tenants']
 
-
             tenants.each { cur_tenant ->
-                def name = cur_tenant.get('name')
+                def tenant_name = cur_tenant.get('tenant_name')
                 def perm_groups = cur_tenant.get('perm_groups')
-                if (name != null)
-                {
-                    def tenant_root_path = "${path_prefix}/${name}"
-                    def create_folder_result = createTenantFolder (tenant_root_path, perm_groups)
-                    if (create_folder_result == false)
-                        return false
+                if (name != null) {
+                    def tenant_root_path = "${path_prefix}/${tenant_name}"
+                    boolean create_root_folder_result = createTenantFolder (tenant_root_path, perm_groups)
+                    if (create_root_folder_result == true) {
+
+                    }
+
                 }
-                else
-                {
+                else {
                     println("createTenantJobs(): No tenant name defined")
                 }
             }
         }
-        else
-        {
+        else {
             println("createTenantJobs(): Missing tenants key")
             return false
         }
     }
-    catch (Exception ex)
-    {
+    catch (Exception ex) {
         println("createTenantJobs(): Exception ${ex.toString()}")
         return false
     }
@@ -127,14 +120,16 @@ boolean createTenantJobs()
     return true
 }
 
-boolean createTentantBuildRoot(string path_prefix)
+boolean createTentantBuildRoot(String path)
 {
-    try
-    {
-
+    try {
+        folder("${path}/builds")
+        {
+            displayName("Builds")
+            description("Builds Root Folder")
+        }
     }
-    catch (Exception ex)
-    {
+    catch (Exception ex) {
         println("createTentantBuildRoot() Exception: ${ex.toString()}")
         return false
     }
@@ -146,32 +141,21 @@ boolean main()
 {
     try
     {
-        boolean create_test_path = createTestBranchFolder(branch_name, delivery_branch)
-        if (create_test_path)
+        boolean create_tenant_jobs_result = createTenantJobs()
+
+        if (create_tenant_jobs_result == true)
         {
-            println("Create branch folder: SUCCESS")
-
-            boolean create_tenant_jobs_result = createTenantJobs()
-
-            if (create_tenant_jobs_result == true)
-            {
-                println("Tenant jobs: SUCCESS")
-            }
-            else
-            {
-                println("Tenant folder creation: FAILURE")
-                return false
-            }
+            println("Create tenant jobs: SUCCESS")
         }
         else
         {
-            println("Create branch folder: FAILURE")
+            println("Create tenant jobs: FAILURE")
             return false
         }
     }
     catch (Exception ex)
     {
-        println("create_tenant_jobs.groovy main() Exception: ${ex.toString()}")
+        println("create_tenant_jobs.groovy Exception: ${ex.toString()}")
         return false
     }
     return true
