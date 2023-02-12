@@ -1,7 +1,7 @@
 folder(seed_jobs_root)
 {
-    displayName("Seed Jobs")
-    description("Automated deployment of jenkins jobs")
+    displayName("Jenkins Admin Jobs")
+    description("Jenkins admin jobs")
 
     properties {
         authorizationMatrix {

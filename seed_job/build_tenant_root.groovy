@@ -43,6 +43,19 @@ boolean createRestrictedFolder(String path, List<String> perm_groups)
     return true
 }
 
+String getPathPrefix(String branch_name, String delivery_branch)
+{
+    if (branch_name == delivery_branch)
+    {
+        return "/"
+    }
+    else
+    {
+
+    }
+}
+
+
 boolean buildTentantRoot(String branch_name, HashMap config_data)
 {
     boolean result = true
@@ -58,7 +71,7 @@ boolean buildTentantRoot(String branch_name, HashMap config_data)
                 def perm_groups = cur_tenant.get('perm_groups')
                 if (name != null)
                 {
-                    def path = "/${seed_jobs_root}/${name}"
+                    def path = "${name}"
                     def create_folder_result = createRestrictedFolder (name, perm_groups)
                     if (create_folder_result == false)
                         result = false

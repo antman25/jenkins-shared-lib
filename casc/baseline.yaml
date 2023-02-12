@@ -162,20 +162,10 @@ tool:
     settingsProvider: "standard"
 jobs:
   - script: >
-      folder("seed_jobs")
-      {
-        properties {
-          authorizationMatrix {
-            inheritanceStrategy { nonInheriting() }
-          }
-        }
-      }
-      
-      pipelineJob("seed_jobs/deploy") {
-              displayName("Deploy Jenkins Jobs")
+   
+      pipelineJob("seed_job") {
+              displayName("Seed Job")
               def repo = 'https://github.com/antman25/jenkins-shared-lib.git'
-
-              description("Deploys all jenkins jobs")
 
               definition {
                 cpsScm {
