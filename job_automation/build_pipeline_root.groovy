@@ -90,7 +90,7 @@ boolean createJobTestFolder()
     return true
 }
 
-void main()
+boolean main()
 {
     boolean create_root_result = createPipelineRootFolder()
     if (create_root_result == true)
@@ -104,6 +104,7 @@ void main()
         else
         {
             println("Create deploy job FAILURE")
+            return false
         }
 
         boolean create_job_testing_result = createJobTestFolder()
@@ -114,12 +115,15 @@ void main()
         else
         {
             println("Create job testing folder FAILURE")
+            return false
         }
     }
     else
     {
         println("Failure to create pipeline root folder")
+        return false
     }
+    return true
 }
 
 boolean result = main()
