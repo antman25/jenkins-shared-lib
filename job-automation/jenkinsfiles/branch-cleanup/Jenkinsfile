@@ -7,7 +7,7 @@ podTemplate {
         stage('Clean Testing Area')
         {
             echo "clean old folders"
-
+            deleteDir('devel')
 
         }
     }
