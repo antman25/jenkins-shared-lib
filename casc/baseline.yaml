@@ -162,24 +162,33 @@ tool:
     settingsProvider: "standard"
 jobs:
   - script: >
-      pipelineJob("seed_job") {
-        displayName('Deploy Jenkins Jobs')
-
-        def repo = 'https://github.com/antman25/jenkins-shared-lib.git'
-
-        description("Seed Job")
-
-        definition {
-          cpsScm {
-            scm {
-              git {
-                remote { url(repo) }
-                branches("main")
-                scriptPath('seed_job/Jenkinsfile')
-                extensions { }  // required as otherwise it may try to tag the repo, which you may not want
-              }
-
-            }
+      folder("seed_jobs")
+      {
+        displayName('Seed Jobs')
+        properties {
+          authorizationMatrix {
+            inheritanceStrategy { nonInheriting() }
           }
         }
       }
+      
+      pipelineJob("seed_jobs/deploy") {
+              displayName("Deploy Jenkins Jobs")
+              def repo = 'https://github.com/antman25/jenkins-shared-lib.git'
+
+              description("Deploys all jenkins jobs")
+
+              definition {
+                cpsScm {
+                  scm {
+                    git {
+                      remote { url(repo) }
+                      branches("main")
+                      scriptPath('seed_job/Jenkinsfile')
+                      extensions { }  // required as otherwise it may try to tag the repo, which you may not want
+                    }
+                  }
+                }
+              }
+            }
+      
