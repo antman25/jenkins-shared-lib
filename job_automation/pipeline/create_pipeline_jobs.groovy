@@ -46,7 +46,7 @@ boolean createDeployJob(String path)
         multibranchPipelineJob("${path}/${pipeline_root_folder}/job_deploy")
         {
             if (branch_name != delivery_branch)
-                diabled()
+                disabled()
 
             displayName("000 - Deploy Jenkins Jobs")
             description("Runs all the JobDSL for job deployment")
