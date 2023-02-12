@@ -1,4 +1,7 @@
-import org.yaml.snakeyaml.Yaml
+import groovy.transform.Field
+
+@Field final String BUILDJOB_PATH = 'builds'
+
 
 String getPathPrefix(String branch_name, String delivery_branch)
 {
@@ -105,7 +108,7 @@ boolean createTenantJobs() {
                             boolean create_buildjobs_root_result = createTentantBuildRoot(tenant_root_path)
                         }
                         else {
-                            println("createTenantJobs(): No tenant name defined")
+                            println("createTenantJobs(): failed to create build job root")
                             return false
                         }
                     }
@@ -137,7 +140,7 @@ boolean createTenantJobs() {
 boolean createTentantBuildRoot(String path)
 {
     try {
-        folder("${path}/builds")
+        folder("${path}/${BUILDJOB_PATH}")
         {
             displayName("Builds")
             description("Builds Root Folder")
@@ -145,6 +148,19 @@ boolean createTentantBuildRoot(String path)
     }
     catch (Exception ex) {
         println("createTentantBuildRoot() Exception: ${ex.toString()}")
+        return false
+    }
+
+    return true
+}
+
+boolean createTentantBuildProject(String path, String project)
+{
+    try {
+
+    }
+    catch (Exception ex) {
+        println("createTentantBuildProject() Exception: ${ex.toString()}")
         return false
     }
 
