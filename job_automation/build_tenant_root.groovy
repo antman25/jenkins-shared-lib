@@ -95,7 +95,6 @@ void main()
     try
     {
         def config_yaml = new Yaml().load(config_data)
-        def common_util = load('job_automation/common.groovy')
         def path_prefix = utils.getPathPrefix(branch_name, delivery_branch, pipeline_root_folder, job_testing_folder)
         def result = buildTentantRoot(path_prefix, config_yaml)
 
