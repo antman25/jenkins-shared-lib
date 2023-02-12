@@ -22,10 +22,6 @@ boolean createPipelineRootFolder(String path)
         if (path != "")
         {
             folder("${path}")
-            {
-                displayName(path)
-                description("Testing Job Root")
-            }
         }
 
 

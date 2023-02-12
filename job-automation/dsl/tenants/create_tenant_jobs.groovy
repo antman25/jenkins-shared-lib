@@ -1,6 +1,7 @@
 import groovy.transform.Field
 
 @Field final String BUILDJOB_PATH = 'builds'
+@Field final String UTILITIES_PATH = 'utilities'
 
 
 String getPathPrefix(String branch_name, String delivery_branch)
@@ -177,6 +178,12 @@ boolean createTentantBuildRoot(String path)
         {
             displayName("Builds")
             description("Builds Root Folder")
+        }
+
+        folder("${path}/${UTILITIES_PATH}")
+        {
+            displayName("Utilities")
+            description("Utilities")
         }
     }
     catch (Exception ex) {
