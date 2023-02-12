@@ -5,7 +5,7 @@ credentials:
           - usernamePassword:
               description: "NEXUS_CREDS"
               id: "NEXUS_CREDS"
-              password: "{AQAAABAAAAAQeeWWCJpyjkR3GYZMPpdfHGvBBsbj5BN1j7rZAxc4zPY=}"
+              password: "{AQAAABAAAAAQQLX9TNZpbgAKiv/PbG3L9upYlbcXn9Rtmnf6lW8vHIo=}"
               scope: GLOBAL
               username: "packer"
           - fileSystemServiceAccountCredential:
@@ -46,9 +46,13 @@ jenkins:
         serverUrl: "https://kubernetes.default"
         templates:
           - id: "e2b3aa84-5ca9-4336-b8e7-a64203ba3f66"
-            label: "k8s-agent"
             name: "default-jnlp"
             namespace: "workflow"
+            workspaceVolume:
+              dynamicPVC:
+                accessModes: "ReadWriteOnce"
+                requestsSize: "13Gi"
+                storageClassName: "longhorn"
             yamlMergeStrategy: "override"
   crumbIssuer:
     standard:
@@ -61,7 +65,6 @@ jenkins:
             value: "https://github.com/antman25/jenkins-shared-lib.git"
   labelAtoms:
     - name: "built-in"
-    - name: "k8s-agent"
   markupFormatter: "plainText"
   mode: NORMAL
   myViewsTabBar: "standard"
@@ -104,7 +107,18 @@ jenkins:
     - all:
         name: "all"
   viewsTabBar: "standard"
+globalCredentialsConfiguration:
+  configuration:
+    providerFilter: "none"
+    typeFilter: "none"
 unclassified:
+  bitbucketEndpointConfiguration:
+    endpoints:
+      - bitbucketCloudEndpoint:
+          enableCache: false
+          manageHooks: false
+          repositoriesCacheDuration: 0
+          teamCacheDuration: 0
   buildDiscarders:
     configuredBuildDiscarders:
       - "jobBuildDiscarder"
