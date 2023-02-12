@@ -71,5 +71,5 @@ println("Config Dump:\n${config_data}")
 
 def config_yaml = new Yaml().load(config_data)
 //buildJobs(config_yaml)
-buildJobs(config_yaml)
+buildJobs(branch_name, config_yaml)
 
