@@ -10,6 +10,12 @@ def call() {
                 checkout scm
             }
 
+            stage('Build Config')
+            {
+                sh 'python3 config/build_config.py'
+            }
+
+
             stage('Job DSL') {
                 try  {
                     String branch_name = env.getEnvironment().getOrDefault('BRANCH_NAME', 'main')
