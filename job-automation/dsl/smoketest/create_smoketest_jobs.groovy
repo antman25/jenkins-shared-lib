@@ -59,7 +59,7 @@ boolean createSmoktestTemplatePython(String path_prefix)
                     scm {
                         git {
                             remote { url(tools_url) }
-                            branches(branch_name)
+                            branches(branch_name_raw)
                             scriptPath('smoketests/template_tests/python3/Jenkinsfile')
                             extensions { }  // required as otherwise it may try to tag the repo, which you may not want
                         }
