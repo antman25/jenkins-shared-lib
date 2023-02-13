@@ -18,12 +18,14 @@ String getPathPrefix(String branch_name, String delivery_branch)
 boolean createSmoktestRoot(String path_prefix)
 {
     try {
-        folder("${path_prefix}/${pipeline_root_folder}/${SMOKETEST_ROOT}")
+        def smoketest_root ="${path_prefix}/${pipeline_root_folder}/${SMOKETEST_ROOT}"
+        folder(smoketest_root)
         {
             displayName ('020 - Smoketests')
             description("Job location of shared-lib smoke tests")
         }
 
+        createSmoktestTemplatePython(smoketest_root)
     }
     catch (Exception ex) {
         println("createSmoktestRoot() Exception: ${ex.toString()}")
