@@ -71,7 +71,9 @@ boolean createSmoktestTemplatePython(String path_prefix)
         pipelineJob("${path_prefix}/template-python") {
             displayName("podTemplate python")
             description("Exercise python podTemplate")
-
+            environmentVariables {
+                env('BRANCH_NAME', branch_name)
+            }
 
             definition {
                 cpsScm {
@@ -102,7 +104,9 @@ boolean createSmoktestTemplateDocker(String path_prefix)
         pipelineJob("${path_prefix}/template-docker") {
             displayName("podTemplate docker")
             description("Exercise docker podTemplate")
-
+            environmentVariables {
+                env('BRANCH_NAME', branch_name)
+            }
 
             definition {
                 cpsScm {
@@ -133,7 +137,9 @@ boolean createSmoktestTemplateHelm(String path_prefix)
         pipelineJob("${path_prefix}/template-helm") {
             displayName("podTemplate helm")
             description("Exercise helm podTemplate")
-
+            environmentVariables {
+                env('BRANCH_NAME', branch_name)
+            }
 
             definition {
                 cpsScm {
