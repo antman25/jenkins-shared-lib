@@ -1,8 +1,3 @@
-import groovy.transform.Field
-
-//@Field final String SMOKETESTS_PATH = 'smoketests'
-
-
 String getPathPrefix(String branch_name, String delivery_branch)
 {
     if (branch_name == delivery_branch)

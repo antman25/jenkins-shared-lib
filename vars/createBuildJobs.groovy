@@ -82,6 +82,13 @@ def call() {
                     }
                 }
 
+                parallel_jobs['podtemplate_helm'] = {
+                    stage ('podTemplate: helm')
+                    {
+                        build job: "${path_prefix}/${PIPELINE_ROOT}/${SMOKETEST_ROOT}/template-helm"
+                    }
+                }
+
                 parallel (parallel_jobs)
             }
         }
