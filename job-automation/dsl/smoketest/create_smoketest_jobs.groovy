@@ -7,11 +7,11 @@ String getPathPrefix(String branch_name, String delivery_branch)
 {
     if (branch_name == delivery_branch)
     {
-        return "${pipeline_root_folder}/${SMOKETEST_PATH}"
+        return "${pipeline_root_folder}/${SMOKETEST_ROOT}"
     }
     else
     {
-        return "${pipeline_root_folder}/${job_testing_folder}/${branch_name}/${SMOKETEST_PATH}"
+        return "${pipeline_root_folder}/${job_testing_folder}/${branch_name}/${SMOKETEST_ROOT}"
     }
 }
 
