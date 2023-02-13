@@ -29,7 +29,7 @@ podTemplates.dockerTemplate {
         stage ('run buildDockerImage step')
         {
             def test_image = buildDockerImage (config)
-            println("test_image: ${test_iamge}")
+            println("test_image: ${test_image}")
             utils.dumpConfig()
         }
     }
