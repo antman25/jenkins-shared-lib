@@ -165,7 +165,9 @@ boolean createSmoktestBuildDocker(String path_prefix)
             displayName("buildDockerImage")
             description("Build Docker Image Test")
 
-
+            environmentVariables {
+                env('BRANCH_NAME', branch_name)
+            }
             definition {
                 cpsScm {
                     scm {
