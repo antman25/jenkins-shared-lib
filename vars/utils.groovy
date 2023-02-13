@@ -18,7 +18,6 @@ boolean toBoolean(def value) {
 
 String getPathPrefix(String branch_name, String delivery_branch)
 {
-  println("getPathPrefix() branch_name: ${branch_name} -- delivery branch: ${delivery_branch}")
   if (branch_name == delivery_branch)
   {
     return ""
