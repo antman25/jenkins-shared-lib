@@ -27,13 +27,21 @@ boolean createSmoktestRoot(String path_prefix)
 
         def create_smoktest_python = createSmoktestTemplatePython(smoketest_root)
         if (create_smoktest_python) {
-            println("createSmoktestRoot() Create smoketest python: SUCCESS")
+            println("createSmoktestRoot() Create smoketest podTemplate python: SUCCESS")
         }
         else {
-            println("createSmoktestRoot() Create smoketest python: FAILURE")
+            println("createSmoktestRoot() Create smoketest podTemplate python: FAILURE")
             return false
         }
 
+        def create_smoketest_docker = createSmoktestTemplateDocker(smoketest_root)
+        if (create_smoketest_docker) {
+            println("createSmoktestRoot() Create smoketest podTemplate docker: SUCCESS")
+        }
+        else {
+            println("createSmoktestRoot() Create smoketest podTemplate docker: FAILURE")
+            return false
+        }
 
     }
     catch (Exception ex) {
