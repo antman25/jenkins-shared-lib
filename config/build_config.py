@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import yaml
+import sys
 
 def setGlobalVar(config, var_name, val):
     if 'global' not in config:
@@ -45,7 +46,9 @@ def main():
             yaml.dump(output_config, f)
     except Exception as ex:
         print("Exception building config: %s" % ex)
+        sys.exit(1)
 
 
 if __name__ == '__main__':
     main()
+    sys.exit(0)
