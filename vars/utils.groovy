@@ -66,7 +66,7 @@ void dumpConfig(Map config)
 {
     String output = ""
     config.each {it ->
-        output += "ConfigDump: ${it}\n")
+        output += "ConfigDump: ${it}\n"
     }
     println("Config Dump:\n${output}")
 }
