@@ -51,7 +51,8 @@ def call() {
                             removedJobAction: 'DELETE',
                             removedViewAction: 'DELETE',
                             lookupStrategy: 'JENKINS_ROOT',
-                            additionalParameters: params
+                            additionalParameters: params,
+                            additionalClasspath: 'vars/'
                 }
                 catch (Exception ex) {
                     println("Exception: ${ex.toString()}")
