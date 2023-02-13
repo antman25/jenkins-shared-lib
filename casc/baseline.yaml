@@ -70,6 +70,8 @@ jenkins:
             value: "job-testing"
           - key: "DELIVERY_BRANCH"
             value: "main"
+          - key: "SMOKETEST_ROOT"
+            value: "smoketest"
   labelAtoms:
     - name: "built-in"
   markupFormatter: "plainText"

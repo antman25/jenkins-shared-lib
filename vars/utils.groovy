@@ -22,24 +22,31 @@ Map getConfig(key = null) {
   // these are the configurable options that can be overridden by passing in config to the
   // run actions. Some also have corresponding environment variables.
 
-  def masterBranch = env.MASTER_BRANCH ?: 'create_tenant_jobs'
-  def isMasterBranch = masterBranch == env.BRANCH_NAME
+  def mainBranch = env.MASTER_BRANCH ?: 'main'
+  def isMainBranch = masterBranch == env.BRANCH_NAME
 
   def config = [
+    chartPath: env.CHART_PATH ?: './helm',
+    dockerfilePath: env.DOCKERFILE_PATH ?: '.',
+    isMainBranch: isMainBranch,
+    mainBranch: mainBranch,
     agentPvcName: env.AGENT_PVC_NAME ?: 'jenkins-agent-retain',
+  ]
+
+  /*def config = [
+
     apiTestsPath: env.API_TESTS_PATH ?: 'tests/api',
     chartPath: env.CHART_PATH ?: './helm',
     cleanupDeploy: envVarExists('CLEANUP_DEPLOY') ? env.CLEANUP_DEPLOY : true,
     codeverosChartPath: env.CODEVEROS_CHART_PATH ?: 'charts/codeveros',
-    dockerfilePath: env.DOCKERFILE_PATH ?: '.',
+
     environment: env.ENVIRONMENT ?: 'ephemeral',
     externalIp: env.EXTERNAL_IP,
     functionalTestsPath: env.FUNCTIONAL_TESTS_PATH ?: 'tests/selenified',
     gitCredentials: env.GIT_CREDENTIALS ?: 'codeveros-gitlab-ssh',
     helmCredentials: env.HELM_CREDENTIALS ?: 'docker-registry-login',
     helmRepoUrl: env.HELM_REPO_URL,
-    isMasterBranch: isMasterBranch,
-    masterBranch: masterBranch,
+
     mavenConfigId: env.MAVEN_CONFIG_ID ?: 'globalmaven',
     namespace: env.NAMESPACE ?: "codeveros-${UUID.randomUUID().toString()}",
     nexusHelm: envVarExists('NEXUS_HELM') ? toBoolean(env.NEXUS_HELM) : true,
@@ -54,7 +61,7 @@ Map getConfig(key = null) {
     servicePath: env.SERVICE_PATH ?: './',
     tag: env.DOCKER_TAG,
     zapUrl: env.ZAP_URL ?: 'localhost:5000'
-  ]
+  ]*/
 
   return key ? config[key] : config
 

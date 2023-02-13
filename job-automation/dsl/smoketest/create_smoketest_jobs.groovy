@@ -1,5 +1,8 @@
 import groovy.transform.Field
 
+//@Field final String SMOKETESTS_PATH = 'smoketests'
+
+
 String getPathPrefix(String branch_name, String delivery_branch)
 {
     if (branch_name == delivery_branch)
@@ -14,7 +17,48 @@ String getPathPrefix(String branch_name, String delivery_branch)
 
 boolean createSmoktestRoot(String path_prefix)
 {
+    try {
+        folder("${path_prefix}/${SMOKETEST_ROOT}")
+    }
+    catch (Exception ex) {
+        println("createSmoktestRoot() Exception: ${ex.toString()}")
+        return false
+    }
+    return true
+}
 
+boolean createSmoktestTemplatePython(String path_prefix)
+{
+    try {
+        pipelineJob("${path_prefix}/${SMOKETEST_ROOT}/${template_python}") {
+            displayName("000 - Branch Cleanup")
+            description("Run to clean up all branches without an active remote origin")
+
+            if (branch_name != delivery_branch) {
+                disabled()
+            }
+
+            definition {
+                cpsScm {
+                    scm {
+                        git {
+                            remote { url(tools_url) }
+                            branches(branch_name)
+                            scriptPath('job-automation/jenkinsfiles/branch-cleanup/Jenkinsfile')
+                            extensions { }  // required as otherwise it may try to tag the repo, which you may not want
+                        }
+                    }
+                }
+            }
+        }
+
+
+    }
+    catch (Exception ex) {
+        println("createSmoktestRoot() Exception: ${ex.toString()}")
+        return false
+    }
+    return true
 }
 
 boolean main()
