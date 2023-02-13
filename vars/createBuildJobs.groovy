@@ -43,7 +43,8 @@ def call() {
                                 'pipeline_root_folder' : "${PIPELINE_ROOT}",
                                 'job_testing_folder' : "${JOB_TESTING_ROOT}",
                                 'workspace_path' : "${WORKSPACE}",
-                                'tools_url' : "${TOOLS_URL}"]
+                                'tools_url' : "${TOOLS_URL}",
+                                'smoketest_podtemplate_python' : 'template-test-python']
 
                     jobDsl targets: ['job-automation/dsl/pipeline/create_pipeline_jobs.groovy',
                                      'job-automation/dsl/tenants/create_tenant_jobs.groovy',

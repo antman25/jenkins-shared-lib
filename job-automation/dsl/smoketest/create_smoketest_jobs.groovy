@@ -46,7 +46,7 @@ boolean createSmoktestRoot(String path_prefix)
 boolean createSmoktestTemplatePython(String path_prefix)
 {
     try {
-        pipelineJob("${path_prefix}/${template_python}") {
+        pipelineJob("${path_prefix}/${smoketest_podtemplate_python}") {
             displayName("Test: podTemplate python")
             description("Exercise python podTemplate")
 
