@@ -25,7 +25,16 @@ boolean createSmoktestRoot(String path_prefix)
             description("Job location of shared-lib smoke tests")
         }
 
-        createSmoktestTemplatePython(smoketest_root)
+        def create_smoktest_python = createSmoktestTemplatePython(smoketest_root)
+        if (create_smoktest_python)
+        {
+            println("createSmoktestRoot() Create smoketest python: SUCCESS")
+        }
+        else
+        {
+            println("createSmoktestRoot() Create smoketest python: FAILURE")
+            return false
+        }
     }
     catch (Exception ex) {
         println("createSmoktestRoot() Exception: ${ex.toString()}")
@@ -62,7 +71,7 @@ boolean createSmoktestTemplatePython(String path_prefix)
 
     }
     catch (Exception ex) {
-        println("createSmoktestRoot() Exception: ${ex.toString()}")
+        println("createSmoktestTemplatePython() Exception: ${ex.toString()}")
         return false
     }
     return true
