@@ -71,9 +71,14 @@ def call() {
                 parallel_jobs['podtemplate_python'] = {
                     stage ('podTemplate: python')
                     {
-                        build_path ="${path_prefix}/${PIPELINE_ROOT}/${SMOKETEST_ROOT}/template-test-python"
-                        println("Adding job to paralle build: ${build_path}")
-                        build job: build_path
+                        build job: "${path_prefix}/${PIPELINE_ROOT}/${SMOKETEST_ROOT}/template-python"
+                    }
+                }
+
+                parallel_jobs['podtemplate_docker'] = {
+                    stage ('podTemplate: docker')
+                    {
+                        build job: "${path_prefix}/${PIPELINE_ROOT}/${SMOKETEST_ROOT}/template-docker"
                     }
                 }
 
