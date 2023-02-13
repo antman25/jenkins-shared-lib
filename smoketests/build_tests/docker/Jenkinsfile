@@ -23,7 +23,7 @@ podTemplates.dockerTemplate {
             def git_sha = util.getLongCommit()
             config.commitHash = git_sha
             config.commitShortHash = git_sha.take(8)
-            utils.dumpConfig()
+            utils.dumpConfig(config)
         }
 
         stage ('run buildDockerImage step')
