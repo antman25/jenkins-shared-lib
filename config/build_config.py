@@ -22,6 +22,8 @@ def createAllTenants(config):
     if 'tenants' not in config:
         config['tenants'] = []
     config['tenants'].append(createTenantDefaults('tenA', ['groupA'], ['prjA']))
+    config['tenants'].append(createTenantDefaults('tenB', ['groupA', 'groupB'], ['prjA']))
+
 
 
 def main():
