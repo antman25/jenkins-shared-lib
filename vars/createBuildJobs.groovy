@@ -17,7 +17,7 @@ def call() {
                 {
                     sh '''
                        python3 -m venv venv && \
-                       source venv/bin/activate
+                       venv/bin/activate && \
                        python3 config/build_config.py                         
                        '''
                 }
