@@ -7,18 +7,18 @@ String getPathPrefix(String branch_name, String delivery_branch)
 {
     if (branch_name == delivery_branch)
     {
-        return "${pipeline_root_folder}/${SMOKETEST_ROOT}"
+        return ""
     }
     else
     {
-        return "${pipeline_root_folder}/${job_testing_folder}/${branch_name}/${SMOKETEST_ROOT}"
+        return "${pipeline_root_folder}/${job_testing_folder}/${branch_name}/"
     }
 }
 
 boolean createSmoktestRoot(String path_prefix)
 {
     try {
-        folder(path_prefix)
+        folder("${path_prefix}/${pipeline_root_folder}/${SMOKETEST_ROOT}")
     }
     catch (Exception ex) {
         println("createSmoktestRoot() Exception: ${ex.toString()}")
