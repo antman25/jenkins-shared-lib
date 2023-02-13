@@ -10,8 +10,8 @@ def main():
     output_path = 'config/config.yaml'
     output_config = {}
 
-    setGlobalVar('artifactory_url', 'http://nexus.antlinux.local')
-    setGlobalVar('bitbucket_url', 'http://bitbucket.antlinux.local')
+    setGlobalVar(output_config, 'artifactory_url', 'http://nexus.antlinux.local')
+    setGlobalVar(output_config, 'bitbucket_url', 'http://bitbucket.antlinux.local')
 
     with open('config/config_test.yaml', 'w') as f:
         yaml.dump(output_config, f)
