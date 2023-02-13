@@ -50,10 +50,6 @@ boolean createSmoktestTemplatePython(String path_prefix)
             displayName("Test: podTemplate python")
             description("Exercise python podTemplate")
 
-            if (branch_name != delivery_branch) {
-                disabled()
-            }
-
             definition {
                 cpsScm {
                     scm {
