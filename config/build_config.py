@@ -41,7 +41,7 @@ def main():
         setGlobalVar(output_config, 'bitbucket_url', 'http://bitbucket.antlinux.local')
         createAllTenants(output_config)
 
-        with open('config/config_test.yaml', 'w') as f:
+        with open('config/config.yaml', 'w') as f:
             yaml.dump(output_config, f)
     except Exception as ex:
         print("Exception building config: %s" % ex)
