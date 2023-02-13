@@ -75,7 +75,7 @@ Map getConfig(key = null) {
     String delivery_branch = env.getEnvironment().getOrDefault('DELIVERY_BRANCH', 'main')
     String chart_path = env.getEnvironment().getOrDefault('CHART_PATH', './helm')
     String dockerfile_path = env.getEnvironment().getOrDefault('DOCKERFILE_PATH', '.')
-    String agent_pvc_name = env.getEnvironment().getOrDefault('AGENT_PVC_NAME', '.')
+    String agent_pvc_name = env.getEnvironment().getOrDefault('AGENT_PVC_NAME', 'jenkins-agent-pvc')
     String pipeline_root = env.getEnvironment().getOrDefault('PIPELINE_ROOT', 'pipeline-root')
 
 
