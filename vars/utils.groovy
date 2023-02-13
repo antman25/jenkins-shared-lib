@@ -6,9 +6,15 @@ Map envVarExists(String key) {
   return env.getProperty(key) != null
 }
 
+String getLongCommit()
+{
+    return sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
+}
+
 String getShortCommit()
 {
-  return sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
+    //return sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
+    return getLongCommit().take(8)
 }
 
 
@@ -56,6 +62,13 @@ def default_stages(Closure body)
   }
 }
 
+void dumpConfig(Map config)
+{
+    config.each {it ->
+        println("ConfigDump: ${it}")
+    }
+}
+
 Map getConfig(key = null) {
     String branch_name = env.getEnvironment().getOrDefault('BRANCH_NAME', 'main')
     String branch_name_safe = utils.sanitizeBranchName(branch_name)
@@ -66,12 +79,10 @@ Map getConfig(key = null) {
     String pipeline_root = env.getEnvironment().getOrDefault('PIPELINE_ROOT', 'pipeline-root')
 
 
-  def isDeliveryBranch = branch_name == delivery_branch
-
   def config = [   branchName : branch_name,
                                 branchNameSafe : branch_name_safe,
-                                branchDelivery: branchDelivery,
-                                isDeliveryBranch: isDeliveryBranch,
+                                branchDelivery: delivery_branch,
+                                isDeliveryBranch: branch_name == delivery_branch,
                                 chartPath : chart_path,
                                 dockerfilePath: dockerfile_path,
                                 agentPvcName: agent_pvc_name,

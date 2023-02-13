@@ -12,14 +12,19 @@ catch (Exception ex)
 podTemplates.dockerTemplate {
     node(POD_LABEL)
     {
+        def env_config = [:]
         stage ('Clone Code')
         {
             checkout scm
+            env_config = utils.getConfig()
+            env_config.commitHash =
         }
 
         stage ('Build Helm Chart')
         {
-            def env_config = utils.getConfig()
+             [ 'registry' : 'test-registry',  'repository' : 'test-repo' ]
+
+
             env_config.dockerImage = "test-image"
             buildHelmChart (env_config)
         }

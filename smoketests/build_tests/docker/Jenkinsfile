@@ -12,16 +12,25 @@ catch (Exception ex)
 podTemplates.dockerTemplate {
     node(POD_LABEL)
     {
+        config = [:]
+
         stage ('Clone Code')
         {
             checkout scm
+
+            config = utils.getConfig()
+
+            def git_sha = util.getLongCommit()
+            config.commitHash = git_sha
+            config.commitShortHash = git_sha.take(8)
+            utils.dumpConfig()
         }
 
-        stage ('Build Helm Chart')
+        stage ('run buildDockerImage step')
         {
-            def env_config = utils.getConfig()
-            env_config.dockerImage = "test-image"
-            buildHelmChart (env_config)
+            def test_image = buildDockerImage (config)
+            println("test_image: ${test_iamge}")
+            utils.dumpConfig()
         }
     }
 }
