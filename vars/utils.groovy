@@ -64,9 +64,11 @@ def default_stages(Closure body)
 
 void dumpConfig(Map config)
 {
+    String output = ""
     config.each {it ->
-        println("ConfigDump: ${it}")
+        output += "ConfigDump: ${it}\n")
     }
+    println("Config Dump:\n${output}")
 }
 
 Map getConfig(key = null) {
