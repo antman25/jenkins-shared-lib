@@ -52,7 +52,7 @@ boolean createSmoktestRoot(String path_prefix)
             return false
         }
 
-        createSmoktestTemplateHelm
+
     }
     catch (Exception ex) {
         println("createSmoktestRoot() Exception: ${ex.toString()}")
