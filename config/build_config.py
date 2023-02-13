@@ -9,7 +9,7 @@ def setGlobalVar(config, var_name, val):
 
 def createTenantDefaults (tenant_name, perm_groups, project_list):
     if perm_groups is not list:
-        raise Exception('Invalid permission group type passed')
+        raise Exception('Invalid permission group type passed' + perm_groups)
     if project_list is not list:
         raise Exception('Invalid project list type passed')
     tenant_config = { 'tenant_name' : tenant_name,
