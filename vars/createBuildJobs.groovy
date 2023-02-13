@@ -20,6 +20,17 @@ def call() {
                         python3 config/build_config.py                         
                        '''
                 }
+                println("Executing command in jnlp container")
+                sh '''
+                    git config --global user.name "jenkins"
+                    git config --global user.email "jenkins@antlinux.local"
+                    
+                    SHA=sha256sum config/build_config.py | awk '{print $1}'
+                    git add config/config.yaml
+                    
+                    git commit -m "config.yaml built with build_config.py SHA256: ${SHA}"
+                    git push
+                    '''
             }
 
 
