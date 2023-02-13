@@ -19,6 +19,11 @@ boolean createSmoktestRoot(String path_prefix)
 {
     try {
         folder("${path_prefix}/${pipeline_root_folder}/${SMOKETEST_ROOT}")
+        {
+            displayName ('020 - Smoketests')
+            description("Job location of shared-lib smoke tests")
+        }
+
     }
     catch (Exception ex) {
         println("createSmoktestRoot() Exception: ${ex.toString()}")
