@@ -16,9 +16,8 @@ def call() {
                 container('python')
                 {
                     sh '''
-                       python3 -m venv venv && \
-                       echo $SHELL && \
-                       venv/bin/activate python3 config/build_config.py                         
+                        python3 -m pip install PyYAML && \
+                        python3 config/build_config.py                         
                        '''
                 }
             }
