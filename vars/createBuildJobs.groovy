@@ -29,7 +29,7 @@ def call() {
                        '''
                 }
 
-                sh 'cat config/config_test.yaml'
+                sh 'cat config/config.yaml'
             }
 
 
