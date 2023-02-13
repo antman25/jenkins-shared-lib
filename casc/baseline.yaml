@@ -181,8 +181,7 @@ jobs:
               branchSource {
                   source {
                       git {
-                          //remote ('https://github.com/antman25/jenkins-shared-lib.git')
-                          remote(env.TOOLS_URL)
+                          remote ('https://github.com/antman25/jenkins-shared-lib.git')
                           // all id's must be unique according to docs
                           id ('deploy-production-jobs-source-id')
                           traits {
