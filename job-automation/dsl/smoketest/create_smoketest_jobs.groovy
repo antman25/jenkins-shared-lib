@@ -71,6 +71,9 @@ boolean createSmoktestTemplatePython(String path_prefix)
         pipelineJob("${path_prefix}/template-python") {
             displayName("podTemplate python")
             description("Exercise python podTemplate")
+            logRotator {
+                numToKeep(20)
+            }
             environmentVariables {
                 env('BRANCH_NAME', branch_name)
             }
@@ -104,6 +107,9 @@ boolean createSmoktestTemplateDocker(String path_prefix)
         pipelineJob("${path_prefix}/template-docker") {
             displayName("podTemplate docker")
             description("Exercise docker podTemplate")
+            logRotator {
+                numToKeep(20)
+            }
             environmentVariables {
                 env('BRANCH_NAME', branch_name)
             }
@@ -137,6 +143,9 @@ boolean createSmoktestTemplateHelm(String path_prefix)
         pipelineJob("${path_prefix}/template-helm") {
             displayName("podTemplate helm")
             description("Exercise helm podTemplate")
+            logRotator {
+                numToKeep(20)
+            }
             environmentVariables {
                 env('BRANCH_NAME', branch_name)
             }
@@ -170,7 +179,9 @@ boolean createSmoktestBuildDocker(String path_prefix)
         pipelineJob("${path_prefix}/build-docker") {
             displayName("buildDockerImage")
             description("Build Docker Image Test")
-
+            logRotator {
+                numToKeep(20)
+            }
             environmentVariables {
                 env('BRANCH_NAME', branch_name)
             }
