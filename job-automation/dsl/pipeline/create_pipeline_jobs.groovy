@@ -55,7 +55,7 @@ boolean createDeployJob(String path_prefix)
             //if (branch_name != delivery_branch)
             //   disabled()
 
-            displayName("000 - Deploy Jenkins Jobs")
+            displayName("000 - Deploy Development Jenkins Jobs")
             if (main_branch) {
                 description(desc)
             }
