@@ -31,6 +31,7 @@ Map getConfig(key = null) {
     isMainBranch: isMainBranch,
     mainBranch: mainBranch,
     agentPvcName: env.AGENT_PVC_NAME ?: 'jenkins-agent-retain',
+    folderPipelineRoot: env.FOLDER_PIPELINE_ROOT ?: 'pipeline-root',
   ]
 
   /*def config = [

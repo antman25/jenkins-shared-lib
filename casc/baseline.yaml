@@ -68,10 +68,7 @@ jenkins:
             value: "pipeline-root"
           - key: "JOB_TESTING_ROOT"
             value: "job-testing"
-          - key: "DELIVERY_BRANCH"
-            value: "main"
-          - key: "SMOKETEST_ROOT"
-            value: "smoketest"
+
   labelAtoms:
     - name: "built-in"
   markupFormatter: "plainText"
