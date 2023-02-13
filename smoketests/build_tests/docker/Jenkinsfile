@@ -20,7 +20,7 @@ podTemplates.dockerTemplate {
 
             config = utils.getConfig()
 
-            def git_sha = util.getLongCommit()
+            def git_sha = utils.getLongCommit()
             config.commitHash = git_sha
             config.commitShortHash = git_sha.take(8)
             utils.dumpConfig(config)
