@@ -71,6 +71,7 @@ boolean main()
     else
     {
         println("Create Smoketest Root: FAILURE")
+        return false
     }
     return true
 }
