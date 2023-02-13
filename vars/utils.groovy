@@ -71,7 +71,7 @@ void dumpConfig(Map config)
 
 Map getConfig(key = null) {
     String branch_name = env.getEnvironment().getOrDefault('BRANCH_NAME', 'main')
-    String branch_name_safe = utils.sanitizeBranchName(branch_name)
+    String branch_name_safe = sanitizeBranchName(branch_name)
     String delivery_branch = env.getEnvironment().getOrDefault('DELIVERY_BRANCH', 'main')
     String chart_path = env.getEnvironment().getOrDefault('CHART_PATH', './helm')
     String dockerfile_path = env.getEnvironment().getOrDefault('DOCKERFILE_PATH', '.')
