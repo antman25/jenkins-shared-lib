@@ -12,7 +12,7 @@ catch (Exception ex)
 podTemplates.dockerTemplate {
     node(POD_LABEL)
     {
-        config = ['registry': 'fake-registry.local', 'repo' : 'fake-repo']
+        config = ['registry': 'fake-registry.local', 'repository' : 'fake-repo']
 
         stage ('Clone Code')
         {
