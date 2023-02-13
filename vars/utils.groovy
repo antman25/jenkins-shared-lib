@@ -56,20 +56,26 @@ def default_stages(Closure body)
 }
 
 Map getConfig(key = null) {
-  // these are the configurable options that can be overridden by passing in config to the
-  // run actions. Some also have corresponding environment variables.
+    String branch_name = env.getEnvironment().getOrDefault('BRANCH_NAME', 'main')
+    String branch_name_safe = utils.sanitizeBranchName(branch_name)
+    String delivery_branch = env.getEnvironment().getOrDefault('DELIVERY_BRANCH', 'main')
+    String chart_path = env.getEnvironment().getOrDefault('CHART_PATH', './helm')
+    String dockerfile_path = env.getEnvironment().getOrDefault('DOCKERFILE_PATH', '.')
+    String agent_pvc_name = env.getEnvironment().getOrDefault('AGENT_PVC_NAME', '.')
+    String pipeline_root = env.getEnvironment().getOrDefault('PIPELINE_ROOT', 'pipeline-root')
 
-  def mainBranch = env.MASTER_BRANCH ?: 'main'
-  def isMainBranch = masterBranch == env.BRANCH_NAME
 
-  def config = [
-    chartPath: env.CHART_PATH ?: './helm',
-    dockerfilePath: env.DOCKERFILE_PATH ?: '.',
-    isMainBranch: isMainBranch,
-    mainBranch: mainBranch,
-    agentPvcName: env.AGENT_PVC_NAME ?: 'jenkins-agent-retain',
-    folderPipelineRoot: env.FOLDER_PIPELINE_ROOT ?: 'pipeline-root',
-  ]
+  def isDeliveryBranch = branch_name == delivery_branch
+
+  def config = [   branch_name : branch_name,
+                                branch_name_safe : branch_name_safe,
+                                branchDelivery: branchDelivery,
+                                isDeliveryBranch: isDeliveryBranch,
+                                chartPath : chart_path,
+                                dockerfilePath: dockerfile_path,
+                                agentPvcName: agent_pvc_name,
+                                folderPipelineRoot: pipeline_root
+                            ]
 
   /*def config = [
 
