@@ -52,7 +52,7 @@ def call() {
                             removedViewAction: 'DELETE',
                             lookupStrategy: 'JENKINS_ROOT',
                             additionalParameters: params,
-                            additionalClasspath: 'vars/'
+                            additionalClasspath: 'vars/utils.groovy'
                 }
                 catch (Exception ex) {
                     println("Exception: ${ex.toString()}")
