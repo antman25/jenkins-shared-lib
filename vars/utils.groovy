@@ -16,7 +16,17 @@ boolean toBoolean(def value) {
   return (value instanceof java.lang.String) ? value.toBoolean() : value
 }
 
-def
+String getPathPrefix(String branch_name, String delivery_branch)
+{
+  if (branch_name == delivery_branch)
+  {
+    return ""
+  }
+  else
+  {
+    return "${PIPELINE_ROOT}/${JOB_TESTING_ROOT}/${branch_name}"
+  }
+}
 
 Map getConfig(key = null) {
   // these are the configurable options that can be overridden by passing in config to the
