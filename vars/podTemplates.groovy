@@ -26,8 +26,6 @@ def helmTemplate(Closure body) {
   }
 }
 
-
-
 def pythonTemplate(Closure body) {
   podTemplate(
     containers: [
