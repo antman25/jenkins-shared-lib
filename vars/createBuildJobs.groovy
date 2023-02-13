@@ -27,7 +27,6 @@ def call() {
                     
                     #SHA=sha256sum config/build_config.py | awk '{print $1}'
                     #echo "SHA256=${SHA}
-                    python3 config/build_config.py
                     git add config/config.yaml
                     
                     git commit -m "config.yaml built with build_config.py "
