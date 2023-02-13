@@ -63,7 +63,7 @@ def call() {
                 }
             }
 
-            stage ('Smoketest podTemplates')
+            stage ('Smoketest podTemplates.groovy.groovy')
             {
                 String path_prefix = utils.getPathPrefix(branch_name,"${DELIVERY_BRANCH}")
 
