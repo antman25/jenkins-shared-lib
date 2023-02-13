@@ -66,9 +66,18 @@ def call() {
             stage ('Smoketest podTemplates')
             {
                 String path_prefix = utils.getPathPrefix(branch_name,"${DELIVERY_BRANCH}")
-                def build_path ="${path_prefix}/${PIPELINE_ROOT}/${SMOKETEST_ROOT}/template-test-python"
-                println("Building job at Path: ${build_path}")
-                build job: build_path
+
+                parallel_jobs = [ :]
+                parallel_jobs['podtemplate_python'] = {
+                    stage ('podTemplate: python')
+                    {
+                        build_path ="${path_prefix}/${PIPELINE_ROOT}/${SMOKETEST_ROOT}/template-test-python"
+                        println("Adding job to paralle build: ${build_path}")
+                        build job: build_path
+                    }
+                }
+
+                parallel (parallel_jobs)
             }
         }
     }
