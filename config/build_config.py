@@ -21,7 +21,7 @@ def createTenantDefaults (tenant_name, perm_groups, project_list):
 def createAllTenants(config):
     if 'tenants' not in config:
         config['tenants'] = []
-    config['tenants'].append(createTenantDefaults('tenA', 'groupA', 'prjA'))
+    config['tenants'].append(createTenantDefaults('tenA', ['groupA'], ['prjA']))
 
 
 def main():
