@@ -24,7 +24,7 @@ String getPathPrefix(String branch_name, String delivery_branch)
   }
   else
   {
-    return "${PIPELINE_ROOT}/${JOB_TESTING_ROOT}/${branch_name}"
+    return "${env.PIPELINE_ROOT}/${env.JOB_TESTING_ROOT}/${branch_name}"
   }
 }
 

@@ -65,7 +65,7 @@ def call() {
 
             stage ('Smoketest podTemplates')
             {
-                def path_prefix = utils.getPathPrefix(String branch_name, "${DELIVERY_BRANCH}")
+                String path_prefix = utils.getPathPrefix(branch_name,"${DELIVERY_BRANCH}")
                 def build_path ="${path_prefix}/${SMOKETEST_ROOT}/template-test-python"
                 println("Building job at Path: ${build_path}")
                 build job: build_path
