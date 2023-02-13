@@ -9,7 +9,7 @@ catch (Exception ex)
     library "jenkins-shared-lib@main"
 }
 
-podTemplates.pythonTemplate {
+podTemplates.dockerTemplate {
     node(POD_LABEL)
     {
         stage ('Clone Code')
@@ -17,7 +17,7 @@ podTemplates.pythonTemplate {
             checkout scm
         }
 
-        stage('Test python3 template')
+        stage('Test docker template')
         {
             container('docker')
             {
