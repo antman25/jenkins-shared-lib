@@ -131,7 +131,7 @@ boolean createJobTestFolder(String path_prefix)
             description("Spot to test job dsl code prior to delivery")
         }
 
-        pipelineJob("${path_prefix}/${pipeline_root_folder}/${job_testing_folder}/branch-cleanup") {
+        /*pipelineJob("${path_prefix}/${pipeline_root_folder}/${job_testing_folder}/branch-cleanup") {
             displayName("000 - Branch Cleanup")
             description("Run to clean up all branches without an active remote origin")
 
@@ -151,7 +151,7 @@ boolean createJobTestFolder(String path_prefix)
                     }
                 }
             }
-        }
+        }*/
     }
     catch (Exception ex)
     {
