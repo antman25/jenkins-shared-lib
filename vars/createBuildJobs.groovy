@@ -6,7 +6,9 @@ def call() {
     podTemplates.pythonTemplate {
         node(POD_LABEL) {
             def params = [:]
-
+            String branch_name = env.getEnvironment().getOrDefault('BRANCH_NAME', 'main')
+            String sanitized_branch_name = utils.sanitizeBranchName(branch_name)
+            println("Sanitized branch name: ${sanitized_branch_name}")
 
 
             stage('Clone code') {
@@ -35,9 +37,7 @@ def call() {
                 try  {
                     def config_data = readFile 'config/config.yaml'
                     def config_yaml = new Yaml().load(config_data)
-                    String branch_name = env.getEnvironment().getOrDefault('BRANCH_NAME', 'main')
-                    String sanitized_branch_name = utils.sanitizeBranchName(branch_name)
-                    println("Sanitized branch name: ${sanitized_branch_name}")
+
 
                     params = [ 'config_yaml' : config_yaml,
                                 'branch_name_raw' : branch_name,
