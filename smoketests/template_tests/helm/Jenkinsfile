@@ -1,0 +1,28 @@
+try
+{
+    library "jenkins-shared-lib@${BRANCH_NAME}"
+    println("Loaded jenkins-shared-lib from branch: ${BRANCH_NAME}")
+}
+catch (Exception ex)
+{
+    println("Problem using BRANCH_NAME, trying main")
+    library "jenkins-shared-lib@main"
+}
+
+podTemplates.helmTemplate {
+    node(POD_LABEL)
+    {
+        stage ('Clone Code')
+        {
+            checkout scm
+        }
+
+        stage('Test helm template')
+        {
+            container('helm')
+            {
+                sh 'helm version'
+            }
+        }
+    }
+}

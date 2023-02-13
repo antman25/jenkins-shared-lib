@@ -43,6 +43,16 @@ boolean createSmoktestRoot(String path_prefix)
             return false
         }
 
+        def create_smoketest_helm = createSmoktestTemplateHelm(smoketest_root)
+        if (create_smoketest_helm) {
+            println("createSmoktestRoot() Create smoketest podTemplate helm: SUCCESS")
+        }
+        else {
+            println("createSmoktestRoot() Create smoketest podTemplate helm: FAILURE")
+            return false
+        }
+
+        createSmoktestTemplateHelm
     }
     catch (Exception ex) {
         println("createSmoktestRoot() Exception: ${ex.toString()}")
@@ -112,6 +122,38 @@ boolean createSmoktestTemplateDocker(String path_prefix)
     }
     return true
 }
+
+boolean createSmoktestTemplateHelm(String path_prefix)
+{
+    try {
+        pipelineJob("${path_prefix}/template-helm") {
+            displayName("podTemplate helm")
+            description("Exercise helm podTemplate")
+
+
+            definition {
+                cpsScm {
+                    scm {
+                        git {
+                            remote { url(tools_url) }
+                            branches(branch_name_raw)
+                            scriptPath('smoketests/template_tests/helm/Jenkinsfile')
+                            extensions { }  // required as otherwise it may try to tag the repo, which you may not want
+                        }
+                    }
+                }
+            }
+        }
+
+
+    }
+    catch (Exception ex) {
+        println("createSmoktestTemplateHelm() Exception: ${ex.toString()}")
+        return false
+    }
+    return true
+}
+
 
 boolean main()
 {
