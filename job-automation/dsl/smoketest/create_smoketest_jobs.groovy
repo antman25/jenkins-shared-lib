@@ -26,15 +26,15 @@ boolean createSmoktestRoot(String path_prefix)
         }
 
         def create_smoktest_python = createSmoktestTemplatePython(smoketest_root)
-        if (create_smoktest_python)
-        {
+        if (create_smoktest_python) {
             println("createSmoktestRoot() Create smoketest python: SUCCESS")
         }
-        else
-        {
+        else {
             println("createSmoktestRoot() Create smoketest python: FAILURE")
             return false
         }
+
+
     }
     catch (Exception ex) {
         println("createSmoktestRoot() Exception: ${ex.toString()}")
@@ -46,9 +46,10 @@ boolean createSmoktestRoot(String path_prefix)
 boolean createSmoktestTemplatePython(String path_prefix)
 {
     try {
-        pipelineJob("${path_prefix}/${smoketest_podtemplate_python}") {
-            displayName("Test: podTemplate python")
+        pipelineJob("${path_prefix}/template-python") {
+            displayName("podTemplate python")
             description("Exercise python podTemplate")
+
 
             definition {
                 cpsScm {
@@ -57,6 +58,37 @@ boolean createSmoktestTemplatePython(String path_prefix)
                             remote { url(tools_url) }
                             branches(branch_name_raw)
                             scriptPath('smoketests/template_tests/python3/Jenkinsfile')
+                            extensions { }  // required as otherwise it may try to tag the repo, which you may not want
+                        }
+                    }
+                }
+            }
+        }
+
+
+    }
+    catch (Exception ex) {
+        println("createSmoktestTemplatePython() Exception: ${ex.toString()}")
+        return false
+    }
+    return true
+}
+
+boolean createSmoktestTemplateDocker(String path_prefix)
+{
+    try {
+        pipelineJob("${path_prefix}/template-docker") {
+            displayName("podTemplate docker")
+            description("Exercise docker podTemplate")
+
+
+            definition {
+                cpsScm {
+                    scm {
+                        git {
+                            remote { url(tools_url) }
+                            branches(branch_name_raw)
+                            scriptPath('smoketests/template_tests/docker/Jenkinsfile')
                             extensions { }  // required as otherwise it may try to tag the repo, which you may not want
                         }
                     }

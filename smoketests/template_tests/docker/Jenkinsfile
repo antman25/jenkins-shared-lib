@@ -21,7 +21,7 @@ podTemplates.pythonTemplate {
         {
             container('docker')
             {
-                sh 'docker build -f smoketests/template_tests/docker/test_image'
+                sh 'docker build -f smoketests/template_tests/docker/test_image --tag testimage:latest'
             }
         }
     }
