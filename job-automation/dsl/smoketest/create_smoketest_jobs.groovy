@@ -7,18 +7,18 @@ String getPathPrefix(String branch_name, String delivery_branch)
 {
     if (branch_name == delivery_branch)
     {
-        return ""
+        return "${pipeline_root_folder}/${SMOKETEST_PATH}"
     }
     else
     {
-        return "${pipeline_root_folder}/${job_testing_folder}/${branch_name}"
+        return "${pipeline_root_folder}/${job_testing_folder}/${branch_name}/${SMOKETEST_PATH}"
     }
 }
 
 boolean createSmoktestRoot(String path_prefix)
 {
     try {
-        folder("${path_prefix}/${SMOKETEST_ROOT}")
+        folder(path_prefix)
     }
     catch (Exception ex) {
         println("createSmoktestRoot() Exception: ${ex.toString()}")
@@ -30,9 +30,9 @@ boolean createSmoktestRoot(String path_prefix)
 boolean createSmoktestTemplatePython(String path_prefix)
 {
     try {
-        pipelineJob("${path_prefix}/${SMOKETEST_ROOT}/${template_python}") {
-            displayName("000 - Branch Cleanup")
-            description("Run to clean up all branches without an active remote origin")
+        pipelineJob("${path_prefix}/${template_python}") {
+            displayName("Test: podTemplate python")
+            description("Exercise python podTemplate")
 
             if (branch_name != delivery_branch) {
                 disabled()
@@ -44,7 +44,7 @@ boolean createSmoktestTemplatePython(String path_prefix)
                         git {
                             remote { url(tools_url) }
                             branches(branch_name)
-                            scriptPath('job-automation/jenkinsfiles/branch-cleanup/Jenkinsfile')
+                            scriptPath('smoketests/template_tests/python3/Jenkinsfile')
                             extensions { }  // required as otherwise it may try to tag the repo, which you may not want
                         }
                     }
