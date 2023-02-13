@@ -1,6 +1,6 @@
 def call(Map config) {
   container('docker') {
-    def commitTag = config.isMainBranch ? config.commitHash : "${config.branchName}-${config.commitHash}"
+    def commitTag = config.isMainBranch ? config.commitShortHash : "${config.branchNameSafe}-${config.commitShortHash}"
 
     try {
       stage('Build Docker Image') {

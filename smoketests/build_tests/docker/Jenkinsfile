@@ -12,7 +12,7 @@ catch (Exception ex)
 podTemplates.dockerTemplate {
     node(POD_LABEL)
     {
-        config = [:]
+        config = ['registry': 'fake-registry.local', 'repo' : 'fake-repo']
 
         stage ('Clone Code')
         {
@@ -30,7 +30,7 @@ podTemplates.dockerTemplate {
         {
             def test_image = buildDockerImage (config)
             println("test_image: ${test_image}")
-            utils.dumpConfig()
+            utils.dumpConfig(config)
         }
     }
 }
