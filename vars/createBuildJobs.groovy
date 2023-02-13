@@ -25,18 +25,8 @@ def call() {
                         python3 config/build_config.py                         
                        '''
                 }
-                println("Executing command in jnlp container")
-                sh '''
-                    git config --global user.name "jenkins" 
-                    git config --global user.email "jenkins@antlinux.local"
-                    
-                    #SHA=sha256sum config/build_config.py | awk '{print $1}'
-                    #echo "SHA256=${SHA}
-                    git add config/config_test.yaml
-                    
-                    git commit -m "config.yaml built with build_config.py "
-                    git push
-                    '''
+
+                sh 'cat config/config_test.yaml'
             }
 
 
@@ -56,7 +46,8 @@ def call() {
                                                 'tools_url' : "${TOOLS_URL}"]
 
                     jobDsl targets: ['job-automation/dsl/pipeline/create_pipeline_jobs.groovy',
-                                     'job-automation/dsl/tenants/create_tenant_jobs.groovy' ].join('\n'),
+                                     'job-automation/dsl/tenants/create_tenant_jobs.groovy',
+                                     'job-automation/dsl/smoketest/create_smoketest_jobs.groovy' ].join('\n'),
                             removedJobAction: 'DELETE',
                             removedViewAction: 'DELETE',
                             lookupStrategy: 'JENKINS_ROOT',
