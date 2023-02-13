@@ -18,7 +18,7 @@ podTemplates.dockerTemplate {
         {
             checkout scm
 
-            config = utils.getConfig()
+            config += utils.getConfig()
 
             def git_sha = utils.getLongCommit()
             config.commitHash = git_sha
