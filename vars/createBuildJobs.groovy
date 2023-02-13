@@ -15,7 +15,11 @@ def call() {
                 println("Executing command in python3 container")
                 container('python')
                 {
-                    sh 'python3 config/build_config.py'
+                    sh '''
+                       python3 -m venv venv && \
+                       source venv/bin/activate
+                       python3 config/build_config.py                         
+                       '''
                 }
             }
 
