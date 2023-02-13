@@ -82,7 +82,8 @@ def pythonTemplate(Closure body) {
         name: 'python',
         image: 'python:latest',
         command: 'cat',
-        ttyEnabled: true
+        ttyEnabled: true,
+        runAsUser: '1000'
       )
     ]
   ) {
