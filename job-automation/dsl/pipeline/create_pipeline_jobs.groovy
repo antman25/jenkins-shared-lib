@@ -127,7 +127,7 @@ boolean createJobTestFolder(String path_prefix)
     {
         folder("${path_prefix}/${pipeline_root_folder}/${job_testing_folder}")
         {
-            displayName("010 - Job DSL Testing Area")
+            displayName("010 - Testing Area Root")
             description("Spot to test job dsl code prior to delivery")
         }
 
