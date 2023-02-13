@@ -17,12 +17,11 @@ podTemplates.dockerTemplate {
             checkout scm
         }
 
-        stage('Test docker template')
+        stage ('Build Helm Chart')
         {
-            container('docker')
-            {
-                sh 'docker version'
-            }
+            def env_config = utils.getConfig()
+            env_config.dockerImage = "test-image"
+            buildHelmChart (env_config)
         }
     }
 }

@@ -30,6 +30,31 @@ String getPathPrefix(String branch_name, String delivery_branch)
   }
 }
 
+def default_stages(Closure body)
+{
+  return {
+            stage ('Clone Code')
+            {
+                checkout scm
+            }
+
+            stage ('Additional Setup')
+            {
+
+            }
+            body()
+
+            stage ('Code Scan')
+            {
+
+            }
+
+            stage ('Post Cleanup')
+            {
+
+            }
+}
+
 Map getConfig(key = null) {
   // these are the configurable options that can be overridden by passing in config to the
   // run actions. Some also have corresponding environment variables.
