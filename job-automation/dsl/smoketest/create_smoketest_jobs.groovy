@@ -47,6 +47,15 @@ boolean createSmoktestRoot(String path_prefix)
             return false
         }
 
+        def create_smoketest_build_docker = createSmoktestBuildDocker(smoketest_root)
+        if (create_smoketest_build_docker) {
+            println("createSmoktestRoot() Create smoketest buildDockerImage: SUCCESS")
+        }
+        else {
+            println("createSmoktestRoot() Create smoketest buildDockerImage: FAILURE")
+            return false
+        }
+
 
     }
     catch (Exception ex) {
@@ -133,6 +142,37 @@ boolean createSmoktestTemplateHelm(String path_prefix)
                             remote { url(tools_url) }
                             branches(branch_name_raw)
                             scriptPath('smoketests/template_tests/helm/Jenkinsfile')
+                            extensions { }  // required as otherwise it may try to tag the repo, which you may not want
+                        }
+                    }
+                }
+            }
+        }
+
+
+    }
+    catch (Exception ex) {
+        println("createSmoktestTemplateHelm() Exception: ${ex.toString()}")
+        return false
+    }
+    return true
+}
+
+boolean createSmoktestBuildDocker(String path_prefix)
+{
+    try {
+        pipelineJob("${path_prefix}/build-docker") {
+            displayName("buildDockerImage")
+            description("Build Docker Image Test")
+
+
+            definition {
+                cpsScm {
+                    scm {
+                        git {
+                            remote { url(tools_url) }
+                            branches(branch_name_raw)
+                            scriptPath('smoketests/build_tests/docker/Jenkinsfile')
                             extensions { }  // required as otherwise it may try to tag the repo, which you may not want
                         }
                     }

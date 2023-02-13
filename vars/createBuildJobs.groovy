@@ -89,6 +89,13 @@ def call() {
                     }
                 }
 
+                parallel_jobs['build_docker'] = {
+                    stage ('buildDockerImage')
+                    {
+                        build job: "${path_prefix}/${PIPELINE_ROOT}/${SMOKETEST_ROOT}/build-docker"
+                    }
+                }
+
                 parallel (parallel_jobs)
             }
         }

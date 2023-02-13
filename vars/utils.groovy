@@ -68,8 +68,8 @@ Map getConfig(key = null) {
 
   def isDeliveryBranch = branch_name == delivery_branch
 
-  def config = [   branch_name : branch_name,
-                                branch_name_safe : branch_name_safe,
+  def config = [   branchName : branch_name,
+                                branchNameSafe : branch_name_safe,
                                 branchDelivery: branchDelivery,
                                 isDeliveryBranch: isDeliveryBranch,
                                 chartPath : chart_path,
