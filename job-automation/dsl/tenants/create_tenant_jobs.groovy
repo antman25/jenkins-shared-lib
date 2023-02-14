@@ -50,7 +50,7 @@ boolean createTestBranchFolder(String path_prefix)
     return true
 }
 
-boolean createTenantFolder(String path, List<String> perm_groups)
+boolean createTenantFolder(String path_prefix, String tenant_name, List<String> perm_groups)
 {
     try
     {
@@ -67,6 +67,8 @@ boolean createTenantFolder(String path, List<String> perm_groups)
             println("createTenantFolder(): Permission groups was null")
             return false
         }
+
+        def folder_path = "${path_prefix}/${tenant_name}"
 
         folder(path)
         {
@@ -111,7 +113,7 @@ boolean createTenantJobs() {
                     def perm_groups = cur_tenant.get('perm_groups')
                     if (tenant_name != null) {
                         def tenant_root_path = "${path_prefix}/${tenant_name}"
-                        boolean create_root_folder_result = createTenantFolder (tenant_root_path, perm_groups)
+                        boolean create_root_folder_result = createTenantFolder (path_prefix, tenant_name, perm_groups)
                         if (create_root_folder_result == true) {
                             boolean create_buildjobs_root_result = createTentantBuildRoot(tenant_root_path)
 
