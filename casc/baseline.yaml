@@ -5,7 +5,7 @@ credentials:
           - usernamePassword:
               description: "NEXUS_CREDS"
               id: "NEXUS_CREDS"
-              password: "{AQAAABAAAAAQ7H81M3yPhFykPf1Dg5mrLH76Nkro0PzjMor/p3zKQtM=}"
+              password: not-real-password
               scope: GLOBAL
               username: "packer"
           - fileSystemServiceAccountCredential:
