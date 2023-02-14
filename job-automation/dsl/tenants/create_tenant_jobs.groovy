@@ -70,7 +70,7 @@ boolean createTenantFolder(String path_prefix, String tenant_name, List<String> 
 
         def folder_path = "${path_prefix}/${tenant_name}"
 
-        folder(path)
+        folder(folder_path)
         {
             properties {
                 authorizationMatrix {
