@@ -21,10 +21,10 @@ podTemplates.dockerTemplate {
             env_config.dockerImageTag = "${BRANCH_NAME}-${utils.getShortCommit()}"
         }
 
-        stage ('debug')
+        /*stage ('debug')
         {
             sh 'pwd && find . && ls -latr'
-        }
+        }*/
 
         stage ('Build Helm Chart')
         {
