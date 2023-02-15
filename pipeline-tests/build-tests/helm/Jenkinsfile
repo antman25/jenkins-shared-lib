@@ -18,7 +18,7 @@ podTemplates.dockerTemplate {
             checkout scm
             env_config = utils.getConfig()
             env_config.commitHash = utils.getLongCommit()
-            env_config.dockerImage = "${BRANCH_NAME}-${utils.getShortCommit()}"
+            env_config.dockerImageTag = "${BRANCH_NAME}-${utils.getShortCommit()}"
         }
 
         stage ('Build Helm Chart')
