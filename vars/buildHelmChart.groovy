@@ -15,7 +15,7 @@ public static Map loadYaml(String file) {
   def result = [:]
   try {
     def data = readFile file
-    def result = new Yaml().load(data)
+    result = new Yaml().load(data)
   } catch (Exception ex) {
     println("Error:", ex);
   }
