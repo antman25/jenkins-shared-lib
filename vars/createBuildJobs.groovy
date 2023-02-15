@@ -8,6 +8,8 @@ def call() {
             def params = [:]
             String branch_name = env.getEnvironment().getOrDefault('BRANCH_NAME', 'main')
             String sanitized_branch_name = utils.sanitizeBranchName(branch_name)
+
+            String path_prefix = utils.getPathPrefix(branch_name,"${DELIVERY_BRANCH}")
             println("Sanitized branch name: ${sanitized_branch_name}")
 
 
@@ -68,7 +70,7 @@ def call() {
 
             stage ('Test All podTemplates')
             {
-                String path_prefix = utils.getPathPrefix(branch_name,"${DELIVERY_BRANCH}")
+
 
                 pod_template_jobs = [ :]
                 pod_template_jobs['podtemplate_python'] = {
