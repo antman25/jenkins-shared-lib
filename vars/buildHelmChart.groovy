@@ -6,7 +6,7 @@ public static void dumpYaml(Map conf, String file) {
     Writer writer = new OutputStreamWriter(new FileOutputStream(file), "UTF-8");
     yaml.dump(conf, writer);
   } catch (Exception ex) {
-    println("Error:", ex);
+    println("Error: ${ex.toString()}");
   }
 }
 
