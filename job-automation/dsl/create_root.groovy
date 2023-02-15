@@ -13,6 +13,12 @@ boolean createTestingRootFolder()
                 }
             }
         }
+
+        folder("/${job_testing_folder}/${branch_name_safe}")
+        {
+            displayName("${branch_name}")
+            description("Job root for branch: ${branch_name}")
+        }
     }
     catch (Exception ex)
     {
