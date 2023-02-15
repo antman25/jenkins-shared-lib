@@ -4,8 +4,8 @@ def call(Map config) {
 
   stage('Build Helm Chart') {
     if (!fileExists("${config.chartPath}/Chart.yaml")) {
-      echo 'Helm chart not found, skipping'
-      return
+      echo "Helm chart not found at path: ${config.chartPath}/Chart.yaml"
+      sh 'exit  1'
     }
 
     container('helm') {
