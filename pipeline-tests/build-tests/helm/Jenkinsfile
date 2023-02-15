@@ -21,6 +21,11 @@ podTemplates.dockerTemplate {
             env_config.dockerImageTag = "${BRANCH_NAME}-${utils.getShortCommit()}"
         }
 
+        stage ('debug')
+        {
+            sh 'pwd && find .'
+        }
+
         stage ('Build Helm Chart')
         {
              [ 'registry' : 'test-registry',  'repository' : 'test-repo' ]
