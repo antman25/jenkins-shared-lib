@@ -1,8 +1,8 @@
-boolean createTestingRootFolder(String branch_name, String delivery_branch)
+boolean createTestingRootFolder(String path_prefix)
 {
     try
     {
-        folder("/${job_testing_folder}")
+        folder("/${path_prefix}/${job_testing_folder}")
         {
             displayName("010 - Job Testing Area")
             description("This is where a mirrored version of all the jobs in a branch folder for testing purposes")
@@ -16,7 +16,7 @@ boolean createTestingRootFolder(String branch_name, String delivery_branch)
 
         if (branch_name != delivery_branch)
         {
-            folder("/${job_testing_folder}/${branch_name}")
+            folder("/${path_prefix}/${job_testing_folder}/${branch_name}")
             {
                 displayName("${branch_name_raw}")
                 description("Job root for branch: ${branch_name_raw}")
