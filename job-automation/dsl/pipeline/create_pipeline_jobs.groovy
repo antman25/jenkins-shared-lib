@@ -152,14 +152,14 @@ boolean createJobTestingRootFolder()
     {
         folder("/${job_testing_folder}")
         {
-            displayName("000 - Pipeline Devel Jobs")
-            description("Spot to test job dsl code prior to delivery")
+            displayName("000 - Pipeline Job Testing")
+            description("Spot to test job dsl and Jenkinsfiles code prior to delivery")
         }
 
     }
     catch (Exception ex)
     {
-        println("createJobTestFolder() Exception: ${ex.toString()}")
+        println("createJobTestingRootFolder() Exception: ${ex.toString()}")
         return false
     }
 
@@ -184,6 +184,16 @@ boolean main()
         return false
     }
 
+    boolean create_root_result = createPipelineRootFolder(path_prefix)
+    if (create_root_result == true) {
+        println("Create pipeline root folder: SUCCESS")
+    }
+    else
+    {
+        println("Create pipeline root folder: FAILURE")
+        return false
+    }
+
     /*boolean create_deploy_job_result = createDeployJob(path_prefix)
     if (create_deploy_job_result)
     {
@@ -195,15 +205,7 @@ boolean main()
         return false
     }
 
-    boolean create_root_result = createPipelineRootFolder(path_prefix)
-    if (create_root_result == true) {
-        println("Create pipeline root folder: SUCCESS")
-    }
-    else
-    {
-        println("Create pipeline root folder: FAILURE")
-        return false
-    }*/
+    */
     return true
 }
 
