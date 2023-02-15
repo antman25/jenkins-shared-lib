@@ -27,7 +27,7 @@ boolean main()
 {
     boolean is_delivery_branch = branch_name == delivery_branch
 
-    boolean create_job_test_root_result = createJobTestingRootFolder(is_delivery_branch)
+    boolean create_job_test_root_result = createJobTestingRootFolder()
     if (create_job_test_root_result) {
         println("Create Job Testing Root: SUCCESS")
     }
