@@ -1,8 +1,9 @@
 import groovy.transform.Field
+@Field final String PIPELINE_PATH = 'pipeline'
 
-String getPathPrefix(boolean main_branch)
+String getPathPrefix(boolean is_delivery_branch)
 {
-    if (main_branch == true)
+    if (is_delivery_branch == true)
     {
         return ""
     }
@@ -37,30 +38,7 @@ boolean createPipelineRootFolder(String path_prefix)
     return true
 }
 
-boolean createTestingRootFolder()
-{
-    try
-    {
-        folder("${path_prefix}/${job_testing_folder}")
-        {
-            displayName("000 - Pipeline Admin")
-            description("Pipeline Admin jobs Area")
 
-            properties {
-                authorizationMatrix {
-                    inheritanceStrategy { nonInheriting() }
-                }
-            }
-        }
-    }
-    catch (Exception ex)
-    {
-        println("createPipelineRoot() Exception: ${ex.toString()}")
-        return false
-    }
-
-    return true
-}
 
 boolean createDeployJob(String path_prefix)
 {
