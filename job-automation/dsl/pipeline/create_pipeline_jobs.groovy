@@ -43,6 +43,31 @@ boolean createPipelineRootFolder(String path_prefix)
     return true
 }
 
+boolean createTestingRootFolder()
+{
+    try
+    {
+        folder("${path_prefix}/${pipeline_root_folder}")
+                {
+                    displayName("000 - Pipeline Admin")
+                    description("Pipeline Admin jobs Area")
+
+                    properties {
+                        authorizationMatrix {
+                            inheritanceStrategy { nonInheriting() }
+                        }
+                    }
+                }
+    }
+    catch (Exception ex)
+    {
+        println("createPipelineRoot() Exception: ${ex.toString()}")
+        return false
+    }
+
+    return true
+}
+
 boolean createDeployJob(String path_prefix)
 {
     try
@@ -121,37 +146,16 @@ boolean createDeployJob(String path_prefix)
     return true
 }
 
-boolean createJobTestFolder()
+boolean createJobTestingRootFolder()
 {
     try
     {
         folder("/${job_testing_folder}")
         {
-            displayName("010 - Testing Area Root")
+            displayName("000 - Pipeline Devel Jobs")
             description("Spot to test job dsl code prior to delivery")
         }
 
-        /*pipelineJob("${path_prefix}/${pipeline_root_folder}/${job_testing_folder}/branch-cleanup") {
-            displayName("000 - Branch Cleanup")
-            description("Run to clean up all branches without an active remote origin")
-
-            if (branch_name != delivery_branch) {
-                disabled()
-            }
-
-            definition {
-                cpsScm {
-                    scm {
-                        git {
-                            remote { url(tools_url) }
-                            branches(branch_name)
-                            scriptPath('job-automation/jenkinsfiles/branch-cleanup/Jenkinsfile')
-                            extensions { }  // required as otherwise it may try to tag the repo, which you may not want
-                        }
-                    }
-                }
-            }
-        }*/
     }
     catch (Exception ex)
     {
@@ -166,6 +170,19 @@ boolean main()
 {
     boolean is_delivery_branch = branch_name == delivery_branch
     String path_prefix = getPathPrefix(is_delivery_branch)
+
+
+
+    boolean create_job_test_root_result = createJobTestingRootFolder()
+    if (create_job_test_root_result)
+    {
+        println("Create Job Testing Root: SUCCESS")
+    }
+    else
+    {
+        println("Create Job Testing Root: FAILURE")
+        return false
+    }
 
     boolean create_deploy_job_result = createDeployJob(path_prefix)
     if (create_deploy_job_result)
