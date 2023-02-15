@@ -21,10 +21,10 @@ podTemplates.helmTemplate {
             env_config.dockerImageTag = "${BRANCH_NAME}-${utils.getShortCommit()}"
         }
 
-        /*stage ('debug')
+        stage ('debug')
         {
-            sh 'pwd && find . && ls -latr'
-        }*/
+            sh 'ls -latrR *'
+        }
 
         stage ('Build Helm Chart')
         {
