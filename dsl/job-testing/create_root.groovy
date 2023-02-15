@@ -1,18 +1,17 @@
-String getPathPrefix(boolean is_delivery_branch)
-{
-    if (is_delivery_branch == true)
-    {
+String getPathPrefix(boolean is_delivery_branch) {
+    if (is_delivery_branch == true) {
         return ""
     }
-    else
-    {
+    else {
         return "/${job_testing_folder}/${branch_name}"
     }
 }
 
-
-boolean createTestingRootFolder(String path_prefix)
+boolean main()
 {
+    //boolean is_delivery_branch = branch_name == delivery_branch
+    String path_prefix = getPathPrefix(is_delivery_branch)
+
     try
     {
         folder("${path_prefix}/${job_testing_folder}")
@@ -38,24 +37,7 @@ boolean createTestingRootFolder(String path_prefix)
     }
     catch (Exception ex)
     {
-        println("createPipelineRoot() Exception: ${ex.toString()}")
-        return false
-    }
-
-    return true
-}
-
-boolean main()
-{
-    boolean is_delivery_branch = branch_name == delivery_branch
-    String path_prefix = getPathPrefix(is_delivery_branch)
-
-    boolean create_job_test_root_result = createTestingRootFolder(path_prefix)
-    if (create_job_test_root_result) {
-        println("Create Job Testing Root: SUCCESS")
-    }
-    else {
-        println("Create Job Testing Root: FAILURE")
+        println("Exception: ${ex.toString()}")
         return false
     }
 

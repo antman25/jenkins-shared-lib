@@ -49,6 +49,9 @@ boolean main()
         templatePipelineJob("${path_prefix}/${TEST_PIPELINE_PATH}/pod-template-python3", "podTemplate: pythonTemplate", "pipeline-tests/template_tests/python3/Jenkinsfile")
         templatePipelineJob("${path_prefix}/${TEST_PIPELINE_PATH}/pod-template-docker", "podTemplate: dockerTemplate", "pipeline-tests/template_tests/docker/Jenkinsfile")
         templatePipelineJob("${path_prefix}/${TEST_PIPELINE_PATH}/pod-template-helm", "podTemplate: helmTemplate", "pipeline-tests/template_tests/helm/Jenkinsfile")
+
+        templatePipelineJob("${path_prefix}/${TEST_PIPELINE_PATH}/build-docker", "buildDockerImage", "pipeline-tests/template_tests/helm/Jenkinsfile")
+
     }
     catch (Exception ex) {
         println("createPodTemplateTests() Exception: ${ex.toString()}")

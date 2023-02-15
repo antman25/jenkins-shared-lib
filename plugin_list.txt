@@ -1,0 +1,11 @@
+blue ocean
+ldap
+kubernetes client
+job dsl
+bitbucket branch source
+vault
+matrix auth
+stage view
+
+# not sure
+Kubernetes CLI Plugin??

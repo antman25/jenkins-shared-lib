@@ -47,13 +47,13 @@ def call() {
                                 'workspace_path' : "${WORKSPACE}",
                                 'tools_url' : "${TOOLS_URL}" ]
                     //'job-automation/dsl/tenants/create_tenant_jobs.groovy',
-                    //                                     'job-automation/dsl/smoketest/create_podtemplate_test_jobs.groovy'
+                    //                                     'job-automation/dsl/smoketest/create_test_jobs.groovy'
                     //
                     jobDsl targets: ['dsl/main_deploy_job.groovy',
                                      'dsl/jenkins-admin/create_jobs.groovy',
                                      'dsl/job-testing/create_root.groovy',
                                      'dsl/test-pipelines/create_root.groovy',
-                                     'dsl/test-pipelines/create_podtemplate_test_jobs.groovy'
+                                     'dsl/test-pipelines/create_test_jobs.groovy'
                                      ].join('\n'),
                             removedJobAction: 'DELETE',
                             removedViewAction: 'DELETE',
