@@ -16,12 +16,6 @@ boolean createPipelineRootFolder(String path_prefix)
 {
     try
     {
-        if (path_prefix != "")
-        {
-            folder("${path_prefix}")
-        }
-
-
         folder("${path_prefix}/${pipeline_root_folder}")
         {
             displayName("000 - Pipeline Admin")
@@ -152,10 +146,15 @@ boolean createJobTestingRootFolder()
     {
         folder("/${job_testing_folder}")
         {
-            displayName("000 - Pipeline Job Testing")
+            displayName("999 - Pipeline Job Testing")
             description("Spot to test job dsl and Jenkinsfiles code prior to delivery")
         }
 
+        folder("/${job_testing_folder}/${branch_name_safe}")
+        {
+            displayName(branch_name_safe)
+            description("Job root for branch: ${branch_name_safe}")
+        }
     }
     catch (Exception ex)
     {
