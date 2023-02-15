@@ -3,11 +3,17 @@ credentials:
     domainCredentials:
       - credentials:
           - usernamePassword:
-              description: "NEXUS_CREDS"
-              id: "NEXUS_CREDS"
+              description: "ARITIFACTORY_CRED"
+              id: "ARTIFACTORY_CRED"
               password: not-real-password
               scope: GLOBAL
-              username: "packer"
+              username: "jenkins"
+          - usernamePassword:
+              description: "BITBUCKET_CRED"
+              id: "BITBUCKET_CRED"
+              password: not-real-password
+              scope: GLOBAL
+              username: "jenkins"
           - fileSystemServiceAccountCredential:
               id: "4b4a14ec-77fd-4a82-b1f3-0d9154b2f44c"
               scope: GLOBAL
