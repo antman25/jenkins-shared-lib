@@ -44,7 +44,6 @@ boolean createDeployJob(String path_prefix)
 {
     try
     {
-        def tools_url = getBinding().getVariables().getOrDefault('TOOLS_URL', 'NotSet')
         def desc = "Runs all the JobDSL for job deployment"
         def main_branch = branch_name == delivery_branch
         multibranchPipelineJob("${path_prefix}/${PIPELINE_PATH}/deploy-devel-jobs")

@@ -14,10 +14,10 @@ boolean createTestingRootFolder()
             }
         }
 
-        folder("/${job_testing_folder}/${branch_name_safe}")
+        folder("/${job_testing_folder}/${branch_name}")
         {
-            displayName("${branch_name}")
-            description("Job root for branch: ${branch_name}")
+            displayName("${branch_name_raw}")
+            description("Job root for branch: ${branch_name_raw}")
         }
     }
     catch (Exception ex)
