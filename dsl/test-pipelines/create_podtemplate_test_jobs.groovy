@@ -42,7 +42,8 @@ void templatePipelineJob(String job_path, String display_name, String jenkinsfil
 
 boolean main()
 {
-    String path_prefix = getPathPrefix(branch_name, delivery_branch)
+    boolean is_delivery_branch = branch_name == delivery_branch
+    String path_prefix = getPathPrefix(is_delivery_branch)
 
     try {
         templatePipelineJob("${path_prefix}/${TEST_PIPELINE_PATH}/pod-template-python3", "pythonTemplate", "pipeline-tests/template_tests/python3/Jenkinsfile")
