@@ -50,6 +50,7 @@ def call(Map config, String chart_root_path) {
         //yaml.dump(chartProps, writerChart);
 
         //dumpYaml(chartProps, 'Chart.yaml')
+        sh "touch ${WORKSPACE}/Chart2.yaml"
         Writer writer = new OutputStreamWriter(new FileOutputStream("${WORKSPACE}/Chart2.yaml"), "UTF-8");
         yaml.dump(chartProps, writer);
 
