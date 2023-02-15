@@ -79,7 +79,7 @@ Map getConfig(key = null) {
     String dockerfile_path = env.getEnvironment().getOrDefault('DOCKERFILE_PATH', '.')
     String agent_pvc_name = env.getEnvironment().getOrDefault('AGENT_PVC_NAME', 'jenkins-agent-pvc')
     String pipeline_root = env.getEnvironment().getOrDefault('PIPELINE_ROOT', 'pipeline-root')
-    String tenant = "NotSet";
+    String tenant = "default";
 
     withFolderProperties {
         tenant = "${env.TENANT}"
@@ -89,7 +89,7 @@ Map getConfig(key = null) {
                                 branchDelivery: delivery_branch,
                                 isDeliveryBranch: branch_name == delivery_branch,
                                 tenant : tenant,
-                                helmCredentiasl : "${tenant_ARTIFACTORY_CRED}",
+                                helmCredentiasl : "${tenant}_ARTIFACTORY_CRED}",
                                 dockerfilePath: dockerfile_path,
                                 agentPvcName: agent_pvc_name,
                                 folderPipelineRoot: pipeline_root
