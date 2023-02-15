@@ -51,6 +51,7 @@ def call(Map config, String chart_root_path) {
 
         //dumpYaml(chartProps, 'Chart.yaml')
         sh "touch ${WORKSPACE}/Chart2.yaml"
+        sh 'ls -latr'
         //Writer writer = new OutputStreamWriter(new FileOutputStream("${WORKSPACE}/Chart2.yaml"), "UTF-8");
         //yaml.dump(chartProps, writer);
 
