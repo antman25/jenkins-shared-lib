@@ -1,6 +1,6 @@
 import org.yaml.snakeyaml.Yaml
 
-public static void dumpYaml(Map conf, String file) {
+void dumpYaml(Map conf, String file) {
   Yaml yaml = new Yaml();
   try {
     Writer writer = new OutputStreamWriter(new FileOutputStream(file), "UTF-8");
@@ -38,13 +38,13 @@ def call(Map config, String chart_root_path) {
         sh 'mkdir test'
         sh 'pwd && find . && ls -latr'
         //chartProps = readYaml file: ''
-        //def chart_data = readFile 'Chart.yaml'
-        //chartProps = new Yaml().load(chart_data)
-        chartProps = loadYaml('Chart.yaml')
+        def chart_data = readFile 'Chart.yaml'
+        chartProps = new Yaml().load(chart_data)
+        //chartProps = loadYaml('Chart.yaml')
 
         chartProps.version = "${chartProps.version}-${config.dockerImageTag}"
         chartProps.appVersion = config.dockerImageTag
-        println("ChartProts: ${chartProps}")
+        println("ChartProps: ${chartProps}")
         //writeYaml file: 'Chart.yaml', data: chartProps, overwrite: true
         //FileWriter writerChart = new FileWriter("test/Chart2.yaml");
         //yaml.dump(chartProps, writerChart);
