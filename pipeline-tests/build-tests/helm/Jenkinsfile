@@ -9,7 +9,7 @@ catch (Exception ex)
     library "jenkins-shared-lib@main"
 }
 
-podTemplates.dockerTemplate {
+podTemplates.HelmTemplate {
     node(POD_LABEL)
     {
         def env_config = [:]
