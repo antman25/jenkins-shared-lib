@@ -45,11 +45,11 @@ boolean createDeployJob(String path_prefix)
     try
     {
         def desc = "Runs all the JobDSL for job deployment"
-        def main_branch = branch_name == delivery_branch
+        def is_delivery_branch = branch_name == delivery_branch
         multibranchPipelineJob("${path_prefix}/${PIPELINE_PATH}/deploy-devel-jobs")
         {
             displayName("000 - Deploy Development Jenkins Jobs")
-            if (main_branch) {
+            if (is_delivery_branch) {
                 description(desc)
             }
             else {
@@ -76,7 +76,7 @@ boolean createDeployJob(String path_prefix)
                         allBranchesSame {
                             props {
                                 suppressAutomaticTriggering {
-                                    if (main_branch) {
+                                    if (is_delivery_branch) {
                                         triggeredBranchesRegex ('^(.*main).*$')
                                     }
                                     else {

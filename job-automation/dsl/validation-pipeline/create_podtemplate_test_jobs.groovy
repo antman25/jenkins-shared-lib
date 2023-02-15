@@ -1,12 +1,15 @@
-String getPathPrefix(String branch_name, String delivery_branch)
+import groovy.transform.Field
+@Field final String VALIDIATION_PATH = 'validation'
+
+String getPathPrefix(boolean is_delivery_branch)
 {
-    if (branch_name == delivery_branch)
+    if (is_delivery_branch == true)
     {
         return ""
     }
     else
     {
-        return "${job_testing_folder}/${branch_name}"
+        return "/${job_testing_folder}/${branch_name}"
     }
 }
 
