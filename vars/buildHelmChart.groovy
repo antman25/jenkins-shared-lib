@@ -11,6 +11,7 @@ def call(Map config, String chart_root_path) {
 
     container('helm') {
       dir(chart_root_path) {
+        sh 'pwd && find . && ls -latr'
         //chartProps = readYaml file: ''
         def chart_data = readFile 'Chart.yaml'
         def chartProps = new Yaml().load(chart_data)
