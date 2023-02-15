@@ -29,7 +29,7 @@ boolean createTestingRootFolder(String path_prefix)
 
         if (branch_name != delivery_branch)
         {
-            folder("/${path_prefix}/${job_testing_folder}/${branch_name}")
+            folder("${path_prefix}/${job_testing_folder}/${branch_name}")
             {
                 displayName("${branch_name_raw}")
                 description("Job root for branch: ${branch_name_raw}")
