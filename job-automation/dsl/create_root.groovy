@@ -1,4 +1,4 @@
-boolean createTestingRootFolder()
+boolean createTestingRootFolder(boolean is_delivery_branch)
 {
     try
     {
@@ -14,10 +14,13 @@ boolean createTestingRootFolder()
             }
         }
 
-        folder("/${job_testing_folder}/${branch_name}")
+        if (is_delivery_branch == false)
         {
-            displayName("${branch_name_raw}")
-            description("Job root for branch: ${branch_name_raw}")
+            folder("/${job_testing_folder}/${branch_name}")
+            {
+                displayName("${branch_name_raw}")
+                description("Job root for branch: ${branch_name_raw}")
+            }
         }
     }
     catch (Exception ex)
@@ -33,7 +36,7 @@ boolean main()
 {
     boolean is_delivery_branch = branch_name == delivery_branch
 
-    boolean create_job_test_root_result = createTestingRootFolder()
+    boolean create_job_test_root_result = createTestingRootFolder(is_delivery_branch)
     if (create_job_test_root_result) {
         println("Create Job Testing Root: SUCCESS")
     }
