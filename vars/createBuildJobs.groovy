@@ -66,7 +66,7 @@ def call() {
                 }
             }
 
-            stage ('Smoketest podTemplates')
+            stage ('Test All podTemplates')
             {
                 String path_prefix = utils.getPathPrefix(branch_name,"${DELIVERY_BRANCH}")
 
@@ -93,6 +93,10 @@ def call() {
                 }
 
                 parallel (pod_template_jobs)
+            }
+
+            stage('Test All build steps')
+            {
                 build_step_jobs = [:]
 
                 build_step_jobs['build_docker'] = {
@@ -110,8 +114,8 @@ def call() {
                 }
 
                 parallel(build_step_jobs)
-
             }
+
         }
     }
 }
