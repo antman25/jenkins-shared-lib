@@ -1,8 +1,6 @@
 import org.yaml.snakeyaml.Yaml
 
 def call(Map config, String chart_root_path) {
-  def chartProps
-
   stage('Build Helm Chart') {
 
     if (!fileExists("${chart_root_path}/Chart.yaml")) {
@@ -35,14 +33,14 @@ def call(Map config, String chart_root_path) {
       }
 
       // todo: bake this helm-push installation into custom Docker image, add push plugin
-      sh '''
+      /*sh '''
         apk --no-cache add git curl
         helm plugin install https://github.com/chartmuseum/helm-push
         apk del git
         rm -f /var/cache/apk/*
-      '''
+      '''*/
 
-      withFolderProperties {
+      /*withFolderProperties {
         withCredentials([
                 usernamePassword(usernameVariable: '$REPO_USER', passwordVariable: 'REPO_PASS', credentialsId: config.helmCredentials)
         ]) {
@@ -58,7 +56,7 @@ def call(Map config, String chart_root_path) {
           }
         }
       }
-    }
+    }*/
     return [name: chartProps.name, version: chartProps.version, repository: config.helmRepoUrl]
   }
 }
