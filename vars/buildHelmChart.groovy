@@ -48,8 +48,10 @@ def call(Map config, String chart_root_path) {
         //writeYaml file: 'Chart.yaml', data: chartProps, overwrite: true
         //FileWriter writerChart = new FileWriter("test/Chart2.yaml");
         //yaml.dump(chartProps, writerChart);
-        dumpYaml(chartProps, 'Chart.yaml')
 
+        //dumpYaml(chartProps, 'Chart.yaml')
+        Writer writer = new OutputStreamWriter(new FileOutputStream('Chart.yaml'), "UTF-8");
+        yaml.dump(chartProps, writer);
 
         //def valuesProps = readYaml file: 'values.yaml'
         //def values_data = readFile 'values.yaml'
