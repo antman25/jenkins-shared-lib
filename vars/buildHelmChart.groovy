@@ -1,5 +1,15 @@
 import org.yaml.snakeyaml.Yaml
 
+public static void dumpYaml(Map conf, String file) {
+  Yaml yaml = new Yaml();
+  try {
+    Writer writer = new OutputStreamWriter(new FileOutputStream(file), "UTF-8");
+    yaml.dump(conf, writer);
+  } catch (Exception ex) {
+    LOG.error("Error:", ex);
+  }
+}
+
 def call(Map config, String chart_root_path) {
 
   stage('Build Helm Chart') {
@@ -21,8 +31,10 @@ def call(Map config, String chart_root_path) {
         chartProps.appVersion = config.dockerImageTag
         println("ChartProts: ${chartProps}")
         //writeYaml file: 'Chart.yaml', data: chartProps, overwrite: true
-        FileWriter writerChart = new FileWriter("test/Chart2.yaml");
-        yaml.dump(chartProps, writerChart);
+        //FileWriter writerChart = new FileWriter("test/Chart2.yaml");
+        //yaml.dump(chartProps, writerChart);
+        dumpYaml(chartProps, 'Chart.yaml')
+
 
         //def valuesProps = readYaml file: 'values.yaml'
         def values_data = readFile 'values.yaml'
