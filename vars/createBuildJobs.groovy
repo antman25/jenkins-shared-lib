@@ -40,14 +40,13 @@ def call() {
 
 
                     params = [ 'config_yaml' : config_yaml,
-                                'branch_name' : branch_name,
-                                'branch_name_safe' : sanitized_branch_name,
+                                'branch_name' : sanitized_branch_name,
+                                'branch_name_raw' : "${BRANCH_NAME}",
                                 'delivery_branch' : "${DELIVERY_BRANCH}",
                                 'pipeline_root_folder' : "${PIPELINE_ROOT}",
                                 'job_testing_folder' : "${JOB_TESTING_ROOT}",
                                 'workspace_path' : "${WORKSPACE}",
-                                'tools_url' : "${TOOLS_URL}",
-                                'smoketest_podtemplate_python' : 'template-test-python']
+                                'tools_url' : "${TOOLS_URL}" ]
                     //'job-automation/dsl/tenants/create_tenant_jobs.groovy',
                     //                                     'job-automation/dsl/smoketest/create_smoketest_jobs.groovy'
                     jobDsl targets: ['job-automation/dsl/pipeline/create_pipeline_jobs.groovy',
