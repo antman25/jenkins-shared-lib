@@ -1,4 +1,3 @@
-blue ocean
 ldap
 kubernetes client
 job dsl
