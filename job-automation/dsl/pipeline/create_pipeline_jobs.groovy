@@ -16,11 +16,6 @@ boolean createPipelineRootFolder(String path_prefix)
 {
     try
     {
-        folder(pipeline_root_folder)
-        {
-            displayName("000 - Pipeline")
-        }
-
         if (path_prefix != "")
         {
             folder("${path_prefix}")
@@ -172,30 +167,20 @@ boolean main()
     boolean is_delivery_branch = branch_name == delivery_branch
     String path_prefix = getPathPrefix(is_delivery_branch)
 
+    boolean create_deploy_job_result = createDeployJob(path_prefix)
+    if (create_deploy_job_result)
+    {
+        println("Create deploy job: SUCCESS")
+    }
+    else
+    {
+        println("Create deploy job: FAILURE")
+        return false
+    }
+
     boolean create_root_result = createPipelineRootFolder(path_prefix)
     if (create_root_result == true) {
         println("Create pipeline root folder: SUCCESS")
-        /*boolean create_deploy_job_result = createDeployJob(path_prefix)
-        if (create_deploy_job_result)
-        {
-            println("Create deploy job: SUCCESS")
-        }
-        else
-        {
-            println("Create deploy job: FAILURE")
-            return false
-        }
-
-        boolean create_job_testing_result = createJobTestFolder()
-        if (create_job_testing_result)
-        {
-            println("Create job testing folder: SUCCESS")
-        }
-        else
-        {
-            println("Create job testing folder: FAILURE")
-            return false
-        }*/
     }
     else
     {
