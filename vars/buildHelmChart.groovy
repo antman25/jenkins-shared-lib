@@ -37,8 +37,9 @@ def call(Map config, String chart_root_path) {
         sh 'mkdir test'
         sh 'pwd && find . && ls -latr'
         //chartProps = readYaml file: ''
-        def chart_data = readFile 'Chart.yaml'
-        def chartProps = new Yaml().load(chart_data)
+        //def chart_data = readFile 'Chart.yaml'
+        //new Yaml().load(chart_data)
+        def chartProps = loadYaml('Chart.yaml')
 
         chartProps.version = "${chartProps.version}-${config.dockerImageTag}"
         chartProps.appVersion = config.dockerImageTag
@@ -55,8 +56,7 @@ def call(Map config, String chart_root_path) {
 
         valuesProps.image.repository = "testrepoval"
         //writeYaml file: 'values.yaml', data: valuesProps, overwrite: true
-        FileWriter writerValues = new FileWriter("values.yaml");
-        yaml.dump(valuesProps, writerValues);
+        dumpYaml(valuesProps, 'values.yaml')
         sh "helm lint ."
       }
 
