@@ -16,6 +16,7 @@ def helmTemplate(Closure body) {
         image: 'alpine/helm:3.5.0',
         command: 'cat',
         ttyEnabled: true,
+        runAsUser: '0',
         envVars: [
           envVar(key: 'HOME', value: '/tmp') // Temporarily setting this so the helm-push plugin and helm repos aren't cached
         ]
