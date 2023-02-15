@@ -32,8 +32,9 @@ boolean createTestPipelineRoot(String path_prefix)
 
 boolean main()
 {
-    String path_prefix = getPathPrefix(branch_name, delivery_branch)
     boolean is_delivery_branch = branch_name == delivery_branch
+    String path_prefix = getPathPrefix(is_delivery_branch)
+
 
     boolean create_test_pipeline_root = createTestPipelineRoot(path_prefix)
     if (create_test_pipeline_root) {
