@@ -1,3 +1,4 @@
+import org.yaml.snakeyaml.Yaml
 
 def call(Map config, String chart_root_path) {
   def chartProps
@@ -11,13 +12,25 @@ def call(Map config, String chart_root_path) {
 
     container('helm') {
       dir(chart_root_path) {
-        chartProps = readYaml file: 'Chart.yaml'
+        //chartProps = readYaml file: ''
+        def chart_data = readFile 'Chart.yaml'
+        def chartProps = new Yaml().load(chart_data)
+
         chartProps.version = "${chartProps.version}-${config.dockerImage.tag}"
         chartProps.appVersion = config.dockerImage.tag
-        writeYaml file: 'Chart.yaml', data: chartProps, overwrite: true
-        def valuesProps = readYaml file: 'values.yaml'
+
+        //writeYaml file: 'Chart.yaml', data: chartProps, overwrite: true
+        FileWriter writerChart = new FileWriter("Chart.yaml");
+        yaml.dump(chartProps, writerChart);
+
+        //def valuesProps = readYaml file: 'values.yaml'
+        def values_data = readFile 'values.yaml'
+        def valuesProps = new Yaml().load(values_data)
+
         valuesProps.image.repository = config.dockerImage.name
-        writeYaml file: 'values.yaml', data: valuesProps, overwrite: true
+        //writeYaml file: 'values.yaml', data: valuesProps, overwrite: true
+        FileWriter writerValues = new FileWriter("values.yaml");
+        yaml.dump(valuesProps, writerValues);
         sh "helm lint ."
       }
 
