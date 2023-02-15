@@ -1,5 +1,5 @@
 import groovy.transform.Field
-@Field final String VALIDIATION_PATH = 'validation'
+@Field final String TEST_PIPELINE_PATH = 'test-pipeline'
 
 String getPathPrefix(boolean is_delivery_branch)
 {
@@ -13,18 +13,18 @@ String getPathPrefix(boolean is_delivery_branch)
     }
 }
 
-boolean createValidiationRoot(String path_prefix)
+boolean createTestPipelineRoot(String path_prefix)
 {
     try {
-        def validation_root ="${path_prefix}/${VALIDIATION_PATH}"
-        folder(validation_root)
+        def pipeline_test_root ="${path_prefix}/${TEST_PIPELINE_PATH}"
+        folder(pipeline_test_root)
         {
-            displayName ('030 - Smoketests')
-            description("Job location of shared-lib smoke tests")
+            displayName ('030 - SharedLib Test Pipelines')
+            description("Job location of shared-lib tests")
         }
     }
     catch (Exception ex) {
-        println("createSmoktestRoot() Exception: ${ex.toString()}")
+        println("createTestPipelineRoot() Exception: ${ex.toString()}")
         return false
     }
     return true
@@ -35,13 +35,13 @@ boolean main()
     String path_prefix = getPathPrefix(branch_name, delivery_branch)
     boolean is_delivery_branch = branch_name == delivery_branch
 
-    boolean create_smoketest_root = createSmoktestRoot(path_prefix)
-    if (create_smoketest_root) {
-        println("Create Smoketest Root: SUCCESS")
+    boolean create_test_pipeline_root = createTestPipelineRoot(path_prefix)
+    if (create_test_pipeline_root) {
+        println("Create Test Pipeline Root: SUCCESS")
     }
     else
     {
-        println("Create Smoketest Root: FAILURE")
+        println("Create Test Pipeline Root: FAILURE")
         return false
     }
     return true
