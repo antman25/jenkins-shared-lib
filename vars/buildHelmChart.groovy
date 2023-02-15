@@ -53,7 +53,7 @@ def call(Map config, String chart_root_path) {
         def values_data = readFile 'values.yaml'
         def valuesProps = new Yaml().load(values_data)
 
-        valuesProps.image.repository = config.dockerImage.name
+        valuesProps.image.repository = "testrepoval"
         //writeYaml file: 'values.yaml', data: valuesProps, overwrite: true
         FileWriter writerValues = new FileWriter("values.yaml");
         yaml.dump(valuesProps, writerValues);
