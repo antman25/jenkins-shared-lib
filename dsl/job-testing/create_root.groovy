@@ -9,7 +9,7 @@ String getPathPrefix(boolean is_delivery_branch) {
 
 boolean main()
 {
-    //boolean is_delivery_branch = branch_name == delivery_branch
+    boolean is_delivery_branch = branch_name == delivery_branch
     String path_prefix = getPathPrefix(is_delivery_branch)
 
     try
