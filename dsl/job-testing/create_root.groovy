@@ -1,3 +1,16 @@
+String getPathPrefix(boolean is_delivery_branch)
+{
+    if (is_delivery_branch == true)
+    {
+        return ""
+    }
+    else
+    {
+        return "/${job_testing_folder}/${branch_name}"
+    }
+}
+
+
 boolean createTestingRootFolder(String path_prefix)
 {
     try
