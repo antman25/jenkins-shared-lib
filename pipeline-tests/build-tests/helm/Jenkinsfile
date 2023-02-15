@@ -23,7 +23,7 @@ podTemplates.dockerTemplate {
 
         stage ('debug')
         {
-            sh 'pwd && find .'
+            sh 'pwd && find . && ls -latr'
         }
 
         stage ('Build Helm Chart')
