@@ -10,6 +10,18 @@ public static void dumpYaml(Map conf, String file) {
   }
 }
 
+public static Map loadYaml(String file) {
+  Yaml yaml = new Yaml();
+  try {
+    def data = readFile file
+    def yaml_data = new Yaml().load(data)
+  } catch (Exception ex) {
+    println("Error:", ex);
+  }
+  return yaml_data
+}
+
+
 def call(Map config, String chart_root_path) {
 
   stage('Build Helm Chart') {
