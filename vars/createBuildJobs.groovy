@@ -49,9 +49,9 @@ def call() {
                     //'job-automation/dsl/tenants/create_tenant_jobs.groovy',
                     //                                     'job-automation/dsl/smoketest/create_podtemplate_test_jobs.groovy'
                     //
-                    jobDsl targets: ['job-automation/dsl/create_root.groovy',
-                                     'job-automation/dsl/jenkins-admin/create_jenkins_admin_jobs.groovy',
-                                     'job-automation/dsl/test-pipelines/create_root.groovy'
+                    jobDsl targets: ['dsl/create_root.groovy',
+                                     'dsl/jenkins-admin/create_jenkins_admin_jobs.groovy',
+                                     'dsl/test-pipelines/create_root.groovy'
                                      ].join('\n'),
                             removedJobAction: 'DELETE',
                             removedViewAction: 'DELETE',
