@@ -38,8 +38,8 @@ def call(Map config, String chart_root_path) {
         sh 'mkdir test'
         sh 'pwd && find . && ls -latr'
         //chartProps = readYaml file: ''
-        def chart_data = readFile 'Chart.yaml'
-        chartProps = new Yaml().load(chart_data)
+        //def chart_data = readFile 'Chart.yaml'
+        //chartProps = new Yaml().load(chart_data)
         //chartProps = loadYaml('Chart.yaml')
 
         chartProps.version = "${chartProps.version}-${config.dockerImageTag}"
@@ -51,8 +51,8 @@ def call(Map config, String chart_root_path) {
 
         //dumpYaml(chartProps, 'Chart.yaml')
         sh "touch ${WORKSPACE}/Chart2.yaml"
-        Writer writer = new OutputStreamWriter(new FileOutputStream("${WORKSPACE}/Chart2.yaml"), "UTF-8");
-        yaml.dump(chartProps, writer);
+        //Writer writer = new OutputStreamWriter(new FileOutputStream("${WORKSPACE}/Chart2.yaml"), "UTF-8");
+        //yaml.dump(chartProps, writer);
 
         //def valuesProps = readYaml file: 'values.yaml'
         //def values_data = readFile 'values.yaml'
