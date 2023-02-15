@@ -171,7 +171,7 @@ tool:
     settingsProvider: "standard"
 jobs:
   - script: >
-      multibranchPipelineJob("deploy-jobs-main-branch-old")
+      multibranchPipelineJob("deploy-jenkins-jobs")
       {
           displayName("000 - Deploy Production Jenkins Jobs")
           description("Use this job to deploy production jenkins jobs")
