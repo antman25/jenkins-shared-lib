@@ -169,7 +169,8 @@ boolean createJobTestFolder()
 
 boolean main()
 {
-    String path_prefix = getPathPrefix(branch_name, delivery_branch)
+    boolean is_delivery_branch = branch_name == delivery_branch
+    String path_prefix = getPathPrefix(is_delivery_branch)
 
     boolean create_root_result = createPipelineRootFolder(path_prefix)
     if (create_root_result == true) {
