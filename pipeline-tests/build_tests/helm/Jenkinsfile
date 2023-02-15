@@ -17,15 +17,13 @@ podTemplates.dockerTemplate {
         {
             checkout scm
             env_config = utils.getConfig()
-            env_config.commitHash =
+            env_config.commitHash = utils.getLongCommit()
         }
 
         stage ('Build Helm Chart')
         {
              [ 'registry' : 'test-registry',  'repository' : 'test-repo' ]
 
-
-            env_config.dockerImage = "test-image"
             buildHelmChart (env_config)
         }
     }
