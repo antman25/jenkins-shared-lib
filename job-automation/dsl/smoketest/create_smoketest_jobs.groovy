@@ -83,7 +83,7 @@ boolean createSmoktestTemplatePython(String path_prefix)
                     scm {
                         git {
                             remote { url(tools_url) }
-                            branches(branch_name_raw)
+                            branches(branch_name)
                             scriptPath('smoketests/template_tests/python3/Jenkinsfile')
                             extensions { }  // required as otherwise it may try to tag the repo, which you may not want
                         }
@@ -119,7 +119,7 @@ boolean createSmoktestTemplateDocker(String path_prefix)
                     scm {
                         git {
                             remote { url(tools_url) }
-                            branches(branch_name_raw)
+                            branches(branch_name)
                             scriptPath('smoketests/template_tests/docker/Jenkinsfile')
                             extensions { }  // required as otherwise it may try to tag the repo, which you may not want
                         }
@@ -155,7 +155,7 @@ boolean createSmoktestTemplateHelm(String path_prefix)
                     scm {
                         git {
                             remote { url(tools_url) }
-                            branches(branch_name_raw)
+                            branches(branch_name)
                             scriptPath('smoketests/template_tests/helm/Jenkinsfile')
                             extensions { }  // required as otherwise it may try to tag the repo, which you may not want
                         }
@@ -190,7 +190,7 @@ boolean createSmoktestBuildDocker(String path_prefix)
                     scm {
                         git {
                             remote { url(tools_url) }
-                            branches(branch_name_raw)
+                            branches(branch_name)
                             scriptPath('smoketests/build_tests/docker/Jenkinsfile')
                             extensions { }  // required as otherwise it may try to tag the repo, which you may not want
                         }

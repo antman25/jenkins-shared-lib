@@ -47,17 +47,17 @@ boolean createTestingRootFolder()
 {
     try
     {
-        folder("${path_prefix}/${pipeline_root_folder}")
-                {
-                    displayName("000 - Pipeline Admin")
-                    description("Pipeline Admin jobs Area")
+        folder("${path_prefix}/${job_testing_folder}")
+        {
+            displayName("000 - Pipeline Admin")
+            description("Pipeline Admin jobs Area")
 
-                    properties {
-                        authorizationMatrix {
-                            inheritanceStrategy { nonInheriting() }
-                        }
-                    }
+            properties {
+                authorizationMatrix {
+                    inheritanceStrategy { nonInheriting() }
                 }
+            }
+        }
     }
     catch (Exception ex)
     {
@@ -184,7 +184,7 @@ boolean main()
         return false
     }
 
-    boolean create_deploy_job_result = createDeployJob(path_prefix)
+    /*boolean create_deploy_job_result = createDeployJob(path_prefix)
     if (create_deploy_job_result)
     {
         println("Create deploy job: SUCCESS")
@@ -203,7 +203,7 @@ boolean main()
     {
         println("Create pipeline root folder: FAILURE")
         return false
-    }
+    }*/
     return true
 }
 

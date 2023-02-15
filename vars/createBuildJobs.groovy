@@ -48,10 +48,10 @@ def call() {
                                 'workspace_path' : "${WORKSPACE}",
                                 'tools_url' : "${TOOLS_URL}",
                                 'smoketest_podtemplate_python' : 'template-test-python']
-
+                    //'job-automation/dsl/tenants/create_tenant_jobs.groovy',
+                    //                                     'job-automation/dsl/smoketest/create_smoketest_jobs.groovy'
                     jobDsl targets: ['job-automation/dsl/pipeline/create_pipeline_jobs.groovy',
-                                     'job-automation/dsl/tenants/create_tenant_jobs.groovy',
-                                     'job-automation/dsl/smoketest/create_smoketest_jobs.groovy' ].join('\n'),
+                                     ].join('\n'),
                             removedJobAction: 'DELETE',
                             removedViewAction: 'DELETE',
                             lookupStrategy: 'JENKINS_ROOT',
