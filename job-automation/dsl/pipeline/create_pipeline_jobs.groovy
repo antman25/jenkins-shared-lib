@@ -140,7 +140,7 @@ boolean createDeployJob(String path_prefix)
     return true
 }
 
-boolean createJobTestingRootFolder()
+boolean createJobTestingRootFolder(boolean main_branch)
 {
     try
     {
@@ -150,10 +150,13 @@ boolean createJobTestingRootFolder()
             description("Spot to test job dsl and Jenkinsfiles code prior to delivery")
         }
 
-        folder("/${job_testing_folder}/${branch_name_safe}")
+        if (main_branch == false)
         {
-            displayName(branch_name_safe)
-            description("Job root for branch: ${branch_name_safe}")
+            folder("/${job_testing_folder}/${branch_name_safe}")
+            {
+                displayName(branch_name_safe)
+                description("Job root for branch: ${branch_name_safe}")
+            }
         }
     }
     catch (Exception ex)
