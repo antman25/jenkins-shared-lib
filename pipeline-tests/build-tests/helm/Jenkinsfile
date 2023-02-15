@@ -17,14 +17,14 @@ podTemplates.dockerTemplate {
         {
             checkout scm
             env_config = utils.getConfig()
-            env_config.commitHash = utils.getLongCommit()
+            env_config.commitHash = utils.getShortCommit()
         }
 
         stage ('Build Helm Chart')
         {
              [ 'registry' : 'test-registry',  'repository' : 'test-repo' ]
 
-            buildHelmChart (env_config)
+            buildHelmChart (env_config, 'pipeline-tests/build-tests/helm/mytestchart')
         }
     }
 }
