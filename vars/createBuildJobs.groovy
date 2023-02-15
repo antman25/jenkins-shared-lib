@@ -40,8 +40,8 @@ def call() {
 
 
                     params = [ 'config_yaml' : config_yaml,
-                                'branch_name_raw' : branch_name,
-                                'branch_name' : sanitized_branch_name,
+                                'branch_name' : branch_name,
+                                'branch_name_safe' : sanitized_branch_name,
                                 'delivery_branch' : "${DELIVERY_BRANCH}",
                                 'pipeline_root_folder' : "${PIPELINE_ROOT}",
                                 'job_testing_folder' : "${JOB_TESTING_ROOT}",

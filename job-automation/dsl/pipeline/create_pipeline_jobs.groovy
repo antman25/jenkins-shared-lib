@@ -1,8 +1,8 @@
 import groovy.transform.Field
 
-String getPathPrefix(String branch_name, String delivery_branch)
+String getPathPrefix(boolean main_branch)
 {
-    if (branch_name == delivery_branch)
+    if (main_branch == true)
     {
         return ""
     }
@@ -16,6 +16,11 @@ boolean createPipelineRootFolder(String path_prefix)
 {
     try
     {
+        folder(pipeline_root_folder)
+        {
+            displayName("000 - Pipeline")
+        }
+
         if (path_prefix != "")
         {
             folder("${path_prefix}")
@@ -121,7 +126,7 @@ boolean createDeployJob(String path_prefix)
     return true
 }
 
-boolean createJobTestFolder(String path_prefix)
+boolean createJobTestFolder()
 {
     try
     {
@@ -180,7 +185,7 @@ boolean main()
             return false
         }
 
-        boolean create_job_testing_result = createJobTestFolder(path_prefix)
+        boolean create_job_testing_result = createJobTestFolder()
         if (create_job_testing_result)
         {
             println("Create job testing folder: SUCCESS")
