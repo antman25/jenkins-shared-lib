@@ -15,7 +15,7 @@ credentials:
               scope: GLOBAL
               username: "jenkins"
           - fileSystemServiceAccountCredential:
-              id: "4b4a14ec-77fd-4a82-b1f3-0d9154b2f44c"
+              id: "kubernetes-svc-account-token-id"
               scope: GLOBAL
 jenkins:
   agentProtocols:
@@ -31,10 +31,10 @@ jenkins:
     - kubernetes:
         containerCap: 10
         containerCapStr: "10"
-        credentialsId: "4b4a14ec-77fd-4a82-b1f3-0d9154b2f44c"
+        credentialsId: "kubernetes-svc-account-token-id"
         jenkinsTunnel: "jenkins-agent.workflow.svc.cluster.local:50000"
         jenkinsUrl: "http://jenkins.workflow.svc.cluster.local:8080"
-        name: "k8s-agent-k3s-cluster1"
+        name: "k3s-cluster1"
         namespace: "workflow"
         podLabels:
           - key: "jenkins/jenkins-agent-podlbl"
