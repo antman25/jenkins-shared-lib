@@ -13,7 +13,7 @@ String getPathPrefix(boolean is_delivery_branch)
     }
 }
 
-def templatePipelineJob(String job_path, string display_name, string jenkinsfile_path)
+void templatePipelineJob(String job_path, String display_name, String jenkinsfile_path)
 {
     pipelineJob(job_path) {
         displayName(display_name)
