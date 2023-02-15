@@ -102,7 +102,7 @@ def call() {
                             }
                 }
 
-                //parallel(build_step_jobs)
+                parallel(build_step_jobs)
 
             }
         }
