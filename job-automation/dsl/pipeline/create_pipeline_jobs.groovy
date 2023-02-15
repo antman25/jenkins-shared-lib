@@ -175,7 +175,7 @@ boolean main()
     boolean create_root_result = createPipelineRootFolder(path_prefix)
     if (create_root_result == true) {
         println("Create pipeline root folder: SUCCESS")
-        boolean create_deploy_job_result = createDeployJob(path_prefix)
+        /*boolean create_deploy_job_result = createDeployJob(path_prefix)
         if (create_deploy_job_result)
         {
             println("Create deploy job: SUCCESS")
@@ -195,7 +195,7 @@ boolean main()
         {
             println("Create job testing folder: FAILURE")
             return false
-        }
+        }*/
     }
     else
     {
