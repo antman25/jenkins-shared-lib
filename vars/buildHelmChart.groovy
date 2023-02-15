@@ -6,18 +6,19 @@ public static void dumpYaml(Map conf, String file) {
     Writer writer = new OutputStreamWriter(new FileOutputStream(file), "UTF-8");
     yaml.dump(conf, writer);
   } catch (Exception ex) {
-    println("Error: ${ex.toString()}");
+    echo("Error: ${ex.toString()}");
   }
 }
 
-public static Map loadYaml(String file) {
+Map loadYaml(String file) {
   Yaml yaml = new Yaml();
   def result = [:]
   try {
     def data = readFile file
+    print(data)
     result = new Yaml().load(data)
   } catch (Exception ex) {
-    println("Error:", ex);
+    echo("Error: ${ex.toString()}");
   }
   return result
 }
