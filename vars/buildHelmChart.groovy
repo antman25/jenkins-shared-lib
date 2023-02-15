@@ -24,7 +24,7 @@ public static Map loadYaml(String file) {
 
 
 def call(Map config, String chart_root_path) {
-
+  def chartProps = [:]
   stage('Build Helm Chart') {
 
     if (!fileExists("${chart_root_path}/Chart.yaml")) {
@@ -38,7 +38,7 @@ def call(Map config, String chart_root_path) {
         sh 'pwd && find . && ls -latr'
         //chartProps = readYaml file: ''
         def chart_data = readFile 'Chart.yaml'
-        def chartProps = new Yaml().load(chart_data)
+        chartProps = new Yaml().load(chart_data)
         //def chartProps = loadYaml('Chart.yaml')
 
         chartProps.version = "${chartProps.version}-${config.dockerImageTag}"
