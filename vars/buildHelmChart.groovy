@@ -18,7 +18,7 @@ def call(Map config, String chart_root_path) {
 
         chartProps.version = "${chartProps.version}-${config.dockerImageTag}"
         chartProps.appVersion = config.dockerImageTag
-
+        println("ChartProts: ${chartProps}")
         //writeYaml file: 'Chart.yaml', data: chartProps, overwrite: true
         FileWriter writerChart = new FileWriter("Chart.yaml");
         yaml.dump(chartProps, writerChart);
