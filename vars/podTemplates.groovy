@@ -17,6 +17,7 @@ def helmTemplate(Closure body) {
         command: 'cat',
         ttyEnabled: true,
         runAsUser: '1000',
+        runAsGroup: '1000',
         envVars: [
           envVar(key: 'HOME', value: '/tmp') // Temporarily setting this so the helm-push plugin and helm repos aren't cached
         ]
