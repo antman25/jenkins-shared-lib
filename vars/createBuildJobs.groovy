@@ -97,9 +97,16 @@ def call() {
 
                 build_step_jobs['build_docker'] = {
                     stage ('buildDockerImage')
-                            {
-                                build job: "${path_prefix}/test-pieline/build-docker"
-                            }
+                    {
+                        build job: "${path_prefix}/test-pieline/build-docker"
+                    }
+                }
+
+                build_step_jobs['build_helm'] = {
+                    stage ('buildHelmChart')
+                    {
+                        build job: "${path_prefix}/test-pieline/build-helm"
+                    }
                 }
 
                 parallel(build_step_jobs)
