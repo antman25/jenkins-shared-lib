@@ -6,6 +6,7 @@ bitbucket branch source
 vault
 matrix auth
 stage view
+folder properties
 
 # not sure
 Kubernetes CLI Plugin??
