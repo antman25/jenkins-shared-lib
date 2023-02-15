@@ -71,20 +71,25 @@ void dumpConfig(Map config)
 }
 
 Map getConfig(key = null) {
+
     String branch_name = env.getEnvironment().getOrDefault('BRANCH_NAME', 'main')
     String branch_name_safe = sanitizeBranchName(branch_name)
     String delivery_branch = env.getEnvironment().getOrDefault('DELIVERY_BRANCH', 'main')
-    String chart_path = env.getEnvironment().getOrDefault('CHART_PATH', './helm')
+    //String chart_path = env.getEnvironment().getOrDefault('CHART_PATH', './helm')
     String dockerfile_path = env.getEnvironment().getOrDefault('DOCKERFILE_PATH', '.')
     String agent_pvc_name = env.getEnvironment().getOrDefault('AGENT_PVC_NAME', 'jenkins-agent-pvc')
     String pipeline_root = env.getEnvironment().getOrDefault('PIPELINE_ROOT', 'pipeline-root')
+    String tenant = "NotSet";
 
-
+    withFolderProperties {
+        tenant = "${env.TENANT}"
+    }
   def config = [   branchName : branch_name,
                                 branchNameSafe : branch_name_safe,
                                 branchDelivery: delivery_branch,
                                 isDeliveryBranch: branch_name == delivery_branch,
-                                chartPath : chart_path,
+                                tenant : tenant,
+                                helmCredentiasl : "${tenant_ARTIFACTORY_CRED}",
                                 dockerfilePath: dockerfile_path,
                                 agentPvcName: agent_pvc_name,
                                 folderPipelineRoot: pipeline_root

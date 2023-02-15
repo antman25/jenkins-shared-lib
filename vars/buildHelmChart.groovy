@@ -1,15 +1,16 @@
 
-def call(Map config) {
+def call(Map config, String chart_root_path) {
   def chartProps
 
   stage('Build Helm Chart') {
-    if (!fileExists("${config.chartPath}/Chart.yaml")) {
-      echo "Helm chart not found at path: ${config.chartPath}/Chart.yaml"
+
+    if (!fileExists("${chart_root_path}/Chart.yaml")) {
+      echo "Helm chart not found at path: ${chart_root_path}/Chart.yaml"
       sh 'exit  1'
     }
 
     container('helm') {
-      dir(config.chartPath) {
+      dir(chart_root_path) {
         chartProps = readYaml file: 'Chart.yaml'
         chartProps.version = "${chartProps.version}-${config.dockerImage.tag}"
         chartProps.appVersion = config.dockerImage.tag
@@ -28,18 +29,20 @@ def call(Map config) {
         rm -f /var/cache/apk/*
       '''
 
-      withCredentials([
-        usernamePassword(usernameVariable: 'REPO_USER', passwordVariable: 'REPO_PASS', credentialsId: config.helmCredentials)
-      ]) {
-        if (config.nexusHelm) {
-          sh """
-           helm dependency build ${config.chartPath}
-           CHART_PACKAGE="\$(helm package ${config.chartPath} | cut -d":" -f2 | tr -d '[:space:]')"
-           curl -u $REPO_USER:$REPO_PASS ${config.helmRepoUrl} --upload-file \$CHART_PACKAGE -v
-          """
-        } else {
-          sh "helm repo add chartRepo ${config.helmRepoUrl} --username $REPO_USER --password $REPO_PASS"
-          sh "helm push -d ${config.chartPath} chartRepo"
+      withFolderProperties {
+        withCredentials([
+                usernamePassword(usernameVariable: '$REPO_USER', passwordVariable: 'REPO_PASS', credentialsId: config.helmCredentials)
+        ]) {
+          if (config.nexusHelm) {
+            sh """
+             helm dependency build ${config.chartPath}
+             CHART_PACKAGE="\$(helm package ${config.chartPath} | cut -d":" -f2 | tr -d '[:space:]')"
+             curl -u $REPO_USER:$REPO_PASS ${config.helmRepoUrl} --upload-file \$CHART_PACKAGE -v
+            """
+          } else {
+            sh "helm repo add chartRepo ${config.helmRepoUrl} --username $REPO_USER --password $REPO_PASS"
+            sh "helm push -d ${config.chartPath} chartRepo"
+          }
         }
       }
     }
