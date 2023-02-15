@@ -46,12 +46,12 @@ boolean main()
     String path_prefix = getPathPrefix(is_delivery_branch)
 
     try {
-        templatePipelineJob("${path_prefix}/${TEST_PIPELINE_PATH}/pod-template-python3", "podTemplate: pythonTemplate", "pipeline-tests/template_tests/python3/Jenkinsfile")
-        templatePipelineJob("${path_prefix}/${TEST_PIPELINE_PATH}/pod-template-docker", "podTemplate: dockerTemplate", "pipeline-tests/template_tests/docker/Jenkinsfile")
-        templatePipelineJob("${path_prefix}/${TEST_PIPELINE_PATH}/pod-template-helm", "podTemplate: helmTemplate", "pipeline-tests/template_tests/helm/Jenkinsfile")
+        templatePipelineJob("${path_prefix}/${TEST_PIPELINE_PATH}/pod-template-python3", "podTemplate: pythonTemplate", "pipeline-tests/template-tests/python3/Jenkinsfile")
+        templatePipelineJob("${path_prefix}/${TEST_PIPELINE_PATH}/pod-template-docker", "podTemplate: dockerTemplate", "pipeline-tests/template-tests/docker/Jenkinsfile")
+        templatePipelineJob("${path_prefix}/${TEST_PIPELINE_PATH}/pod-template-helm", "podTemplate: helmTemplate", "pipeline-tests/template-tests/helm/Jenkinsfile")
 
-        templatePipelineJob("${path_prefix}/${TEST_PIPELINE_PATH}/build-docker", "buildDockerImage", "pipeline-tests/build_tests/docker/Jenkinsfile")
-        templatePipelineJob("${path_prefix}/${TEST_PIPELINE_PATH}/build-helm", "buildHelmImage", "pipeline-tests/build_tests/helm/Jenkinsfile")
+        templatePipelineJob("${path_prefix}/${TEST_PIPELINE_PATH}/build-docker", "buildDockerImage", "pipeline-tests/build-tests/docker/Jenkinsfile")
+        templatePipelineJob("${path_prefix}/${TEST_PIPELINE_PATH}/build-helm", "buildHelmImage", "pipeline-tests/build-tests/helm/Jenkinsfile")
 
     }
     catch (Exception ex) {
