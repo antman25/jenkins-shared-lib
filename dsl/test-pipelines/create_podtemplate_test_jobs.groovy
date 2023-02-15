@@ -46,9 +46,9 @@ boolean main()
     String path_prefix = getPathPrefix(is_delivery_branch)
 
     try {
-        templatePipelineJob("${path_prefix}/${TEST_PIPELINE_PATH}/pod-template-python3", "pythonTemplate", "pipeline-tests/template_tests/python3/Jenkinsfile")
-        templatePipelineJob("${path_prefix}/${TEST_PIPELINE_PATH}/pod-template-docker", "dockerTemplate", "pipeline-tests/template_tests/docker/Jenkinsfile")
-        templatePipelineJob("${path_prefix}/${TEST_PIPELINE_PATH}/pod-template-helm", "helmTemplate", "pipeline-tests/template_tests/helm/Jenkinsfile")
+        templatePipelineJob("${path_prefix}/${TEST_PIPELINE_PATH}/pod-template-python3", "podTemplate: pythonTemplate", "pipeline-tests/template_tests/python3/Jenkinsfile")
+        templatePipelineJob("${path_prefix}/${TEST_PIPELINE_PATH}/pod-template-docker", "podTemplate: dockerTemplate", "pipeline-tests/template_tests/docker/Jenkinsfile")
+        templatePipelineJob("${path_prefix}/${TEST_PIPELINE_PATH}/pod-template-helm", "podTemplate: helmTemplate", "pipeline-tests/template_tests/helm/Jenkinsfile")
     }
     catch (Exception ex) {
         println("createPodTemplateTests() Exception: ${ex.toString()}")
