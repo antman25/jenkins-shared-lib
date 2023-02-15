@@ -51,12 +51,12 @@ def call(Map config, String chart_root_path) {
 
 
         //def valuesProps = readYaml file: 'values.yaml'
-        def values_data = readFile 'values.yaml'
-        def valuesProps = new Yaml().load(values_data)
+        //def values_data = readFile 'values.yaml'
+        //def valuesProps = new Yaml().load(values_data)
 
-        valuesProps.image.repository = "testrepoval"
+        //valuesProps.image.repository = "testrepoval"
         //writeYaml file: 'values.yaml', data: valuesProps, overwrite: true
-        dumpYaml(valuesProps, 'values.yaml')
+        //dumpYaml(valuesProps, 'values.yaml')
         sh "helm lint ."
       }
 
