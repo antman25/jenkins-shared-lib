@@ -30,9 +30,8 @@ String getPathPrefix(String branch_name, String delivery_branch)
   }
   else
   {
-    def pipeline_root = env.getEnvironment().getOrDefault('PIPELINE_ROOT', 'pipeline-root')
     def job_testing_root = env.getEnvironment().getOrDefault('JOB_TESTING_ROOT', 'job-testing')
-    return "${pipeline_root}/${job_testing_root}/${branch_name}"
+    return "${job_testing_root}/${branch_name}"
   }
 }
 

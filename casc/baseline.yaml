@@ -146,7 +146,7 @@ unclassified:
           modernSCM:
             scm:
               git:
-                id: "1c85d9ac-3326-4e95-b5a3-737b601e701a"
+                id: "jenkins-sharedlib-id"
                 remote: "https://github.com/antman25/jenkins-shared-lib.git"
                 traits:
                   - "gitBranchDiscovery"
