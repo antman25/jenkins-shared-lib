@@ -8,8 +8,8 @@ def call() {
             def params = [:]
             String branch_name = env.getEnvironment().getOrDefault('BRANCH_NAME', 'main')
             String sanitized_branch_name = utils.sanitizeBranchName(branch_name)
-
             String path_prefix = utils.getPathPrefix(branch_name,"${DELIVERY_BRANCH}")
+
             println("Sanitized branch name: ${sanitized_branch_name}")
 
 
@@ -104,14 +104,14 @@ def call() {
                 build_step_jobs['build_docker'] = {
                     stage ('buildDockerImage')
                     {
-                        build job: "${path_prefix}/test-pieline/build-docker"
+                        build job: "${path_prefix}/test-pipeline/build-docker"
                     }
                 }
 
                 build_step_jobs['build_helm'] = {
                     stage ('buildHelmChart')
                     {
-                        build job: "${path_prefix}/test-pieline/build-helm"
+                        build job: "${path_prefix}/test-pipeline/build-helm"
                     }
                 }
 
