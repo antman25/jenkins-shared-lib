@@ -61,14 +61,14 @@ boolean createTenantFolder(String path_prefix, String tenant_name, List<String> 
                             credentials {
                                 usernamePassword {
                                     scope('USER')
-                                    id("${tenant_name}-bitbucket-cred")
+                                    id("bitbucket-cred-tenant-${tenant_name}")
                                     description("Bitbucket credentials for ${tenant_name}")
                                     username("jenkins-${tenant_name}")
                                     password(bitbucket_password)
                                 }
                                 usernamePassword {
                                     scope('USER')
-                                    id("${tenant_name}-artifactory-cred")
+                                    id("artifactory-cred-tenant-${tenant_name}")
                                     description("Artifactory credentials for ${tenant_name}")
                                     username("jenkins-${tenant_name}")
                                     password(bitbucket_password)
