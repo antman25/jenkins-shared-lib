@@ -15,9 +15,6 @@ def call() {
 
             stage('Clone code') {
                 checkout scm
-                /*checkout([$class: 'GitSCM', branches: [[name: branch_name]],
-                                            extensions: [],
-                                            userRemoteConfigs: [[url: 'https://github.com/antman25/jenkins-shared-lib.git']]])*/
             }
 
             stage('Build Config')
