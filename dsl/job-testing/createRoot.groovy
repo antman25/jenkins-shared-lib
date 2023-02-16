@@ -14,6 +14,12 @@ boolean main()
 
     try
     {
+        folder("${job_testing_folder}")
+        {
+            displayName("${branch_name_raw}")
+            description("Job root for branch: ${branch_name_raw}")
+        }
+
         folder("${path_prefix}/${job_testing_folder}")
         {
             displayName("000 - Testing Area")
