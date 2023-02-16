@@ -168,14 +168,14 @@ jobs:
 
           environmentVariables {
               env('BRANCH_NAME', 'main')
-              string("TOOLS_URL", 'https://github.com/antman25/jenkins-shared-lib.git')
+              env("TOOLS_URL", 'https://github.com/antman25/jenkins-shared-lib.git')
           }
 
           definition {
             cpsScm {
               scm {
                 git {
-                  remote { url('https://github.com/antman25/jenkins-shared-lib.git') }
+                  remote { url("${TOOLS_URL}") }
                   branches('main')
                   scriptPath('Jenkinsfile')
                   extensions { }  // required as otherwise it may try to tag the repo, which you may not want
