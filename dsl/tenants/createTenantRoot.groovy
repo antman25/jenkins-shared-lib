@@ -10,7 +10,7 @@ String getPathPrefix(boolean is_delivery_branch) {
         return ""
     }
     else {
-        return "${pipeline_root_folder}/${job_testing_folder}/${branch_name}"
+        return "/${job_testing_folder}/${branch_name}"
     }
 }
 
