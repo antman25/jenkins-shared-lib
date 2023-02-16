@@ -5,13 +5,13 @@ credentials:
           - usernamePassword:
               description: "ARITIFACTORY_CRED"
               id: "ARTIFACTORY_CRED"
-              password: not-real-password
+              password: "{AQAAABAAAAAgrPjUUPivTehQBIpgjekkNalwXsOnq/evuemimUmaWDjrIoanfCfefJ06+z7E1gRa}"
               scope: GLOBAL
               username: "jenkins"
           - usernamePassword:
               description: "BITBUCKET_CRED"
               id: "BITBUCKET_CRED"
-              password: not-real-password
+              password: "{AQAAABAAAAAQ4OqObIo21o8YFMC8000vj8zrsr3s3WNNH4PzGLrdBC8=}"
               scope: GLOBAL
               username: "jenkins"
           - fileSystemServiceAccountCredential:
@@ -68,23 +68,22 @@ jenkins:
   globalNodeProperties:
     - envVars:
         env:
-          - key: "BUILD_BITBUCKET_PROJECT"
-            value: "PIP"
-          - key: "JOB_TESTING_ROOT"
-            value: "job-testing"
           - key: "DELIVERY_BRANCH"
             value: "main"
+          - key: "JOB_TESTING_ROOT"
+            value: "job-testing"
   labelAtoms:
     - name: "built-in"
   markupFormatter: "plainText"
   mode: NORMAL
   myViewsTabBar: "standard"
+  noUsageStatistics: true
   numExecutors: 0
   primaryView:
     all:
       name: "all"
   projectNamingStrategy: "standard"
-  quietPeriod: 15
+  quietPeriod: 10
   securityRealm:
     local:
       allowsSignup: false
@@ -93,6 +92,7 @@ jenkins:
         - id: "admin"
           name: "Jenkins Admin"
           properties:
+            - "favorite"
             - "apiToken"
             - "mailer"
             - "myView"
@@ -102,6 +102,7 @@ jenkins:
         - id: "antman"
           name: "antman"
           properties:
+            - "favorite"
             - "myView"
             - "timezone"
             - "apiToken"
@@ -109,6 +110,15 @@ jenkins:
                 emailAddress: "antman@antlinux.local"
             - preferredProvider:
                 providerId: "default"
+        - id: "groupa"
+          name: "groupa"
+          properties:
+            - "apiToken"
+            - mailer:
+                emailAddress: "groupa@antlinux.local"
+            - preferredProvider:
+                providerId: "default"
+            - "favorite"
   slaveAgentPort: 50000
   updateCenter:
     sites:
@@ -125,11 +135,12 @@ globalCredentialsConfiguration:
 unclassified:
   bitbucketEndpointConfiguration:
     endpoints:
-      - bitbucketCloudEndpoint:
-          enableCache: false
-          manageHooks: false
-          repositoriesCacheDuration: 0
-          teamCacheDuration: 0
+      - bitbucketServerEndpoint:
+          bitbucketJenkinsRootUrl: "http://jenkins.antlinux.local:31039/"
+          credentialsId: "BITBUCKET_CRED"
+          displayName: "Bitbucket Server"
+          manageHooks: true
+          serverUrl: "http://10.0.0.222:7990"
   buildDiscarders:
     configuredBuildDiscarders:
       - "jobBuildDiscarder"
@@ -142,6 +153,8 @@ unclassified:
     configuration:
       engineVersion: 2
       timeout: 60
+  junitTestResultStorage:
+    storage: "file"
   location:
     adminAddress: "address not configured yet <nobody@nowhere>"
     url: "http://jenkins.antlinux.local:31039/"
@@ -210,6 +223,4 @@ jobs:
             }
           }
       }
-      
-
       
