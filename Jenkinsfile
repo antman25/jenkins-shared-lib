@@ -10,7 +10,7 @@ catch (Exception ex)
 }*/
 
 def sourceInfo = [$class: 'GitSCMSource', remote: "${TOOLS_URL}", credentialsId: "${TENANT}_BITBUCKET_CRED"]
-/*try {
+try {
     println("Attempting to load shared lib from branch: ${BRANCH_NAME}")
     library identifier: "jenkins-shared-lib@${BRANCH_NAME}" retriever: modernSCM(sourceInfo)
 } catch (err) {
@@ -19,4 +19,4 @@ def sourceInfo = [$class: 'GitSCMSource', remote: "${TOOLS_URL}", credentialsId:
 }
 
 
-createBuildJobs()*/
+//createBuildJobs()
