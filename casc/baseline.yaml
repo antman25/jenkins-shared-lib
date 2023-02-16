@@ -174,26 +174,13 @@ tool:
 jobs:
   - script: >
       
-      folder('/pipeline')
-      {
-        /*properties {
-          folderProperties {
-            properties {
-              stringProperty {
-                key('TENANT')
-                value('PIP')
-              }
-            }
-          }
-        }*/
-      }
-      folder('/pipeline/utilities')
       
       
-      multibranchPipelineJob("pipeline/utilities/deploy-jenkins-jobs")
+      
+      multibranchPipelineJob("seed-job")
       {
-          displayName("000 - Deploy Jenkins Jobs")
-          description("Use this job to deploy jenkins jobs")
+          displayName("TEMPORARY - Deploy Jenkins Jobs - TEMPORARY")
+          description("Delete this job when when the jenkins instance is bootstrapped")
 
 
           branchSources {
@@ -208,7 +195,7 @@ jobs:
 
                               headRegexFilter
                               {
-                                  regex('.*')
+                                  regex('^(.*main).*$')
                               }
                           }
                       }
@@ -236,7 +223,7 @@ jobs:
           }
           triggers {
             periodicFolderTrigger {
-              interval("1h")
+              interval("1m")
             }
           }
       }
