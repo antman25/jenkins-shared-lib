@@ -163,19 +163,44 @@ jobs:
   - script: >
       
       pipelineJob("seed-job-gitlab") {
-          displayName("!!! Temporary Seed Job !!!")
+          displayName("!!! Temporary Seed Job - Tools = Gitlab !!!")
           description("Seed job used to bootstrap")
 
           environmentVariables {
               env('BRANCH_NAME', 'main')
-              env("TOOLS_URL", 'https://github.com/antman25/jenkins-shared-lib.git')
+              env('TOOLS_URL', 'https://github.com/antman25/jenkins-shared-lib.git')
+              env('TENANT', 'PIP')
           }
 
           definition {
             cpsScm {
               scm {
                 git {
-                  remote { url("${TOOLS_URL}") }
+                  remote { url('https://github.com/antman25/jenkins-shared-lib.git') }
+                  branches('main')
+                  scriptPath('Jenkinsfile')
+                  extensions { }  // required as otherwise it may try to tag the repo, which you may not want
+                }
+              }
+            }
+          }
+      }
+      
+      pipelineJob("seed-job-bitbucket") {
+          displayName("!!! Temporary Seed Job - Tools = Bitbucket !!!")
+          description("Seed job used to bootstrap")
+
+          environmentVariables {
+              env('BRANCH_NAME', 'main')
+              env('TOOLS_URL', 'http://10.0.0.222:7990/scm/pip/jenkins-shared-lib.git')
+              env('TENANT', 'PIP')
+          }
+
+          definition {
+            cpsScm {
+              scm {
+                git {
+                  remote { url('http://10.0.0.222:7990/scm/pip/jenkins-shared-lib.git') }
                   branches('main')
                   scriptPath('Jenkinsfile')
                   extensions { }  // required as otherwise it may try to tag the repo, which you may not want
