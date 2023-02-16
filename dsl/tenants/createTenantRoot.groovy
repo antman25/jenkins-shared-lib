@@ -5,85 +5,83 @@ import groovy.transform.Field
 @Field final String SANDBOX_PATH = 'sandbox'
 
 
-String getPathPrefix(boolean is_delivery_branch)
-{
-    if (is_delivery_branch)
-    {
+String getPathPrefix(boolean is_delivery_branch) {
+    if (is_delivery_branch) {
         return ""
     }
-    else
-    {
+    else {
         return "${pipeline_root_folder}/${job_testing_folder}/${branch_name}"
     }
 }
 
-List<String> permissionDeveloper(String group)
-{
+List<String> permissionDeveloper(String group) {
     return ["hudson.model.Item.Read:${group}",
             "hudson.model.Item.Cancel:${group}",
             "hudson.model.Item.Build:${group}",
             "hudson.model.Item.Workspace:${group}"];
 }
 
-boolean createTenantFolder(String path_prefix, String tenant_name, List<String> perm_groups)
-{
-    try
-    {
-
+boolean createTenantFolder(String path_prefix, String tenant_name, List<String> perm_groups) {
+    try {
         def total_permissions = []
         def folder_path = "${path_prefix}/${tenant_name}"
-        if (perm_groups != null)
-        {
+        if (perm_groups != null) {
             perm_groups.each { cur_perm_group ->
                 total_permissions.addAll(permissionDeveloper(cur_perm_group))
             }
             println("Path: ${folder_path} -- Permission Groups: ${perm_groups.toString()}")
-        }
-        else
-        {
+        } else {
             println("createTenantFolder(): Permission groups was null")
             return false
         }
 
-        folder(folder_path)
-        {
+        folder(folder_path) {
             displayName(tenant_name)
             properties {
                 authorizationMatrix {
                     inheritanceStrategy { nonInheriting() }
                     permissions ( total_permissions )
                 }
-
-                stringProperty {
-                    key('TENANT')
-                    value(tenant_name)
-                }
-            }
-
-            /*folderCredentialsProperty {
-                domainCredentials {
-                    domainCredentials {
-                        domain {
-                            name(tenant_name)
-                            description("Credentials domain for ${tenant_name}")
+                folderProperties {
+                    properties {
+                        stringProperty {
+                            key('TENANT')
+                            value(tenant_name)
                         }
-                        credentials {
-                            usernamePassword {
-                                scope('USER')
-                                id("${TENANT_NAME}-bitbucket-cred")
-                                description("Bitbucket credentials for ${tenant_name}")
-                                username("jenkins-${tenant_name}")
+                    }
+                }
 
+                folderCredentialsProperty {
+                    domainCredentials {
+                        domainCredentials {
+                            domain {
+                                name(tenant_name)
+                                description("Credentials domain for ${tenant_name}")
+                            }
+                            credentials {
+                                usernamePassword {
+                                    scope('USER')
+                                    id("${TENANT_NAME}-bitbucket-cred")
+                                    description("Bitbucket credentials for ${tenant_name}")
+                                    username("jenkins-${tenant_name}")
+
+                                }
+                                usernamePassword {
+                                    scope('USER')
+                                    id("${TENANT_NAME}-artifactory-cred")
+                                    description("Artifactory credentials for ${tenant_name}")
+                                    username("jenkins-${tenant_name}")
+
+                                }
                             }
                         }
                     }
                 }
-            }*/
+            }
         }
 
     }
-    catch (Exception ex)
-    {
+    catch (Exception ex){
         println("createTenantFolder() Exception: ${ex.toString()}")
         return false
     }
