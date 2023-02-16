@@ -2,7 +2,7 @@ def sourceInfo = null
 try {
     println("Attempting to load shared lib from branch: ${env.BRANCH_NAME} -- Using ${TENANT}-bitbucket-creds")
 
-    if ("${TOOLS_URL}".contains('git')
+    if ("${TOOLS_URL}".contains('git'))
         sourceInfo = [$class: 'GitSCMSource', remote: "${TOOLS_URL}"]
     else
         sourceInfo = [$class: 'GitSCMSource', remote: "${TOOLS_URL}", credentialsId: "${TENANT}-bitbucket-creds"]
