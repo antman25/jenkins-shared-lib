@@ -48,14 +48,14 @@ def call() {
                                 'job_testing_folder' : "${JOB_TESTING_ROOT}",
                                 'workspace_path' : "${WORKSPACE}",
                                 'tools_url' : "${TOOLS_URL}" ]
-                    //'job-automation/dsl/tenants/createTenantJobs.groovy',
-                    //                                     'job-automation/dsl/smoketest/createTestJobs.groovy'
                     //
-                    jobDsl targets: ['dsl/createJenkinsJobDeploy.groovy',
-                                     'dsl/jenkins-admin/createJobs.groovy',
+                    //'dsl/createJenkinsJobDeploy.groovy',
+                    //                                     'dsl/jenkins-admin/createJobs.groovy',
+                    //'dsl/test-pipelines/createRoot.groovy',
+                    //                                     'dsl/test-pipelines/createTestJobs.groovy'
+                    jobDsl targets: [
                                      'dsl/job-testing/createRoot.groovy',
-                                     'dsl/test-pipelines/createRoot.groovy',
-                                     'dsl/test-pipelines/createTestJobs.groovy'
+                                     'job-automation/dsl/tenants/createTenantJobs.groovy'
                                      ].join('\n'),
                             removedJobAction: 'DELETE',
                             removedViewAction: 'DELETE',

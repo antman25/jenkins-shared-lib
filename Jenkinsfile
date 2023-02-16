@@ -9,11 +9,11 @@ catch (Exception ex)
     library "jenkins-shared-lib@main"
 }*/
 
-def sourceInfo = [$class: 'GitSCMSource', remote: "${BITBUCKET_URL}/scm/${BUILD_BITBUCKET_PROJECT}/jenkins-automation.git", credentialsId: "${TENANT}_BITBUCKET_CRED"]
+def sourceInfo = [$class: 'GitSCMSource', remote: "${BITBUCKET_URL}/scm/${BUILD_BITBUCKET_PROJECT}/jenkins-shared-lib.git", credentialsId: "${TENANT}_BITBUCKET_CRED"]
 try {
-    library identifier: "jenkins-automation@${BRANCH_NAME}" retriever: modernSCM(sourceInfo)
+    library identifier: "jenkins-shared-lib@${BRANCH_NAME}" retriever: modernSCM(sourceInfo)
 } catch (err) {
-    library identifier: "jenkins-automation@main" retriever: modernSCM(sourceInfo)
+    library identifier: "jenkins-shared-lib@main" retriever: modernSCM(sourceInfo)
 }
 
 

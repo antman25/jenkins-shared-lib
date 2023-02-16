@@ -27,6 +27,7 @@ def addTentant(tenants, tenant_name, perm_groups, project_list):
 def createAllTenants(config):
     if 'tenants' not in config:
         config['tenants'] = []
+    addTentant(config['tenants'], 'Pipeline', ['pipeline'], ['PIP'])
     addTentant(config['tenants'], 'tenA', ['groupA'], ['prjA'])
     addTentant(config['tenants'], 'tenB', ['groupA', 'groupB'], ['prjB'])
     addTentant(config['tenants'], 'tenC', ['groupC'], ['prjC'])

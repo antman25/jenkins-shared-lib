@@ -68,7 +68,7 @@ jenkins:
   globalNodeProperties:
     - envVars:
         env:
-          - key: "TOOLS_URL"
+          - key: "BUILD_BITBUCKET_PROJECT"
             value: "https://github.com/antman25/jenkins-shared-lib.git"
           - key: "JOB_TESTING_ROOT"
             value: "job-testing"
@@ -173,17 +173,34 @@ tool:
     settingsProvider: "standard"
 jobs:
   - script: >
-      multibranchPipelineJob("deploy-jenkins-jobs")
+      
+      folder('pipeline')
       {
-          displayName("000 - Deploy Production Jenkins Jobs")
-          description("Use this job to deploy production jenkins jobs")
+        properties {
+          folderProperties {
+            properties {
+              stringProperty {
+                key('TENANT')
+                value('PIP')
+              }
+            }
+          }
+        }
+      }
+      folder('pipeline/utilities')
+      
+      
+      multibranchPipelineJob("pipeline/utilities/deploy-jenkins-jobs")
+      {
+          displayName("000 - Deploy Jenkins Jobs")
+          description("Use this job to deploy jenkins jobs")
 
 
           branchSources {
               branchSource {
                   source {
                       git {
-                          remote ('https://github.com/antman25/jenkins-shared-lib.git')
+                          remote ('http://bitbucket.antlinux.local:7990/scm/pip/jenkins-shared-lib.git')
                           // all id's must be unique according to docs
                           id ('deploy-production-jobs-source-id')
                           traits {
@@ -191,7 +208,7 @@ jobs:
 
                               headRegexFilter
                               {
-                                  regex('^(.*main).*$')
+                                  regex('.*')
                               }
                           }
                       }
