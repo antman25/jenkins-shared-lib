@@ -5,7 +5,7 @@ try {
     if ("${CRED_ID}" != '')
         sourceInfo = [$class: 'GitSCMSource', remote: "${TOOLS_URL}", credentialsId: "${CRED_ID}"]
     else
-        sourceInfo = [$class: 'GitSCMSource', remote: "${TOOLS_URL}"
+        sourceInfo = [$class: 'GitSCMSource', remote: "${TOOLS_URL}"]
 
     library identifier: "jenkins-shared-lib@${BRANCH_NAME}", retriever: modernSCM(sourceInfo)
 } catch (err) {
