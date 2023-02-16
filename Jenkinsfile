@@ -1,6 +1,6 @@
 def sourceInfo = null
 try {
-    println("Attempting to load shared lib from branch: ${BRANCH_NAME} -- Using ${CRED_ID} credentials")
+    println("Attempting to load shared lib from branch: ${env.BRANCH_NAME} -- Using ${env.CRED_ID} credentials")
 
     if ("${CRED_ID}" != '')
         sourceInfo = [$class: 'GitSCMSource', remote: "${TOOLS_URL}", credentialsId: "${CRED_ID}"]
