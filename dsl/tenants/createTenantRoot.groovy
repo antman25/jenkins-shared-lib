@@ -60,7 +60,7 @@ boolean createTenantFolder(String path_prefix, String tenant_name, List<String> 
                 }
             }
 
-            folderCredentialsProperty {
+            /*folderCredentialsProperty {
                 domainCredentials {
                     domainCredentials {
                         domain {
@@ -78,7 +78,7 @@ boolean createTenantFolder(String path_prefix, String tenant_name, List<String> 
                         }
                     }
                 }
-            }
+            }*/
         }
 
     }
