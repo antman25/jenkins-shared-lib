@@ -7,6 +7,8 @@ matrix auth
 stage view
 folder properties
 basic-branch-build-strategies
+pipeline utility steps
+ansi color
 
 # not sure
 Kubernetes CLI Plugin??
