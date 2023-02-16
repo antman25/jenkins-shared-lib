@@ -1,7 +1,11 @@
 def sourceInfo = null
 try {
-    println("Attempting to load shared lib from branch: ${BRANCH_NAME} -- Using ${TENANT}_BITBUCKET_CRED credentials")
-    sourceInfo = [$class: 'GitSCMSource', remote: "${TOOLS_URL}", credentialsId: "${TENANT}_BITBUCKET_CRED"]
+    println("Attempting to load shared lib from branch: ${BRANCH_NAME} -- Using ${CRED_ID} credentials")
+
+    if ("${CRED_ID}" != '')
+        sourceInfo = [$class: 'GitSCMSource', remote: "${TOOLS_URL}", credentialsId: "${CRED_ID}"]
+    else
+        sourceInfo = [$class: 'GitSCMSource', remote: "${TOOLS_URL}"
 
     library identifier: "jenkins-shared-lib@${BRANCH_NAME}", retriever: modernSCM(sourceInfo)
 } catch (err) {
