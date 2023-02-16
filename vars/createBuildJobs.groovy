@@ -52,7 +52,8 @@ def call() {
                     //                                     'dsl/test-pipelines/createTestJobs.groovy'
                     jobDsl targets: [
                                      'dsl/job-testing/createRoot.groovy',
-                                     'dsl/tenants/createTenantJobs.groovy'
+                                     'dsl/tenants/createTenantRoot.groovy',
+                                     'dsl/tenants/pipeline/createJobs.groovy'
                                      ].join('\n'),
                             removedJobAction: 'DELETE',
                             removedViewAction: 'DELETE',

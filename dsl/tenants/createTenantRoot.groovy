@@ -104,39 +104,39 @@ boolean createTenantJobs() {
                                 }
 
                                 if (create_buildjobs_project == true) {
-                                    println("createTenantJobs(): Create project build folder: SUCCESS")
+                                    println("createTenantRoot(): Create project build folder: SUCCESS")
                                 }
                                 else {
-                                    println("createTenantJobs(): Create project build folder: FAILURE")
+                                    println("createTenantRoot(): Create project build folder: FAILURE")
                                     return false
                                 }
 
                             } else  {
-                                println("createTenantJobs(): Project List Empty")
+                                println("createTenantRoot(): Project List Empty")
                                 return false
                             }
                         }
                     }
                     else {
-                        println("createTenantJobs(): failed to create build job root")
+                        println("createTenantRoot(): failed to create build job root")
                         return false
                     }
                 }
                 else {
-                    println("createTenantJobs(): No tenant name defined")
+                    println("createTenantRoot(): No tenant name defined")
                     return false
                 }
             }
 
         }
         else {
-            println("createTenantJobs(): Missing tenants key in config")
+            println("createTenantRoot(): Missing tenants key in config")
             return false
         }
 
     }
     catch (Exception ex) {
-        println("createTenantJobs(): Exception ${ex.toString()}")
+        println("createTenantRoot(): Exception ${ex.toString()}")
         return false
     }
 

@@ -1,5 +1,6 @@
 import groovy.transform.Field
-@Field final String PIPELINE_PATH = 'pipeline'
+@Field final String TENANT = 'pipeline'
+@Field final String UTILITIES_PATH = 'utilities'
 
 String getPathPrefix(boolean is_delivery_branch)
 {
@@ -13,42 +14,15 @@ String getPathPrefix(boolean is_delivery_branch)
     }
 }
 
-boolean createPipelineRootFolder(String path_prefix)
-{
-    try
-    {
-        folder("${path_prefix}/${PIPELINE_PATH}")
-        {
-            displayName("020 - Jenkins Admin Jobs")
-            description("Jenkins Admin jobs Area")
-
-            properties {
-                authorizationMatrix {
-                    inheritanceStrategy { nonInheriting() }
-                }
-            }
-        }
-    }
-    catch (Exception ex)
-    {
-        println("createPipelineRoot() Exception: ${ex.toString()}")
-        return false
-    }
-
-    return true
-}
-
-
-
 boolean createDeployJob(String path_prefix)
 {
     try
     {
         def desc = "Runs all the JobDSL for job deployment"
         def is_delivery_branch = branch_name == delivery_branch
-        multibranchPipelineJob("${path_prefix}/${PIPELINE_PATH}/deploy-devel-jobs")
+        multibranchPipelineJob("${path_prefix}/${TENANT}/${UTILITIES_PATH}/deploy-jobs-git")
         {
-            displayName("000 - Deploy Development Jenkins Jobs")
+            displayName("000 - Deploy Jenkins Jobs")
             if (is_delivery_branch) {
                 description(desc)
             }
@@ -118,17 +92,6 @@ boolean main()
 {
     boolean is_delivery_branch = branch_name == delivery_branch
     String path_prefix = getPathPrefix(is_delivery_branch)
-
-    boolean create_root_result = createPipelineRootFolder(path_prefix)
-
-    if (create_root_result == true) {
-        println("Create pipeline root folder: SUCCESS")
-    }
-    else
-    {
-        println("Create pipeline root folder: FAILURE")
-        return false
-    }
 
     boolean create_deploy_job_result = createDeployJob(path_prefix)
     if (create_deploy_job_result)
