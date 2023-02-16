@@ -6,6 +6,7 @@ vault
 matrix auth
 stage view
 folder properties
+basic-branch-build-strategies
 
 # not sure
 Kubernetes CLI Plugin??
