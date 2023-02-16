@@ -180,13 +180,12 @@ jobs:
   - script: >
       
       pipelineJob("seed-job-gitlab") {
-          displayName("!!! Temporary Seed Job - Tools = Gitlab !!!")
+          displayName("!!! Temporary Seed Job - Gitlab URL !!!")
           description("Seed job used to bootstrap")
 
           environmentVariables {
               env('BRANCH_NAME', 'main')
               env('TOOLS_URL', 'https://github.com/antman25/jenkins-shared-lib.git')
-              env('CRED_ID', '')
           }
           properties {
             disableConcurrentBuilds {}
@@ -207,14 +206,13 @@ jobs:
       }
       
       pipelineJob("seed-job-bitbucket") {
-          displayName("!!! Temporary Seed Job - Tools = Bitbucket !!!")
+          displayName("!!! Temporary Seed Job - Bitbucket URL !!!")
           description("Seed job used to bootstrap")
 
           environmentVariables {
               env('BRANCH_NAME', 'main')
               env('TOOLS_URL', 'http://10.0.0.222:7990/scm/pip/jenkins-shared-lib.git')
               env('TENANT', 'PIP')
-              env('CRED_ID', 'BITBUCKET_CRED')
           }
           properties {
             disableConcurrentBuilds {}
