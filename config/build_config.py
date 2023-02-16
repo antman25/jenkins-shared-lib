@@ -20,6 +20,7 @@ def createTenantDefaults (tenant_name, perm_groups, project_list):
     return tenant_config
 
 def addTentant(tenants, tenant_name, perm_groups, project_list):
+    tenant_name = tenant_name.lower()
     tenant_config = createTenantDefaults(tenant_name, perm_groups, project_list)
     print("Adding Tentant: %s" % tenant_name)
     tenants.append(tenant_config)
