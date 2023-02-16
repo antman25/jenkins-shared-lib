@@ -161,35 +161,28 @@ tool:
     settingsProvider: "standard"
 jobs:
   - script: >
-      def url_gitlab = 'https://github.com/antman25/jenkins-shared-lib.git'
-      def url_bitbucket = 'http://10.0.0.222:7990/scm/pip/jenkins-shared-lib.git'
       
-      /*def buildSeedJob(String seed_name, String seed_url)
-      {
-        pipelineJob("seed-job-${seed_name}") {
-            displayName("!!! Temporary Seed Job !!!")
-            description("Seed job used to bootstrap")
+      pipelineJob("seed-job-gitlab") {
+          displayName("!!! Temporary Seed Job !!!")
+          description("Seed job used to bootstrap")
 
-            environmentVariables {
-                env('BRANCH_NAME', 'main')
-                string("TOOLS_URL", seed_url)
-            }
+          environmentVariables {
+              env('BRANCH_NAME', 'main')
+              string("TOOLS_URL", 'https://github.com/antman25/jenkins-shared-lib.git')
+          }
 
-            definition {
-              cpsScm {
-                scm {
-                  git {
-                    remote { url(seed_url) }
-                    branches('main')
-                    scriptPath('Jenkinsfile')
-                    extensions { }  // required as otherwise it may try to tag the repo, which you may not want
-                  }
+          definition {
+            cpsScm {
+              scm {
+                git {
+                  remote { url('https://github.com/antman25/jenkins-shared-lib.git') }
+                  branches('main')
+                  scriptPath('Jenkinsfile')
+                  extensions { }  // required as otherwise it may try to tag the repo, which you may not want
                 }
               }
             }
-        }
+          }
       }
-      
-      buildSeedJob('gitlab', url_gitlab)
-      buildSeedJob('bitbucket', url_bitbucket)*/
+
       
