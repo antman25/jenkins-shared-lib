@@ -69,7 +69,7 @@ jenkins:
     - envVars:
         env:
           - key: "BUILD_BITBUCKET_PROJECT"
-            value: "https://github.com/antman25/jenkins-shared-lib.git"
+            value: "PIP"
           - key: "JOB_TESTING_ROOT"
             value: "job-testing"
           - key: "DELIVERY_BRANCH"
@@ -138,18 +138,6 @@ unclassified:
   fingerprints:
     fingerprintCleanupDisabled: false
     storage: "file"
-  globalLibraries:
-    libraries:
-      - defaultVersion: "main"
-        name: "jenkins-shared-lib"
-        retriever:
-          modernSCM:
-            scm:
-              git:
-                id: "jenkins-sharedlib-id"
-                remote: "https://github.com/antman25/jenkins-shared-lib.git"
-                traits:
-                  - "gitBranchDiscovery"
   hashicorpVault:
     configuration:
       engineVersion: 2
@@ -173,57 +161,35 @@ tool:
     settingsProvider: "standard"
 jobs:
   - script: >
+      def url_gitlab = 'https://github.com/antman25/jenkins-shared-lib.git'
+      def url_bitbucket = 'http://10.0.0.222:7990/scm/pip/jenkins-shared-lib.git'
       
-      
-      
-      
-      multibranchPipelineJob("seed-job")
+      def buildSeedJob(String seed_name, String seed_url)
       {
-          displayName("TEMPORARY - Deploy Jenkins Jobs - TEMPORARY")
-          description("Delete this job when when the jenkins instance is bootstrapped")
+        pipelineJob("seed-job-${seed_name}") {
+            displayName("!!! Temporary Seed Job !!!")
+            description("Seed job used to bootstrap")
 
-
-          branchSources {
-              branchSource {
-                  source {
-                      git {
-                          remote ('http://bitbucket.antlinux.local:7990/scm/pip/jenkins-shared-lib.git')
-                          // all id's must be unique according to docs
-                          id ('deploy-production-jobs-source-id')
-                          traits {
-                              gitBranchDiscovery()
-
-                              headRegexFilter
-                              {
-                                  regex('^(.*main).*$')
-                              }
-                          }
-                      }
-                  }
-                  strategy {
-                      allBranchesSame {
-                          props {
-                              suppressAutomaticTriggering {
-                                  triggeredBranchesRegex ('^(.*main).*$')
-                              }
-                          }
-                      }
-                  }
-              }
-          }
-          orphanedItemStrategy {
-              discardOldItems {
-                  numToKeep(20)
-              }
-          }
-          factory {
-              workflowBranchProjectFactory {
-                  scriptPath('Jenkinsfile')
-              }
-          }
-          triggers {
-            periodicFolderTrigger {
-              interval("1m")
+            environmentVariables {
+                env('BRANCH_NAME', 'main')
+                string("TOOLS_URL", seed_url)
             }
-          }
+
+            definition {
+              cpsScm {
+                scm {
+                  git {
+                    remote { url(seed_url) }
+                    branches('main')
+                    scriptPath('Jenkinsfile')
+                    extensions { }  // required as otherwise it may try to tag the repo, which you may not want
+                  }
+                }
+              }
+            }
+        }
       }
+      
+      buildSeedJob('gitlab', url_gitlab)
+      buildSeedJob('bitbucket', url_bitbucket)
+      
