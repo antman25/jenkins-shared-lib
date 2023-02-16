@@ -73,21 +73,21 @@ def call() {
                 pod_template_jobs['podtemplate_python'] = {
                     stage ('podTemplate: python')
                     {
-                        build job: "${path_prefix}/test-pipeline/pod-template-python3"
+                        //build job: "${path_prefix}/test-pipeline/pod-template-python3"
                     }
                 }
 
                 pod_template_jobs['podtemplate_docker'] = {
                     stage ('podTemplate: docker')
                     {
-                        build job: "${path_prefix}/test-pipeline/pod-template-docker"
+                        //build job: "${path_prefix}/test-pipeline/pod-template-docker"
                     }
                 }
 
                 pod_template_jobs['podtemplate_helm'] = {
                     stage ('podTemplate: helm')
                     {
-                        build job: "${path_prefix}/test-pipeline/pod-template-helm"
+                        //build job: "${path_prefix}/test-pipeline/pod-template-helm"
                     }
                 }
 
@@ -101,14 +101,14 @@ def call() {
                 build_step_jobs['build_docker'] = {
                     stage ('buildDockerImage')
                     {
-                        build job: "${path_prefix}/test-pipeline/build-docker"
+                        //build job: "${path_prefix}/test-pipeline/build-docker"
                     }
                 }
 
                 build_step_jobs['build_helm'] = {
                     stage ('buildHelmChart')
                     {
-                        build job: "${path_prefix}/test-pipeline/build-helm"
+                        //build job: "${path_prefix}/test-pipeline/build-helm"
                     }
                 }
 
