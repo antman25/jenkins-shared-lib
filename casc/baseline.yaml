@@ -184,6 +184,9 @@ jobs:
               env('TOOLS_URL', 'https://github.com/antman25/jenkins-shared-lib.git')
               env('CRED_ID', '')
           }
+          properties {
+            disableConcurrentBuilds {}
+          }
 
           definition {
             cpsScm {
@@ -208,6 +211,9 @@ jobs:
               env('TOOLS_URL', 'http://10.0.0.222:7990/scm/pip/jenkins-shared-lib.git')
               env('TENANT', 'PIP')
               env('CRED_ID', 'BITBUCKET_CRED')
+          }
+          properties {
+            disableConcurrentBuilds {}
           }
 
           definition {
