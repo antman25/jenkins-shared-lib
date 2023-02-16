@@ -14,23 +14,8 @@ boolean main()
 
     try
     {
-        folder("${job_testing_folder}")
-        {
-            displayName("${branch_name_raw}")
-            description("Job root for branch: ${branch_name_raw}")
-        }
 
-        if (branch_name != delivery_branch)
-        {
-
-            folder("${job_testing_folder}/${branch_name}")
-            {
-                displayName("${branch_name_raw}")
-                description("Job root for branch: ${branch_name_raw}")
-            }
-        }
-
-        /*folder("${path_prefix}/${job_testing_folder}")
+        folder("${path_prefix}/${job_testing_folder}")
         {
             displayName("000 - Testing Area")
             description("This is where a mirrored version of all the jobs in a branch folder for testing purposes")
@@ -42,7 +27,19 @@ boolean main()
             }
         }
 
-        */
+        if (branch_name != delivery_branch)
+        {
+
+            folder("${path_prefix}/${job_testing_folder}/${branch_name}")
+            {
+                displayName("${branch_name_raw}")
+                description("Job root for branch: ${branch_name_raw}")
+            }
+        }
+
+
+
+
     }
     catch (Exception ex)
     {
