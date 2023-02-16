@@ -174,9 +174,9 @@ tool:
 jobs:
   - script: >
       
-      folder('pipeline')
+      folder('/pipeline')
       {
-        properties {
+        /*properties {
           folderProperties {
             properties {
               stringProperty {
@@ -185,9 +185,9 @@ jobs:
               }
             }
           }
-        }
+        }*/
       }
-      folder('pipeline/utilities')
+      folder('/pipeline/utilities')
       
       
       multibranchPipelineJob("pipeline/utilities/deploy-jenkins-jobs")
