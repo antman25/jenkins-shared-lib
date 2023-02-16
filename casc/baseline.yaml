@@ -5,13 +5,13 @@ credentials:
           - usernamePassword:
               description: "ARITIFACTORY_CRED"
               id: "ARTIFACTORY_CRED"
-              password: "{AQAAABAAAAAgrPjUUPivTehQBIpgjekkNalwXsOnq/evuemimUmaWDjrIoanfCfefJ06+z7E1gRa}"
+              password: not-real-password
               scope: GLOBAL
               username: "jenkins"
           - usernamePassword:
               description: "BITBUCKET_CRED"
               id: "BITBUCKET_CRED"
-              password: "{AQAAABAAAAAQ4OqObIo21o8YFMC8000vj8zrsr3s3WNNH4PzGLrdBC8=}"
+              password: not-real-password
               scope: GLOBAL
               username: "jenkins"
           - fileSystemServiceAccountCredential:
