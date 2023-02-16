@@ -32,47 +32,39 @@ def call() {
             }
 
             withCredentials([usernamePassword(credentialsId: 'BITBUCKET_CRED', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                // available as an env variable, but will be masked if you try to print it out any which way
-                // note: single quotes prevent Groovy interpolation; expansion is by Bourne Shell, which is what you want
-                sh 'echo $PASSWORD'
-                // also available as a Groovy variable
-                echo USERNAME
-                // or inside double quotes for string interpolation
-                echo "username is $USERNAME"
-            }
+                stage('Job DSL') {
+                    try {
+                        def config_data = readFile 'config/config.yaml'
+                        def config_yaml = new Yaml().load(config_data)
 
 
-            stage('Job DSL') {
-                try  {
-                    def config_data = readFile 'config/config.yaml'
-                    def config_yaml = new Yaml().load(config_data)
-
-
-                    params = [ 'config_yaml' : config_yaml,
-                                'branch_name' : sanitized_branch_name,
-                                'branch_name_raw' : branch_name,
-                                'delivery_branch' : "${DELIVERY_BRANCH}",
-                                'job_testing_folder' : "${JOB_TESTING_ROOT}",
-                                'workspace_path' : "${WORKSPACE}",
-                                'tools_url' : "${TOOLS_URL}" ]
-                    //
-                    //'dsl/createJenkinsJobDeploy.groovy',
-                    //                                     'dsl/jenkins-admin/createJobs.groovy',
-                    //'dsl/test-pipelines/createRoot.groovy',
-                    //                                     'dsl/test-pipelines/createTestJobs.groovy'
-                    jobDsl targets: [
-                                     'dsl/job-testing/createRoot.groovy',
-                                     'dsl/tenants/createTenantRoot.groovy',
-                                     'dsl/tenants/pipeline/createJobs.groovy'
-                                     ].join('\n'),
-                            removedJobAction: 'DELETE',
-                            removedViewAction: 'DELETE',
-                            lookupStrategy: 'JENKINS_ROOT',
-                            additionalParameters: params
-                }
-                catch (Exception ex) {
-                    println("Exception: ${ex.toString()}")
-                    sh('exit 1')
+                        params = ['config_yaml'       : config_yaml,
+                                  'branch_name'       : sanitized_branch_name,
+                                  'branch_name_raw'   : branch_name,
+                                  'delivery_branch'   : "${DELIVERY_BRANCH}",
+                                  'job_testing_folder': "${JOB_TESTING_ROOT}",
+                                  'workspace_path'    : "${WORKSPACE}",
+                                  'tools_url'         : "${TOOLS_URL}",
+                                   'bitbucket_password' :"${PASSWORD}" ]
+                        //
+                        //'dsl/createJenkinsJobDeploy.groovy',
+                        //                                     'dsl/jenkins-admin/createJobs.groovy',
+                        //'dsl/test-pipelines/createRoot.groovy',
+                        //                                     'dsl/test-pipelines/createTestJobs.groovy'
+                        jobDsl targets: [
+                                'dsl/job-testing/createRoot.groovy',
+                                'dsl/tenants/createTenantRoot.groovy',
+                                'dsl/tenants/pipeline/createJobs.groovy'
+                        ].join('\n'),
+                                removedJobAction: 'DELETE',
+                                removedViewAction: 'DELETE',
+                                lookupStrategy: 'JENKINS_ROOT',
+                                additionalParameters: params
+                    }
+                    catch (Exception ex) {
+                        println("Exception: ${ex.toString()}")
+                        sh('exit 1')
+                    }
                 }
             }
 
