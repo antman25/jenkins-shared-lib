@@ -72,6 +72,10 @@ jenkins:
             value: "main"
           - key: "JOB_TESTING_ROOT"
             value: "job-testing"
+          - key: "TOOLS_URL"
+            value: "https://github.com/antman25/jenkins-shared-lib.git"
+          - key: "TOOLS_URL_TESTING"
+            value: "http://10.0.0.222:7990/scm/pip/jenkins-shared-lib.git"
   labelAtoms:
     - name: "built-in"
   markupFormatter: "plainText"
