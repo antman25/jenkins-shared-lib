@@ -164,7 +164,7 @@ jobs:
       def url_gitlab = 'https://github.com/antman25/jenkins-shared-lib.git'
       def url_bitbucket = 'http://10.0.0.222:7990/scm/pip/jenkins-shared-lib.git'
       
-      def buildSeedJob(String seed_name, String seed_url)
+      /*def buildSeedJob(String seed_name, String seed_url)
       {
         pipelineJob("seed-job-${seed_name}") {
             displayName("!!! Temporary Seed Job !!!")
@@ -191,5 +191,5 @@ jobs:
       }
       
       buildSeedJob('gitlab', url_gitlab)
-      buildSeedJob('bitbucket', url_bitbucket)
+      buildSeedJob('bitbucket', url_bitbucket)*/
       
