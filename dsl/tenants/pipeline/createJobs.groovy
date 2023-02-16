@@ -41,7 +41,8 @@ boolean createDeployJob(String path_prefix)
 
                                 headRegexFilter
                                 {
-                                    regex('^(?!.*main).*$')
+                                    //regex('^(?!.*main).*$')
+                                    regex('.*')
                                 }
                             }
                         }
