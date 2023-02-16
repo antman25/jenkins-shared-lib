@@ -7,7 +7,6 @@ def call() {
         node(POD_LABEL) {
             def params = [:]
             String branch_name = env.getEnvironment().getOrDefault('BRANCH_NAME', 'main')
-            String tools_url = env.getEnvironment().getOrDefault('TOOLS_URL', 'main')
             String sanitized_branch_name = utils.sanitizeBranchName(branch_name)
             String path_prefix = utils.getPathPrefix(branch_name,"${DELIVERY_BRANCH}")
 
@@ -56,7 +55,7 @@ def call() {
                     //                                     'dsl/test-pipelines/createTestJobs.groovy'
                     jobDsl targets: [
                                      'dsl/job-testing/createRoot.groovy',
-                                     'job-automation/dsl/tenants/createTenantJobs.groovy'
+                                     'dsl/tenants/createTenantJobs.groovy'
                                      ].join('\n'),
                             removedJobAction: 'DELETE',
                             removedViewAction: 'DELETE',
