@@ -20,6 +20,16 @@ boolean main()
             description("Job root for branch: ${branch_name_raw}")
         }
 
+        if (branch_name != delivery_branch)
+        {
+
+            folder("${job_testing_folder}/${branch_name}")
+            {
+                displayName("${branch_name_raw}")
+                description("Job root for branch: ${branch_name_raw}")
+            }
+        }
+
         /*folder("${path_prefix}/${job_testing_folder}")
         {
             displayName("000 - Testing Area")
@@ -32,15 +42,7 @@ boolean main()
             }
         }
 
-        if (branch_name != delivery_branch)
-        {
-
-            folder("${job_testing_folder}/${branch_name}")
-            {
-                displayName("${branch_name_raw}")
-                description("Job root for branch: ${branch_name_raw}")
-            }
-        }*/
+        */
     }
     catch (Exception ex)
     {
