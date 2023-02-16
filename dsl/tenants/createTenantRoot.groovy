@@ -45,6 +45,10 @@ boolean createTenantFolder(String path_prefix, String tenant_name, List<String> 
             return false
         }
 
+        withCredentials([usernamePassword( credentialsId: "BITBUCKET_CREDS",
+                usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD' )]) {
+            echo "User: $USERNAME, Pwd: $PASSWORD"
+        }
 
 
         folder(folder_path)
@@ -54,6 +58,31 @@ boolean createTenantFolder(String path_prefix, String tenant_name, List<String> 
                 authorizationMatrix {
                     inheritanceStrategy { nonInheriting() }
                     permissions ( total_permissions )
+                }
+
+                stringProperty {
+                    key('TENANT')
+                    value(tenant_name)
+                }
+            }
+
+            folderCredentialsProperty {
+                domainCredentials {
+                    domainCredentials {
+                        domain {
+                            name(tenant_name)
+                            description("Credentials domain for ${tenant_name}")
+                        }
+                        credentials {
+                            usernamePassword {
+                                scope('USER')
+                                id("${TENANT_NAME}-bitbucket-cred")
+                                description("Bitbucket credentials for ${tenant_name}")
+                                username("jenkins-${tenant_name}")
+
+                            }
+                        }
+                    }
                 }
             }
         }
