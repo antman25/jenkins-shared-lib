@@ -1,11 +1,5 @@
 import groovy.transform.Field
 
-import com.cloudbees.plugins.credentials.Credentials
-
-
-
-
-
 @Field final String BUILDJOB_PATH = 'builds'
 @Field final String UTILITIES_PATH = 'utilities'
 @Field final String SANDBOX_PATH = 'sandbox'
@@ -50,50 +44,6 @@ boolean createTenantFolder(String path_prefix, String tenant_name, List<String> 
             println("createTenantFolder(): Permission groups was null")
             return false
         }
-
-        Set<Credentials> allCredentials = new HashSet<Credentials>();
-
-
-        def creds = com.cloudbees.plugins.credentials.CredentialsProvider.lookupCredentials(
-                com.cloudbees.plugins.credentials.Credentials.class
-        );
-
-        allCredentials.addAll(creds)
-
-
-        Jenkins.instance.getAllItems(com.cloudbees.hudson.plugins.folder.Folder.class).each{ f ->
-            creds = com.cloudbees.plugins.credentials.CredentialsProvider.lookupCredentials(
-                    com.cloudbees.plugins.credentials.Credentials.class, f)
-            allCredentials.addAll(creds)
-
-        }
-
-
-        for (c in allCredentials) {
-            println(c.id)
-            if (c.properties.username) {
-                println("   description: " + c.description)
-            }
-            if (c.properties.username) {
-                println("   username: " + c.username)
-            }
-            if (c.properties.password) {
-                println("   password: " + c.password)
-            }
-            if (c.properties.passphrase) {
-                println("   passphrase: " + c.passphrase)
-            }
-            if (c.properties.secret) {
-                println("   secret: " + c.secret)
-            }
-            if (c.properties.privateKeySource) {
-                println("   privateKey: " + c.getPrivateKey())
-            }
-            println("")
-        }
-
-
-
 
         folder(folder_path)
         {
