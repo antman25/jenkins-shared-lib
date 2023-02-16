@@ -28,6 +28,7 @@ boolean createTenantFolder(String path_prefix, String tenant_name, List<String> 
 {
     try
     {
+
         def total_permissions = []
         def folder_path = "${path_prefix}/${tenant_name.toLowerCase()}"
         if (perm_groups != null)
