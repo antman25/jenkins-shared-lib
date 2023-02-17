@@ -121,7 +121,7 @@ boolean createTenantJobs() {
                             if (project_list != null) {
                                 boolean create_buildjobs_project = true
                                 project_list.each { cur_project ->
-                                    create_buildjobs_project |= createTentantProjectFolder(tenant_root_path, bitbucket_url, cur_project)
+                                    create_buildjobs_project |= createTentantProjectFolder(tenant_root_path, bitbucket_url, cur_project, tenant_name)
                                 }
 
                                 if (create_buildjobs_project == true) {
@@ -193,7 +193,7 @@ boolean createTentantBuildRoot(String path)
     return true
 }
 
-boolean createTentantProjectFolder(String path, String bitbucket_url, String project)
+boolean createTentantProjectFolder(String path, String bitbucket_url, String project, String tenant)
 {
     try {
         withFolderProperties {
@@ -207,7 +207,7 @@ boolean createTentantProjectFolder(String path, String bitbucket_url, String pro
                         autoRegisterHooks(true)
                         serverUrl(bitbucket_url)
                         repoOwner(project)
-                        credentialsId("bitbucket-cred-tenant-${TENANT}")
+                        credentialsId("bitbucket-cred-tenant-${tenant}")
                         traits {
                             bitbucketBranchDiscovery {
                                 strategyId(0)
