@@ -196,26 +196,29 @@ boolean createTentantBuildRoot(String path)
 boolean createTentantProjectFolder(String path, String bitbucket_url, String project)
 {
     try {
-        organizationFolder("${path}/${BUILDJOB_PATH}/${project}")
-        {
-            displayName(project)
-            description("Project: ${project}\nBitbucket URL: ${bitbucket_url}")
+        withFolderProperties {
+            organizationFolder("${path}/${BUILDJOB_PATH}/${project}")
+            {
+                displayName(project)
+                description("Project: ${project}\nBitbucket URL: ${bitbucket_url}")
 
-            organizations {
-                bitbucket {
-                    autoRegisterHooks(true)
-                    serverUrl(bitbucket_url)
-                    repoOwner(project)
-                    credentialsId("bitbucket-cred-tenant-${TENANT}")
-                    traits {
-                        bitbucketBranchDiscovery {
-                            strategyId(0)
+                organizations {
+                    bitbucket {
+                        autoRegisterHooks(true)
+                        serverUrl(bitbucket_url)
+                        repoOwner(project)
+                        credentialsId("bitbucket-cred-tenant-${TENANT}")
+                        traits {
+                            bitbucketBranchDiscovery {
+                                strategyId(0)
+                            }
+
                         }
-
                     }
                 }
             }
         }
+
     }
     catch (Exception ex) {
         println("createTentantBuildProject() Exception: ${ex.toString()}")
