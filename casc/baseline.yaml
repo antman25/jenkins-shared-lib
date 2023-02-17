@@ -145,6 +145,7 @@ unclassified:
           displayName: "Bitbucket Server"
           manageHooks: true
           serverUrl: "http://10.0.0.35"
+          webhookImplementation: NATIVE
   buildDiscarders:
     configuredBuildDiscarders:
       - "jobBuildDiscarder"
