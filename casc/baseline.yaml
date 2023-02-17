@@ -75,7 +75,7 @@ jenkins:
           - key: "TOOLS_URL"
             value: "https://github.com/antman25/jenkins-shared-lib.git"
           - key: "TOOLS_URL_TESTING"
-            value: "http://10.0.0.222:7990/scm/pip/jenkins-shared-lib.git"
+            value: "http://10.0.0.35/scm/pip/jenkins-shared-lib.git"
   labelAtoms:
     - name: "built-in"
   markupFormatter: "plainText"
@@ -140,11 +140,11 @@ unclassified:
   bitbucketEndpointConfiguration:
     endpoints:
       - bitbucketServerEndpoint:
-          bitbucketJenkinsRootUrl: "http://jenkins.antlinux.local:31039/"
+          bitbucketJenkinsRootUrl: "http://10.0.0.50:8080/"
           credentialsId: "BITBUCKET_CRED"
           displayName: "Bitbucket Server"
           manageHooks: true
-          serverUrl: "http://10.0.0.222:7990"
+          serverUrl: "http://10.0.0.35"
   buildDiscarders:
     configuredBuildDiscarders:
       - "jobBuildDiscarder"
@@ -161,7 +161,7 @@ unclassified:
     storage: "file"
   location:
     adminAddress: "address not configured yet <nobody@nowhere>"
-    url: "http://jenkins.antlinux.local:31039/"
+    url: "http://10.0.0.50:8080/"
   mailer:
     charset: "UTF-8"
     useSsl: false
@@ -186,6 +186,7 @@ jobs:
           environmentVariables {
               env('BRANCH_NAME', 'main')
               env('TOOLS_URL', 'https://github.com/antman25/jenkins-shared-lib.git')
+              env('TENANT', 'PIP')
           }
           properties {
             disableConcurrentBuilds {}
