@@ -206,6 +206,7 @@ boolean createTentantProjectFolder(String path, String bitbucket_url, String pro
                     autoRegisterHooks(true)
                     serverUrl(bitbucket_url)
                     repoOwner(project)
+                    credentialsId("bitbucket-cred-tenant-${TENANT}")
                     traits {
                         bitbucketBranchDiscovery {
                             strategyId(0)
