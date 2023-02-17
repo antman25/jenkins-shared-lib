@@ -198,13 +198,22 @@ boolean createTentantProjectFolder(String path, String bitbucket_url, String pro
     try {
         organizationFolder("${path}/${BUILDJOB_PATH}/${project}")
         {
-            //if (branch_name != delivery_branch)
-            //    disabled()
-
             displayName(project)
             description("Project: ${project}\nBitbucket URL: ${bitbucket_url}")
 
+            organizations {
+                bitbucket {
+                    autoRegisterHooks(true)
+                    serverUrl(bitbucket_url)
+                    repoOwner(project)
+                    traits {
+                        bitbucketBranchDiscovery {
+                            strategyId(0)
+                        }
 
+                    }
+                }
+            }
         }
     }
     catch (Exception ex) {
