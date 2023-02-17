@@ -22,7 +22,7 @@ boolean createDeployJob(String path_prefix)
         def is_delivery_branch = branch_name == delivery_branch
         multibranchPipelineJob("${path_prefix}/${TENANT}/${UTILITIES_PATH}/deploy-jobs-git")
         {
-            displayName("000 - Deploy Jenkins Jobs")
+            displayName("000 - Deploy Jenkins Jobs - Gitlab")
             if (is_delivery_branch) {
                 description(desc)
             }
