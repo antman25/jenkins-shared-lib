@@ -96,7 +96,6 @@ jenkins:
         - id: "admin"
           name: "Jenkins Admin"
           properties:
-            - "favorite"
             - "apiToken"
             - "mailer"
             - "myView"
@@ -106,7 +105,6 @@ jenkins:
         - id: "antman"
           name: "antman"
           properties:
-            - "favorite"
             - "myView"
             - "timezone"
             - "apiToken"
@@ -122,7 +120,6 @@ jenkins:
                 emailAddress: "groupa@antlinux.local"
             - preferredProvider:
                 providerId: "default"
-            - "favorite"
   slaveAgentPort: 50000
   updateCenter:
     sites:
@@ -158,8 +155,6 @@ unclassified:
     configuration:
       engineVersion: 2
       timeout: 60
-  junitTestResultStorage:
-    storage: "file"
   location:
     adminAddress: "address not configured yet <nobody@nowhere>"
     url: "http://10.0.0.50:8080/"
