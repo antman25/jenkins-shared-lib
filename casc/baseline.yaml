@@ -184,7 +184,7 @@ jobs:
       }
       
       pipelineJob("seed-job/gitlab") {
-          displayName("Temporary Seed Job - Gitlab Source")
+          displayName("Temporary Seed Job - Github Source")
           description("Seed job used to bootstrap")
 
           environmentVariables {
