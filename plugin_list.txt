@@ -9,6 +9,6 @@ folder properties
 basic-branch-build-strategies
 pipeline utility steps
 env injector
+Kubernetes CLI Plugin
 
 # not sure
-Kubernetes CLI Plugin??

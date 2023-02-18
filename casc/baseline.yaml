@@ -14,9 +14,7 @@ credentials:
               password: not-real-password
               scope: GLOBAL
               username: "jenkins"
-          - fileSystemServiceAccountCredential:
-              id: "kubernetes-svc-account-token-id"
-              scope: GLOBAL
+
 jenkins:
   agentProtocols:
     - "JNLP4-connect"
@@ -27,40 +25,8 @@ jenkins:
         - "GROUP:Overall/Read:authenticated"
         - "USER:Overall/Administer:admin"
         - "USER:Overall/Administer:antman"
-  clouds:
-    - kubernetes:
-        containerCap: 10
-        containerCapStr: "10"
-        credentialsId: "kubernetes-svc-account-token-id"
-        jenkinsTunnel: "jenkins-agent.workflow.svc.cluster.local:50000"
-        jenkinsUrl: "http://jenkins.workflow.svc.cluster.local:8080"
-        name: "k3s-cluster1"
-        namespace: "workflow"
-        podLabels:
-          - key: "jenkins/jenkins-agent-podlbl"
-            value: "true"
-        serverCertificate: |
-          -----BEGIN CERTIFICATE-----
-          MIIBdzCCAR2gAwIBAgIBADAKBggqhkjOPQQDAjAjMSEwHwYDVQQDDBhrM3Mtc2Vy
-          dmVyLWNhQDE2NzU3NTAxNjcwHhcNMjMwMjA3MDYwOTI3WhcNMzMwMjA0MDYwOTI3
-          WjAjMSEwHwYDVQQDDBhrM3Mtc2VydmVyLWNhQDE2NzU3NTAxNjcwWTATBgcqhkjO
-          PQIBBggqhkjOPQMBBwNCAASQ1a4PXs/g0AezNNH6HlTdi9An74mfSwY5EnEfLHh3
-          ud+k0k5kOAPaQhwcKtDS+yQEf+ot4+5Jbzs0QtXv7aYMo0IwQDAOBgNVHQ8BAf8E
-          BAMCAqQwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUT3Hi7SHFkF8Hewp6FB7E
-          vvS+4UkwCgYIKoZIzj0EAwIDSAAwRQIgGIQ9t8NXHXAVaJOIWOHr0+ffu+xgySFU
-          OOKtvrHl/2kCIQCpKlxjcILLbACC/leH0gNLRWx/HOKYkp0gMvmjnWuTTg==
-          -----END CERTIFICATE-----
-        serverUrl: "https://kubernetes.default"
-        templates:
-          - id: "e2b3aa84-5ca9-4336-b8e7-a64203ba3f66"
-            name: "default-jnlp"
-            namespace: "workflow"
-            workspaceVolume:
-              dynamicPVC:
-                accessModes: "ReadWriteOnce"
-                requestsSize: "13Gi"
-                storageClassName: "longhorn-retain"
-            yamlMergeStrategy: "override"
+
+
   crumbIssuer:
     standard:
       excludeClientIPFromCrumb: true
@@ -175,14 +141,26 @@ tool:
 jobs:
   - script: >
       
-      pipelineJob("seed-job-gitlab") {
+      folder('seed-job') {
+        properties {
+          folderProperties {
+            properties {
+              stringProperty {
+                key('TENANT')
+                value("PIP")
+              }
+            }
+          }
+        }
+      }
+      
+      pipelineJob("seed-job/gitlab") {
           displayName("!!! Temporary Seed Job - Gitlab URL !!!")
           description("Seed job used to bootstrap")
 
           environmentVariables {
               env('BRANCH_NAME', 'main')
               env('TOOLS_URL', 'https://github.com/antman25/jenkins-shared-lib.git')
-              env('TENANT', 'PIP')
           }
           properties {
             disableConcurrentBuilds {}
@@ -202,14 +180,13 @@ jobs:
           }
       }
       
-      pipelineJob("seed-job-bitbucket") {
+      pipelineJob("seed-job/bitbucket") {
           displayName("!!! Temporary Seed Job - Bitbucket URL !!!")
           description("Seed job used to bootstrap")
 
           environmentVariables {
               env('BRANCH_NAME', 'main')
               env('TOOLS_URL', 'http://10.0.0.222:7990/scm/pip/jenkins-shared-lib.git')
-              env('TENANT', 'PIP')
           }
           properties {
             disableConcurrentBuilds {}

@@ -1,0 +1,9 @@
+podTemplate {
+    node(POD_LABEL)
+    {
+        stage('Test')
+        {
+            sh 'echo default image'
+        }
+    }
+}
