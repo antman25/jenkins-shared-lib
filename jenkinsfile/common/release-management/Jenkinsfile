@@ -1,0 +1,9 @@
+podTemplate {
+    node(POD_LABEL)
+    {
+        stage ('Release Management')
+        {
+            sh 'echo test'
+        }
+    }
+}

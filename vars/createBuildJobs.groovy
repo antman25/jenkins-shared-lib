@@ -6,9 +6,8 @@ def call() {
     podTemplates.pythonTemplate {
         node(POD_LABEL) {
             def params = [:]
-            String branch_name = env.getEnvironment().getOrDefault('BRANCH_NAME', 'main')
-            String sanitized_branch_name = utils.sanitizeBranchName(branch_name)
-            String path_prefix = utils.getPathPrefix(branch_name,"${DELIVERY_BRANCH}")
+            String sanitized_branch_name = utils.sanitizeBranchName("${BRANCH_NAME}")
+            String path_prefix = utils.getPathPrefix(sanitized_branch_name,"${DELIVERY_BRANCH}")
 
             println("Sanitized branch name: ${sanitized_branch_name}")
 
@@ -31,6 +30,7 @@ def call() {
                 sh 'cat config/config.yaml'
             }
 
+            // TODO: Remove when vault is integrated
             withCredentials([usernamePassword(credentialsId: 'bitbucket-plugin-cred', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                 stage('Job DSL') {
                     try {
@@ -40,7 +40,7 @@ def call() {
 
                         params = ['config_yaml'       : config_yaml,
                                   'branch_name'       : sanitized_branch_name,
-                                  'branch_name_raw'   : branch_name,
+                                  'branch_name_raw'   : "${BRANCH_NAME}",
                                   'delivery_branch'   : "${DELIVERY_BRANCH}",
                                   'job_testing_folder': "${JOB_TESTING_ROOT}",
                                   'workspace_path'    : "${WORKSPACE}",
@@ -51,11 +51,10 @@ def call() {
                         //                                     'dsl/jenkins-admin/createJobs.groovy',
                         //'dsl/test-pipelines/createRoot.groovy',
                         //                                     'dsl/test-pipelines/createTestJobs.groovy'
-                        jobDsl targets: [
-                                'dsl/job-testing/createRoot.groovy',
-                                'dsl/tenants/createTenantRoot.groovy',
-                                'dsl/tenants/pipeline/createJobs.groovy'
-                                ].join('\n'),
+                        jobDsl targets: [   'dsl/job-testing/createRoot.groovy',
+                                            'dsl/tenants/createTenantRoot.groovy',
+                                            'dsl/tenants/pipeline/createJobs.groovy'
+                                            ].join('\n'),
                                 removedJobAction: 'DELETE',
                                 removedViewAction: 'DELETE',
                                 lookupStrategy: 'JENKINS_ROOT',
@@ -68,10 +67,7 @@ def call() {
                 }
             }
 
-            stage ('Test All podTemplates')
-            {
-
-
+            stage ('Test All podTemplates') {
                 pod_template_jobs = [ :]
                 pod_template_jobs['podtemplate_python'] = {
                     stage ('podTemplate: python')

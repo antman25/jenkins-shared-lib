@@ -69,7 +69,7 @@ boolean createDeployJob(String path_prefix)
                 }
             }
             factory {
-                workflowBranchProjectFactory {
+                workflowBranchProjectFactory {jenkinsfile
                     scriptPath("Jenkinsfile")
                 }
             }

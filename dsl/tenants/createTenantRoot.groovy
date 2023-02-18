@@ -102,6 +102,63 @@ boolean createTenantFolder(String path_prefix, String tenant_name, List<String> 
     return true
 }
 
+def templateMultibranchPipeline(String job_path, String display_name, String desc, String jenkinsfile_path, String branch_filter_regex='.*', String auto_build_regex='.*' )
+{
+    try
+    {
+        multibranchPipelineJob(job_path)
+        {
+            displayName(displayName)
+            description(desc)
+
+
+            branchSources {
+                branchSource {
+                    source {
+                        git {
+                            remote (tools_url)
+                            // all id's must be unique according to docs
+                            id ('deploy-production-jobs-source-id')
+                            traits {
+                                gitBranchDiscovery()
+
+                                headRegexFilter
+                                {
+                                    regex('^(.*main).*$')
+                                }
+                            }
+                        }
+                    }
+                    strategy {
+                        allBranchesSame {
+                            props {
+                                suppressAutomaticTriggering {
+                                    triggeredBranchesRegex ('^(.*main).*$')
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            orphanedItemStrategy {
+                discardOldItems {
+                    numToKeep(20)
+                }
+            }
+            factory {
+                workflowBranchProjectFactory {
+                    scriptPath(jenkinsfile_path)
+                }
+            }
+            /*triggers {
+                periodicFolderTrigger {
+                    interval("1h")
+                }
+            }*/
+        }
+    }
+}
+
 
 
 boolean createTenantJobs() {
