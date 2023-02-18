@@ -6,7 +6,7 @@ credentials:
               description: "Credentials used by Bitbucket plugin"
               id: "bitbucket-plugin-cred"
               password: not-real-password
-              scope: SYSTEM
+              scope: GLOBAL
               username: "jenkins"
 jenkins:
   agentProtocols:
