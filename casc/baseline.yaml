@@ -17,7 +17,6 @@ credentials:
               password: not-real-password
               scope: GLOBAL
               username: "jenkins"
-
 jenkins:
   agentProtocols:
     - "JNLP4-connect"
@@ -28,6 +27,7 @@ jenkins:
         - "GROUP:Overall/Read:authenticated"
         - "USER:Overall/Administer:admin"
         - "USER:Overall/Administer:antman"
+
   crumbIssuer:
     standard:
       excludeClientIPFromCrumb: true
@@ -45,8 +45,9 @@ jenkins:
             value: "http://10.0.0.35/scm/pip/jenkins-shared-lib.git"
   labelAtoms:
     - name: "built-in"
+    - name: "jenkins-jenkins-agent"
   markupFormatter: "plainText"
-  mode: NORMAL
+  mode: EXCLUSIVE
   myViewsTabBar: "standard"
   noUsageStatistics: true
   numExecutors: 0
@@ -69,24 +70,6 @@ jenkins:
             - preferredProvider:
                 providerId: "default"
             - "timezone"
-        - id: "antman"
-          name: "antman"
-          properties:
-            - "myView"
-            - "timezone"
-            - "apiToken"
-            - mailer:
-                emailAddress: "antman@antlinux.local"
-            - preferredProvider:
-                providerId: "default"
-        - id: "groupa"
-          name: "groupa"
-          properties:
-            - "apiToken"
-            - mailer:
-                emailAddress: "groupa@antlinux.local"
-            - preferredProvider:
-                providerId: "default"
   slaveAgentPort: 50000
   updateCenter:
     sites:
@@ -100,6 +83,29 @@ globalCredentialsConfiguration:
   configuration:
     providerFilter: "none"
     typeFilter: "none"
+security:
+  apiToken:
+    creationOfLegacyTokenEnabled: false
+    tokenGenerationOnCreationEnabled: false
+    usageStatisticsEnabled: true
+  envInject:
+    enableLoadingFromMaster: false
+    enablePermissions: false
+    hideInjectedVars: false
+  gitHooks:
+    allowedOnAgents: false
+    allowedOnController: false
+  gitHostKeyVerificationConfiguration:
+    sshHostKeyVerificationStrategy: "knownHostsFileVerificationStrategy"
+  globalJobDslSecurityConfiguration:
+    useScriptSecurity: false
+  sSHD:
+    port: -1
+  scriptApproval:
+    approvedSignatures:
+      - "method org.jenkinsci.plugins.workflow.support.actions.EnvironmentAction getEnvironment"
+      - "method org.yaml.snakeyaml.Yaml load java.lang.String"
+      - "new org.yaml.snakeyaml.Yaml"
 unclassified:
   bitbucketEndpointConfiguration:
     endpoints:
@@ -118,10 +124,20 @@ unclassified:
   fingerprints:
     fingerprintCleanupDisabled: false
     storage: "file"
+  gitSCM:
+    addGitTagAction: false
+    allowSecondFetch: false
+    createAccountBasedOnEmail: false
+    disableGitToolChooser: false
+    hideCredentials: false
+    showEntireCommitSummaryInChanges: false
+    useExistingAccountWithSameEmail: false
   hashicorpVault:
     configuration:
       engineVersion: 2
       timeout: 60
+  junitTestResultStorage:
+    storage: "file"
   location:
     adminAddress: "address not configured yet <nobody@nowhere>"
     url: "http://10.0.0.50:8080/"
@@ -146,7 +162,7 @@ jobs:
       {
         definition {
           cpsFlowDefinition {
-            
+      
               script("podTemplate { node(POD_LABEL) { stage('test') { sh 'echo test' } } }")
               sandbox(true)
           }
@@ -192,7 +208,7 @@ jobs:
           }
       }
       
-      pipelineJob("seed-job/bitbucket") {
+      /*pipelineJob("seed-job/bitbucket") {
           displayName("!!! Temporary Seed Job - Bitbucket URL !!!")
           description("Seed job used to bootstrap")
 
@@ -216,5 +232,5 @@ jobs:
               }
             }
           }
-      }
+      }*/
       
