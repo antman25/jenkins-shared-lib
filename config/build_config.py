@@ -41,7 +41,7 @@ def main():
 
     try:
         #setGlobalVar(output_config, 'artifactory_url', 'http://nexus.antlinux.local')
-        setGlobalVar(output_config, 'bitbucket_url', 'http://bitbucket.antlinux.local')
+        setGlobalVar(output_config, 'bitbucket_url', 'http://10.0.0.35')
         createAllTenants(output_config)
 
         with open('config/config.yaml', 'w') as f:
