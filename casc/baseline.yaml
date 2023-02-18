@@ -2,6 +2,9 @@ credentials:
   system:
     domainCredentials:
       - credentials:
+          - fileSystemServiceAccountCredential:
+              id: "k8s-svc-account-token-id"
+              scope: SYSTEM
           - usernamePassword:
               description: "ARITIFACTORY_CRED"
               id: "ARTIFACTORY_CRED"
@@ -25,8 +28,6 @@ jenkins:
         - "GROUP:Overall/Read:authenticated"
         - "USER:Overall/Administer:admin"
         - "USER:Overall/Administer:antman"
-
-
   crumbIssuer:
     standard:
       excludeClientIPFromCrumb: true
@@ -140,6 +141,17 @@ tool:
     settingsProvider: "standard"
 jobs:
   - script: >
+      
+      pipelineJob('simple-test')
+      {
+        definition {
+          cpsFlowDefinition {
+            
+              script("podTemplate { node(POD_LABEL) { stage('test') { sh 'echo test' } } }")
+              sandbox(true)
+          }
+        }
+      }
       
       folder('seed-job') {
         properties {
