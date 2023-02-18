@@ -43,4 +43,20 @@ def pythonTemplate(Closure body) {
   }
 }
 
+def gradleTemplate(Closure body) {
+  podTemplate(
+      containers: [
+        containerTemplate(
+                name: 'gradle',
+                image: 'gradle:7.4.2-jdk17-alpine',
+                command: 'cat',
+                ttyEnabled: true
+        )
+      ]
+  ) {
+    body()
+  }
+}
+
+
 

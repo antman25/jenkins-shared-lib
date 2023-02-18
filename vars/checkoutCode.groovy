@@ -1,7 +1,7 @@
 
 
 def call(Map config) {
-  if (config.isMasterBranch) {
+  if (config.isDeliveryBranch) {
     return checkout(scm)
   }
 

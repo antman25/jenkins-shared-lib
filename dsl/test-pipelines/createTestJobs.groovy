@@ -49,6 +49,7 @@ boolean main()
         templatePipelineJob("${path_prefix}/${TEST_PIPELINE_PATH}/pod-template-python3", "podTemplate: pythonTemplate", "pipeline-tests/template-tests/python3/Jenkinsfile")
         templatePipelineJob("${path_prefix}/${TEST_PIPELINE_PATH}/pod-template-docker", "podTemplate: dockerTemplate", "pipeline-tests/template-tests/docker/Jenkinsfile")
         templatePipelineJob("${path_prefix}/${TEST_PIPELINE_PATH}/pod-template-helm", "podTemplate: helmTemplate", "pipeline-tests/template-tests/helm/Jenkinsfile")
+        templatePipelineJob("${path_prefix}/${TEST_PIPELINE_PATH}/pod-template-gradle", "podTemplate: gradleTemplate", "pipeline-tests/template-tests/gradle/Jenkinsfile")
 
         templatePipelineJob("${path_prefix}/${TEST_PIPELINE_PATH}/build-docker", "buildDockerImage", "pipeline-tests/build-tests/docker/Jenkinsfile")
         templatePipelineJob("${path_prefix}/${TEST_PIPELINE_PATH}/build-helm", "buildHelmImage", "pipeline-tests/build-tests/helm/Jenkinsfile")

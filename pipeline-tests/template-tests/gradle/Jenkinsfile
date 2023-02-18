@@ -1,4 +1,3 @@
-def sourceInfo = null
 withFolderProperties {
     try {
         println("Attempting to load shared lib from branch: ${env.BRANCH_NAME} -- Using bitbucket-creds-tenant-${TENANT}")
@@ -13,6 +12,23 @@ withFolderProperties {
         println("Problem using BRANCH_NAME variable, trying main")
         library identifier: "jenkins-shared-lib@main", retriever: modernSCM(sourceInfo)
     }
-    createBuildJobs()
 }
 
+
+podTemplates.gradleTemplate {
+    node(POD_LABEL)
+    {
+        stage ('Clone Code')
+        {
+            checkout scm
+        }
+
+        stage('Test gradle template')
+        {
+            container('gradle')
+            {
+                sh 'gradle -v'
+            }
+        }
+    }
+}
