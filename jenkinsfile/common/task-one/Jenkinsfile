@@ -1,0 +1,9 @@
+podTemplate {
+    node(POD_LABEL)
+    {
+        stage ('Task Two')
+        {
+            sh 'env | sort -n'
+        }
+    }
+}
