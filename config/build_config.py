@@ -3,12 +3,16 @@ import yaml
 import sys
 
 KEY_TENANTS='tenants'
-KEY_GLOBAL='global'
+KEY_COMMON='common'
 KEY_UTILITIES='utilities'
 
+
 REGEX_MATCH_ALL=".*"
-REGEX_ONLY_MAIN="'^(.*main).*$'"
+REGEX_EXCLUDE_ALL="^(?!.*).*$"
+REGEX_ONLY_MAIN="^(.*main).*$"
 REGEX_EXCLUDE_MAIN="^(?!.*main).*$"
+# Regex notes
+# ^(?:.*develop|.*master|.*release/\d+\.\d+\.\d+(?!.))$
 
 TENANT_PIPELINE='Pipeline'
 TENANT_GROUP_A="Group-A"
@@ -16,13 +20,13 @@ TENANT_GROUP_B="Group-B"
 TENANT_TEST_1="Test-1"
 TENANT_TEST_2="Test-2"
 
-def setGlobalVar(config, var_name, val):
-    if KEY_GLOBAL not in config:
-        config[KEY_GLOBAL] = {}
-    config[KEY_GLOBAL][var_name] = val
+def setCommonKey(config, var_name, val):
+    if KEY_COMMON not in config:
+        config[KEY_COMMON] = {}
+    config[KEY_COMMON][var_name] = val
 
 def setBitbucketUrl(config, bitbucket_url):
-    setGlobalVar(config, 'bitbucket_url', bitbucket_url)
+    setCommonKey(config, 'bitbucket_url', bitbucket_url)
 
 
 def templateTenant (tenant_name, perm_groups, project_list, filter_repo_regex):
@@ -44,7 +48,7 @@ def templateJob(job_name, display_name, desc, branch_filter_regex=REGEX_MATCH_AL
              'display_name' : display_name,
              'description' : desc,
              'branch_filter_regex' : branch_filter_regex,
-             'branch_build_regex' : branch_filter_regex,
+             'branch_build_regex' : branch_build_regex,
             }
 
 def addTentant(config, tenant_name, perm_groups, project_list, filter_repo_regex = REGEX_MATCH_ALL):
@@ -55,7 +59,14 @@ def addTentant(config, tenant_name, perm_groups, project_list, filter_repo_regex
     config[KEY_TENANTS].append(tenant_config)
 
 def createCommonUtilityJobs(config):
-    setGlobalVar(config, KEY_UTILITIES, [])
+    utility_jobs = []
+    utility_jobs.append(templateJob(job_name='release-management',
+                                    display_name='Release Management',
+                                    desc='Release sw',
+                                    branch_filter_regex=REGEX_ONLY_MAIN,
+                                    branch_build_regex=REGEX_EXCLUDE_ALL
+    ))
+    setCommonKey(config, KEY_UTILITIES, utility_jobs)
 
 def createAllTenants(config):
     addTentant(config=config,
