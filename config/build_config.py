@@ -2,6 +2,10 @@
 import yaml
 import sys
 
+class NoAliasDumper(yaml.SafeDumper):
+    def ignore_aliases(self, data):
+        return True
+
 KEY_TENANTS='tenants'
 KEY_COMMON='common'
 KEY_UTILITIES='utilities'
@@ -26,6 +30,8 @@ TENANT_GROUP_B="group-b"
 TENANT_TEST_1="test-1"
 TENANT_TEST_2="test-2"
 
+NO_UTILITY_JOBS = { }
+
 def setCommon(config, var_name, val):
     if KEY_COMMON not in config:
         config[KEY_COMMON] = {}
@@ -35,17 +41,7 @@ def setBitbucketUrl(config, bitbucket_url):
     setCommon(config, 'bitbucket_url', bitbucket_url)
 
 
-def templateTenant (tenant_name, tenant_display_name, perm_groups, project_list, filter_repo_regex):
-    if type(perm_groups) != list:
-        raise Exception('Invalid permission group type passed')
-    if type(project_list) != list:
-        raise Exception('Invalid project list type passed')
-    tenant_config = { 'tenant_display_name' : tenant_display_name,
-                      'perm_groups' : perm_groups,
-                      'project_list' : project_list,
-                      'filter_repo_regex' : filter_repo_regex,
-                    }
-    return tenant_config
+
 
 def templateJob(display_name, desc, repo_url, jenkinsfile_path, credential_id, job_env_vars, branch_filter_regex=REGEX_MATCH_ALL, branch_build_regex=REGEX_MATCH_ALL):
     return { 'display_name' : display_name,
@@ -58,13 +54,31 @@ def templateJob(display_name, desc, repo_url, jenkinsfile_path, credential_id, j
              'branch_build_regex' : branch_build_regex,
             }
 
-def addTenant(config, tenant_name, tenant_display_name, perm_groups, project_list, filter_repo_regex = REGEX_MATCH_ALL):
+def templateTenant (tenant_name, tenant_display_name, perm_groups, project_list, utilities, filter_repo_regex):
+
+    if type(perm_groups) != list:
+        raise Exception('Invalid permission group type passed')
+    if type(project_list) != list:
+        raise Exception('Invalid project list type passed')
+    #print(type(utilities))
+    if type(utilities) != dict:
+        raise Exception('Invalid utilties type passed')
+    tenant_config = { 'tenant_display_name' : tenant_display_name,
+                      'perm_groups' : perm_groups,
+                      'project_list' : project_list,
+                      'utilities' : utilities,
+                      'filter_repo_regex' : filter_repo_regex,
+                    }
+    return tenant_config
+
+def addTenant(config, tenant_name, tenant_display_name, perm_groups, project_list, utilities, filter_repo_regex = REGEX_MATCH_ALL):
+
     tenant_name = tenant_name.lower()
     if KEY_TENANTS not in config:
         config[KEY_TENANTS] = {}
     if tenant_name in config[KEY_TENANTS]:
         raise ("Attempted to add a duplicate tenant config")
-    config[KEY_TENANTS][tenant_name] = templateTenant(tenant_name, tenant_display_name, perm_groups, project_list, filter_repo_regex)
+    config[KEY_TENANTS][tenant_name] = templateTenant(tenant_name, tenant_display_name, perm_groups, project_list, utilities, filter_repo_regex)
     print(f'Creating Tentant {tenant_name}')
     dump_config(config[KEY_TENANTS][tenant_name] )
 
@@ -95,7 +109,7 @@ def createCommonUtilityJobs(config, tools_url):
     utility_jobs['common-task-2'] = templateJob(display_name='Common Task 2',
                                                 desc='common task 2',
                                                 repo_url=tools_url,
-                                                jenkinsfile_path='jenkinsfile/common/tasak-two/Jenkinsfile',
+                                                jenkinsfile_path='jenkinsfile/common/task-two/Jenkinsfile',
                                                 credential_id=TENANT_CRED_BITBUCKET_RO,
                                                 job_env_vars={},
                                                 branch_filter_regex=REGEX_ONLY_MAIN,
@@ -104,14 +118,13 @@ def createCommonUtilityJobs(config, tools_url):
 
     setCommon(config, KEY_UTILITIES, utility_jobs)
 
-
-
 def createAllTenants(config):
     addTenant(config=config,
                tenant_name=TENANT_PIPELINE,
                tenant_display_name='Pipeline Team',
                perm_groups=['pipline','admin'],
                project_list=['PIP','PIPAPP'],
+               utilities=NO_UTILITY_JOBS,
                filter_repo_regex='^(?!.*(jenkins-shared-lib))'
     )
 
@@ -119,28 +132,32 @@ def createAllTenants(config):
                tenant_name=TENANT_GROUP_A,
                tenant_display_name=TENANT_GROUP_A,
                perm_groups=['groupa'],
-               project_list=['prjA']
+               project_list=['prjA'],
+               utilities=NO_UTILITY_JOBS
     )
 
     addTenant(config=config,
                tenant_name=TENANT_GROUP_B,
                tenant_display_name=TENANT_GROUP_B,
                perm_groups=['groupb'],
-               project_list=['prjB']
+               project_list=['prjB'],
+               utilities=NO_UTILITY_JOBS
     )
 
     addTenant(config=config,
                tenant_name=TENANT_TEST_1,
                tenant_display_name="Team One",
                perm_groups=['test1'],
-               project_list=['prjC']
+               project_list=['prjC'],
+               utilities=NO_UTILITY_JOBS
     )
 
     addTenant(config=config,
                tenant_name=TENANT_TEST_2,
                tenant_display_name="Team Two",
                perm_groups=['test2'],
-               project_list=['prjD']
+               project_list=['prjD'],
+               utilities=NO_UTILITY_JOBS
     )
 
 
@@ -175,38 +192,35 @@ def getJenkinsToolsUrl(casc_config):
     return getJenkinsGlobalEnvVar(casc_config, 'TOOLS_URL')
 
 def main():
-    try:
-        output_path = 'config/config.yaml'
-        output_config = {}
+    #try:
+    output_path = 'config/config.yaml'
+    output_config = {}
 
-        casc_path = 'casc/baseline.yaml'
-        casc_config = {}
-        with open(casc_path, 'r') as f:
-            casc_config = yaml.safe_load(f)
-        tools_url = getJenkinsToolsUrl(casc_config)
-        bitbucket_url = getJenkinsBitbucketUrl(casc_config)
-        if tools_url:
-            print(f"TOOLS_URL = {tools_url}")
-        else:
-            print("Problem reading TOOLS_URL")
-            exit(1)
+    casc_path = 'casc/baseline.yaml'
+    casc_config = {}
+    with open(casc_path, 'r') as f:
+        casc_config = yaml.safe_load(f)
+    tools_url = getJenkinsToolsUrl(casc_config)
+    bitbucket_url = getJenkinsBitbucketUrl(casc_config)
+    if tools_url:
+        print(f"TOOLS_URL = {tools_url}")
+    else:
+        print("Problem reading TOOLS_URL")
+        exit(1)
 
-        if bitbucket_url:
-            print(f"Bitbucket URL = {bitbucket_url}")
-        else:
-            print("Problem reading bitbucket URL")
-            exit(1)
+    if bitbucket_url:
+        print(f"Bitbucket URL = {bitbucket_url}")
+    else:
+        print("Problem reading bitbucket URL")
+        exit(1)
 
-        setBitbucketUrl(output_config, bitbucket_url)
-        createCommonUtilityJobs(output_config, tools_url)
-        createAllTenants(output_config)
-        #createTenantUtilityJobs(output_config)
+    setBitbucketUrl(output_config, bitbucket_url)
+    createCommonUtilityJobs(output_config, tools_url)
+    createAllTenants(output_config)
+    #createTenantUtilityJobs(output_config)
 
-        with open('config/config.yaml', 'w') as f:
-            yaml.dump(output_config, f)
-    except Exception as ex:
-        print("Exception building config: %s" % ex)
-        sys.exit(1)
+    with open('config/config.yaml', 'w') as f:
+        yaml.dump(output_config, f, Dumper=NoAliasDumper)
 
 
 if __name__ == '__main__':
