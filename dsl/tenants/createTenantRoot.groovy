@@ -169,7 +169,7 @@ boolean createTentantBuildRoot(String path)
     try {
         folder("${path}/${BUILDJOB_PATH}")
         {
-            displayName("Builds Test")
+            displayName("Builds")
             description("Builds Root Folder")
         }
 
