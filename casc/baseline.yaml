@@ -202,7 +202,7 @@ jobs:
           }
       }
       
-      /*pipelineJob("seed-job/bitbucket") {
+      pipelineJob("seed-job/bitbucket") {
           displayName("!!! Temporary Seed Job - Bitbucket URL !!!")
           description("Seed job used to bootstrap")
 
@@ -218,7 +218,7 @@ jobs:
             cpsScm {
               scm {
                 git {
-                  remote { url('http://10.0.0.222:7990/scm/pip/jenkins-shared-lib.git') }
+                  remote { url('http://10.0.0.35/scm/pip/jenkins-shared-lib.git') }
                   branches('main')
                   scriptPath('Jenkinsfile')
                   extensions { }  // required as otherwise it may try to tag the repo, which you may not want
@@ -226,5 +226,5 @@ jobs:
               }
             }
           }
-      }*/
+      }
       
