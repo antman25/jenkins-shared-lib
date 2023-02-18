@@ -2,20 +2,11 @@ credentials:
   system:
     domainCredentials:
       - credentials:
-          - fileSystemServiceAccountCredential:
-              id: "k8s-svc-account-token-id"
+          - usernamePassword:
+              description: "Credentials used by Bitbucket plugin"
+              id: "bitbucket-plugin-cred"
+              password: not-real-password
               scope: SYSTEM
-          - usernamePassword:
-              description: "ARITIFACTORY_CRED"
-              id: "ARTIFACTORY_CRED"
-              password: not-real-password
-              scope: GLOBAL
-              username: "jenkins"
-          - usernamePassword:
-              description: "BITBUCKET_CRED"
-              id: "BITBUCKET_CRED"
-              password: not-real-password
-              scope: GLOBAL
               username: "jenkins"
 jenkins:
   agentProtocols:
@@ -111,7 +102,7 @@ unclassified:
     endpoints:
       - bitbucketServerEndpoint:
           bitbucketJenkinsRootUrl: "http://10.0.0.50:8080/"
-          credentialsId: "BITBUCKET_CRED"
+          credentialsId: "bitbucket-plugin-cred"
           displayName: "Bitbucket Server"
           manageHooks: true
           serverUrl: "http://10.0.0.35"

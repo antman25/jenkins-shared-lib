@@ -31,7 +31,7 @@ def call() {
                 sh 'cat config/config.yaml'
             }
 
-            withCredentials([usernamePassword(credentialsId: 'BITBUCKET_CRED', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+            withCredentials([usernamePassword(credentialsId: 'bitbucket-plugin-cred', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                 stage('Job DSL') {
                     try {
                         def config_data = readFile 'config/config.yaml'
@@ -45,7 +45,7 @@ def call() {
                                   'job_testing_folder': "${JOB_TESTING_ROOT}",
                                   'workspace_path'    : "${WORKSPACE}",
                                   'tools_url'         : "${TOOLS_URL}",
-                                   'bitbucket_password' :"${PASSWORD}" ]
+                                   'bootstrap_password' :"${PASSWORD}" ]
                         //
                         //'dsl/createJenkinsJobDeploy.groovy',
                         //                                     'dsl/jenkins-admin/createJobs.groovy',
@@ -55,7 +55,7 @@ def call() {
                                 'dsl/job-testing/createRoot.groovy',
                                 'dsl/tenants/createTenantRoot.groovy',
                                 'dsl/tenants/pipeline/createJobs.groovy'
-                        ].join('\n'),
+                                ].join('\n'),
                                 removedJobAction: 'DELETE',
                                 removedViewAction: 'DELETE',
                                 lookupStrategy: 'JENKINS_ROOT',

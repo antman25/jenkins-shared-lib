@@ -61,17 +61,31 @@ boolean createTenantFolder(String path_prefix, String tenant_name, List<String> 
                             credentials {
                                 usernamePassword {
                                     scope('USER')
-                                    id("bitbucket-cred-tenant-${tenant_name}")
-                                    description("Bitbucket credentials for ${tenant_name}")
-                                    username("jenkins-${tenant_name}")
-                                    password(bitbucket_password)
+                                    id("tenant-bitbucket-rw-cred")
+                                    description("Bitbucket credentials for Read-Write account. Tenant: ${tenant_name}")
+                                    username("jenkins-${tenant_name}-rw")
+                                    password(bootstrap_password)
                                 }
                                 usernamePassword {
                                     scope('USER')
-                                    id("artifactory-cred-tenant-${tenant_name}")
-                                    description("Artifactory credentials for ${tenant_name}")
-                                    username("jenkins-${tenant_name}")
-                                    password(bitbucket_password)
+                                    id("tenant-bitbucket-ro-cred")
+                                    description("Bitbucket credentials for Read-Only account. Tenant: ${tenant_name}")
+                                    username("jenkins-${tenant_name}-ro")
+                                    password(bootstrap_password)
+                                }
+                                usernamePassword {
+                                    scope('USER')
+                                    id("tenant-artifactory-rw-cred")
+                                    description("Artifactory credentials for Read-Write account. Tenant: ${tenant_name}")
+                                    username("jenkins-${tenant_name}-rw")
+                                    password(bootstrap_password)
+                                }
+                                usernamePassword {
+                                    scope('USER')
+                                    id("tenant-artifactory-ro-cred")
+                                    description("Artifactory credentials for Read-Only account. Tenant: ${tenant_name}")
+                                    username("jenkins-${tenant_name}-ro")
+                                    password(bootstrap_password)
                                 }
                             }
                         }
@@ -206,7 +220,7 @@ boolean createTentantProjectFolder(String path, String bitbucket_url, String pro
                     autoRegisterHooks(true)
                     serverUrl(bitbucket_url)
                     repoOwner(project)
-                    credentialsId("bitbucket-cred-tenant-${tenant}")
+                    credentialsId("tenant-bitbucket-ro-cred")
                     traits {
                         bitbucketBranchDiscovery {
                             strategyId(0)
