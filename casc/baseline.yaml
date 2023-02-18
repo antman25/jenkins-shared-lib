@@ -158,16 +158,6 @@ tool:
 jobs:
   - script: >
       
-      pipelineJob('simple-test')
-      {
-        definition {
-          cpsFlowDefinition {
-      
-              script("podTemplate { node(POD_LABEL) { stage('test') { sh 'echo test' } } }")
-              sandbox(true)
-          }
-        }
-      }
       
       folder('seed-job') {
         properties {
@@ -182,8 +172,19 @@ jobs:
         }
       }
       
+      pipelineJob('seed-job/simple-test')
+      {
+        definition {
+          cpsFlowDefinition {
+
+              script("podTemplate { node(POD_LABEL) { stage('test') { sh 'echo test' } } }")
+              sandbox(true)
+          }
+        }
+      }
+      
       pipelineJob("seed-job/gitlab") {
-          displayName("!!! Temporary Seed Job - Gitlab URL !!!")
+          displayName("Temporary Seed Job - Gitlab Source")
           description("Seed job used to bootstrap")
 
           environmentVariables {
