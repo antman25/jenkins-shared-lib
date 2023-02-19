@@ -40,10 +40,12 @@ def call() {
                         String delivery_branch = config_yaml['common']['branchDelivery']
                         String path_prefix = utils.getPathPrefix(sanitized_branch_name,delivery_branch)
                         String testing_folder = config_yaml['common']['branchDelivery']
+                        String job_testing_folder = config_yaml['common']['rootTestingFolder']
                         boolean is_delivery_branch = branch_name == delivery_branch
 
                         params = ['path_prefix' : path_prefix,
                                   'is_delivery_branch' : is_delivery_branch,
+                                  'job_testing_folder' : job_testing_folder,
                                   'config_yaml' : config_yaml,
                                   'branch_name' : sanitized_branch_name,
                                   'branch_name_raw' : branch_name,
