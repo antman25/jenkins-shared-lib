@@ -183,6 +183,8 @@ boolean createTenantJobs() {
                     createTentantProjectFolder("${tenant_root_path}/${BUILDJOB_PATH}", bitbucket_url, cur_proj_key)
                 }
 
+                def unique_job_types = cur_tenant.get('jobs')
+                println("Unique Jobs = ${unique_job_types}")
             }
         }
     }
