@@ -58,6 +58,7 @@ def setRootTestingFolder(config, test_path):
     setConfig(config, KEY_COMMON, 'rootTestingFolder', test_path)
 
 
+
 def templateJob(display_name, desc, repo_url, jenkinsfile_path, credential_id, job_env_vars=DEFAULT_ENV_VARS, branch_filter_regex=REGEX_MATCH_ALL, branch_build_regex=REGEX_MATCH_ALL):
     return { 'displayName' : display_name,
              'description' : desc,
@@ -66,7 +67,7 @@ def templateJob(display_name, desc, repo_url, jenkinsfile_path, credential_id, j
              'credentialId' : credential_id,
              'jobEnvVars' : job_env_vars,
              'branchFilterRegex' : branch_filter_regex,
-             'branchBuildRegex' : branch_build_regex,
+             'branchBuildRegex' : branch_build_regex
             }
 
 def templateTenant (tenant_display_name, perm_groups, build_project_list, filter_repo_regex):
@@ -93,16 +94,36 @@ def addTenant(config, tenant_name, tenant_display_name, perm_groups, build_proje
     print(f'Creating Tentant {tenant_name}')
     dump_config(config[KEY_TENANTS][tenant_name] )
 
-def getCommonInfoJobs(config, tools_url):
-    jobs = {}
 
-    jobs['info'] = templateJob(display_name='Deploy Application',
-                                             desc='Release sw',
-                                             repo_url=tools_url,
-                                             jenkinsfile_path='jenkinsfile/common/release-management/Jenkinsfile',
-                                             credential_id=TENANT_CRED_BITBUCKET_RO,
-                                    )
-    return jobs
+def dump_config(config):
+    for cur_key in config:
+        print(f'\t{cur_key}={config[cur_key]}')
+
+def getJenkinsGlobalEnvVar(casc_config, var_name):
+    if 'jenkins' in casc_config:
+        if 'globalNodeProperties' in casc_config['jenkins']:
+            if len(casc_config['jenkins']['globalNodeProperties']) > 0:
+                if 'envVars' in casc_config['jenkins']['globalNodeProperties'][0]:
+                    if 'env' in casc_config['jenkins']['globalNodeProperties'][0]['envVars']:
+                        for cur_env_var in casc_config['jenkins']['globalNodeProperties'][0]['envVars']['env']:
+                            if 'key' in cur_env_var and 'value' in cur_env_var:
+                                if cur_env_var['key'] == var_name:
+                                    return cur_env_var['value']
+    return None
+
+def getJenkinsBitbucketUrl(casc_config):
+    if 'unclassified' in casc_config:
+        if 'bitbucketEndpointConfiguration' in casc_config['unclassified']:
+            if 'endpoints' in casc_config['unclassified']['bitbucketEndpointConfiguration']:
+                if len(casc_config['unclassified']['bitbucketEndpointConfiguration']['endpoints']) > 0:
+                    if 'bitbucketServerEndpoint' in casc_config['unclassified']['bitbucketEndpointConfiguration']['endpoints'][0]:
+                        if 'serverUrl' in casc_config['unclassified']['bitbucketEndpointConfiguration']['endpoints'][0]['bitbucketServerEndpoint']:
+                            return casc_config['unclassified']['bitbucketEndpointConfiguration']['endpoints'][0]['bitbucketServerEndpoint']['serverUrl']
+    return None
+
+def createCommonJobEnvVars(config):
+    setCommonJobEnvVar(config, 'COMMON_VAR1', 'TestValue2')
+    setCommonJobEnvVar(config, 'COMMON_VAR2', 'TestValue1')
 
 def createAllTenants(config):
     addTenant(config=config,
@@ -140,44 +161,6 @@ def createAllTenants(config):
                perm_groups=['test2'],
                build_project_list=['prjD']
     )
-
-
-
-def dump_config(config):
-    for cur_key in config:
-        print(f'\t{cur_key}={config[cur_key]}')
-
-def getJenkinsGlobalEnvVar(casc_config, var_name):
-    if 'jenkins' in casc_config:
-        if 'globalNodeProperties' in casc_config['jenkins']:
-            if len(casc_config['jenkins']['globalNodeProperties']) > 0:
-                if 'envVars' in casc_config['jenkins']['globalNodeProperties'][0]:
-                    if 'env' in casc_config['jenkins']['globalNodeProperties'][0]['envVars']:
-                        for cur_env_var in casc_config['jenkins']['globalNodeProperties'][0]['envVars']['env']:
-                            if 'key' in cur_env_var and 'value' in cur_env_var:
-                                if cur_env_var['key'] == var_name:
-                                    return cur_env_var['value']
-    return None
-
-def getJenkinsBitbucketUrl(casc_config):
-    if 'unclassified' in casc_config:
-        if 'bitbucketEndpointConfiguration' in casc_config['unclassified']:
-            if 'endpoints' in casc_config['unclassified']['bitbucketEndpointConfiguration']:
-                if len(casc_config['unclassified']['bitbucketEndpointConfiguration']['endpoints']) > 0:
-                    if 'bitbucketServerEndpoint' in casc_config['unclassified']['bitbucketEndpointConfiguration']['endpoints'][0]:
-                        if 'serverUrl' in casc_config['unclassified']['bitbucketEndpointConfiguration']['endpoints'][0]['bitbucketServerEndpoint']:
-                            return casc_config['unclassified']['bitbucketEndpointConfiguration']['endpoints'][0]['bitbucketServerEndpoint']['serverUrl']
-    return None
-
-def getJenkinsToolsUrl(casc_config):
-    return getJenkinsGlobalEnvVar(casc_config, 'TOOLS_URL')
-
-def getJenkinsDeliveryBranch(casc_config):
-    return getJenkinsGlobalEnvVar(casc_config, 'DELIVERY_BRANCH')
-
-def createCommonJobEnvVars(config):
-    setCommonJobEnvVar(config, 'COMMON_VAR1', 'TestValue2')
-    setCommonJobEnvVar(config, 'COMMON_VAR2', 'TestValue1')
 
 def createCommonUtilityJobs(config, tools_url):
     # Utility Types
@@ -219,7 +202,7 @@ def main():
     casc_config = {}
     with open(casc_path, 'r') as f:
         casc_config = yaml.safe_load(f)
-    tools_url = getJenkinsToolsUrl(casc_config)
+    tools_url = getJenkinsGlobalEnvVar(casc_config, 'TOOLS_URL')
     bitbucket_url = getJenkinsBitbucketUrl(casc_config)
     if tools_url:
         print(f"TOOLS_URL = {tools_url}")
