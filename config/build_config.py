@@ -60,7 +60,7 @@ def setDeliveryBranch(config, delivery_branch):
 def setRootTestingFolder(config, test_path):
     setConfig(config, KEY_COMMON, 'rootTestingFolder', test_path)
 
-def templateMultiBranchJob(display_name, desc, repo_url, jenkinsfile_path, credential_id, job_env_vars=DEFAULT_ENV_VARS, branch_filter_regex=REGEX_MATCH_ALL, branch_build_regex=REGEX_MATCH_ALL):
+def templateMultiBranchJob(display_name, desc, repo_url, jenkinsfile_path, credential_id, job_env_vars=DEFAULT_ENV_VARS, branch_filter_regex=REGEX_MATCH_ALL, branch_build_regex=REGEX_ONLY_MAIN):
     return { 'displayName' : display_name,
                  'description' : desc,
                  'repoUrl' : repo_url,
