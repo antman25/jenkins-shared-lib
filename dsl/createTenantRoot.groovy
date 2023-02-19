@@ -92,30 +92,27 @@ boolean createTenantFolder(String path_prefix, String tenant_name, String displa
     return true
 }
 
-def templateMultibranchPipeline(String job_path, String display_name, String desc, String jenkinsfile_path, String branch_filter_regex='.*', String auto_build_regex='.*' )
-{
-    try
-    {
+def templateMultibranchPipeline(String job_path, String display_name, String desc, String jenkinsfile_path, String branch_filter_regex='.*', String auto_build_regex='.*' ) {
+    try {
         multibranchPipelineJob(job_path)
         {
             displayName(displayName)
             description(desc)
 
-
             branchSources {
                 branchSource {
                     source {
                         git {
-                            remote (tools_url)
+                            remote(tools_url)
                             // all id's must be unique according to docs
-                            id ('deploy-production-jobs-source-id')
+                            //id('deploy-production-jobs-source-id')
                             traits {
                                 gitBranchDiscovery()
 
                                 headRegexFilter
-                                {
-                                    regex('^(.*main).*$')
-                                }
+                                        {
+                                            regex('^(.*main).*$')
+                                        }
                             }
                         }
                     }
@@ -123,7 +120,7 @@ def templateMultibranchPipeline(String job_path, String display_name, String des
                         allBranchesSame {
                             props {
                                 suppressAutomaticTriggering {
-                                    triggeredBranchesRegex ('^(.*main).*$')
+                                    triggeredBranchesRegex('^(.*main).*$')
                                 }
                             }
                         }
@@ -140,13 +137,15 @@ def templateMultibranchPipeline(String job_path, String display_name, String des
                     scriptPath(jenkinsfile_path)
                 }
             }
-            /*triggers {
-                periodicFolderTrigger {
-                    interval("1h")
-                }
-            }*/
+
         }
     }
+    catch (Exception ex)
+    {
+        println("Exception: {ex.toString()}")
+        return false
+    }
+    return true
 }
 
 
