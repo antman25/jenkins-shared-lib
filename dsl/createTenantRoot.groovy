@@ -239,9 +239,9 @@ boolean createTenantJobs() {
                 }
                 def tenant_jobs = cur_tenant.get('jobs')
                 Map combined_jobs = mergeMaps(tenant_jobs, common_jobs)
-                println("Common Jobs: ${common_jobs}")
-                println("Tenant Jobs: ${tenant_jobs}")
-                println("Combined: ${combined_jobs}")
+                //println("Common Jobs: ${common_jobs}")
+                //println("Tenant Jobs: ${tenant_jobs}")
+                //println("Combined: ${combined_jobs}")
 
                 combined_jobs.each { job_type, job_list ->
                     folder("${tenant_root_path}/${job_type}")
