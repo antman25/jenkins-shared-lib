@@ -194,7 +194,14 @@ boolean createTenantJobs() {
                 }
 
                 Map combined_jobs = mergeMaps(cur_tenant.get('jobs'), common_jobs)
-                println("Combined: ${combined_jobs}")
+                //println("Combined: ${combined_jobs}")
+
+                combined_jobs.each { job_type, job_list ->
+                    folder("${tenant_root_path}/${job_type}")
+                    {
+                        displayName(job_type)
+                    }
+                }
             }
         }
     }
