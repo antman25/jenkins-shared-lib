@@ -144,7 +144,6 @@ def templateMultibranchPipeline(String job_path, String display_name, String des
                 }
             }
 
-
             branchSources {
                 branchSource {
                     source {
