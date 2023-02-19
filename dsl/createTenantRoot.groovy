@@ -151,7 +151,7 @@ def templateMultibranchPipeline(String job_path, String display_name, String des
 
 
 boolean createTenantJobs() {
-    boolean is_delivery_branch = branch_name == delivery_branch
+
     try {
 
 
