@@ -20,6 +20,8 @@ REGEX_EXCLUDE_MAIN="^(?!.*main).*$"
 # Regex notes
 # ^(?:.*develop|.*master|.*release/\d+\.\d+\.\d+(?!.))$
 
+JOB_TYPE_DEFAULT='pipelineJob'
+JOB_TYPE_MULTIBRANCH='multibranchPipelineJob'
 
 TENANT_CRED_BITBUCKET_RW='tenant-bitbucket-rw-cred'
 TENANT_CRED_BITBUCKET_RO='tenant-bitbucket-ro-cred'
@@ -57,17 +59,21 @@ def setDeliveryBranch(config, delivery_branch):
 def setRootTestingFolder(config, test_path):
     setConfig(config, KEY_COMMON, 'rootTestingFolder', test_path)
 
+def templateMultiBranchJob(display_name, desc, repo_url, jenkinsfile_path, credential_id, job_env_vars=DEFAULT_ENV_VARS, branch_filter_regex=REGEX_MATCH_ALL, branch_build_regex=REGEX_MATCH_ALL):
+    job = templateJob(display_name, desc, repo_url, jenkinsfile_path, credential_id)
+    job['branchFilterRegex'] = branch_filter_regex
+    job['branchBuildRegex'] = branch_build_regex
+    job['type'] = JOB_TYPE_MULTIBRANCH
+    return job
 
-
-def templateJob(display_name, desc, repo_url, jenkinsfile_path, credential_id, job_env_vars=DEFAULT_ENV_VARS, branch_filter_regex=REGEX_MATCH_ALL, branch_build_regex=REGEX_MATCH_ALL):
+def templateJob(display_name, desc, repo_url, jenkinsfile_path, credential_id, job_env_vars=DEFAULT_ENV_VARS):
     return { 'displayName' : display_name,
              'description' : desc,
              'repoUrl' : repo_url,
              'pathJenkinsfile' : jenkinsfile_path,
              'credentialId' : credential_id,
              'jobEnvVars' : job_env_vars,
-             'branchFilterRegex' : branch_filter_regex,
-             'branchBuildRegex' : branch_build_regex
+             'type' : JOB_TYPE_DEFAULT
             }
 
 def templateTenant (tenant_display_name, perm_groups, build_project_list, filter_repo_regex):
@@ -169,9 +175,7 @@ def createCommonUtilityJobs(config, tools_url):
                                                                   repo_url=tools_url,
                                                                   jenkinsfile_path='jenkinsfile/common/release-management/Jenkinsfile',
                                                                   credential_id=TENANT_CRED_BITBUCKET_RO,
-                                                                  job_env_vars={'REL_MGMT' : True},
-                                                                  branch_filter_regex=REGEX_ONLY_MAIN,
-                                                                  branch_build_regex=REGEX_EXCLUDE_ALL
+                                                                  job_env_vars={'REL_MGMT' : True}
                                                         ))
 
     setCommonJob(config, KEY_UTILITIES, "common-util-job1", templateJob(display_name='Util Job One',
@@ -179,18 +183,14 @@ def createCommonUtilityJobs(config, tools_url):
                                                                   repo_url=tools_url,
                                                                   jenkinsfile_path='jenkinsfile/common/release-management/Jenkinsfile',
                                                                   credential_id=TENANT_CRED_BITBUCKET_RO,
-                                                                  job_env_vars={'EnvVar1' : True},
-                                                                  branch_filter_regex=REGEX_ONLY_MAIN,
-                                                                  branch_build_regex=REGEX_EXCLUDE_ALL
+                                                                  job_env_vars={'EnvVar1' : True}
                                                         ))
     setCommonJob(config, KEY_UTILITIES, "common-util-job2", templateJob(display_name='Release Management',
                                                                   desc='Release sw',
                                                                   repo_url=tools_url,
                                                                   jenkinsfile_path='jenkinsfile/common/release-management/Jenkinsfile',
                                                                   credential_id=TENANT_CRED_BITBUCKET_RO,
-                                                                  job_env_vars={'EnvVar2' : 'blah', 'EnvaVar3' : False},
-                                                                  branch_filter_regex=REGEX_ONLY_MAIN,
-                                                                  branch_build_regex=REGEX_EXCLUDE_ALL
+                                                                  job_env_vars={'EnvVar2' : 'blah', 'EnvaVar3' : False}
                                                         ))
 
 def main():
