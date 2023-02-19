@@ -2,7 +2,7 @@ import groovy.transform.Field
 
 @Field final String BUILDJOB_PATH = 'builds'
 //@Field final String UTILITIES_PATH = 'utilities'
-//@Field final String SANDBOX_PATH = 'sandbox'
+@Field final String SANDBOX_PATH = 'sandbox'
 
 List<String> permissionDeveloper(String group) {
     return ["hudson.model.Item.Read:${group}",
@@ -168,14 +168,19 @@ boolean createTenantJobs() {
                 def project_list = cur_tenant.get('projectList')
                 createTenantFolder(path_prefix, tenant_name, display_name, groups)
 
-                def build_root_path = "${path_prefix}/${tenant_name}/${BUILDJOB_PATH}"
-                folder(build_root_path)
+                def tenant_root_path = "${path_prefix}/${tenant_name}"
+                folder("${tenant_root_path}/${BUILDJOB_PATH}")
                 {
                     displayName("Builds")
                 }
 
+                folder("${tenant_root_path}/${SANDBOX_PATH}")
+                {
+                    displayName("Sandbox")
+                }
+
                 project_list.each { cur_proj_key ->
-                    createTentantProjectFolder(build_root_path, bitbucket_url, cur_proj_key)
+                    createTentantProjectFolder(tenant_root_path, bitbucket_url, cur_proj_key)
                 }
 
             }
