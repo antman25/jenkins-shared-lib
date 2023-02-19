@@ -99,6 +99,37 @@ boolean createTenantFolder(String path_prefix, String tenant_name, String displa
     return true
 }
 
+def templatePipelineJob(String job_path, String display_name, String desc, String jenkinsfile_url, String jenkinsfile_path, String cred_id)
+{
+    pipelineJob(job_path) {
+        displayName(display_name)
+        description(desc)
+
+        environmentVariables {
+            env('BRANCH_NAME', branch_name_raw)
+        }
+        properties {
+            disableConcurrentBuilds {}
+        }
+
+        definition {
+            cpsScm {
+                scm {
+                    git {
+                        remote {
+                            url(jenkinsfile_url)
+                            credentials(cred_id)
+                        }
+                        branches(branch_name_raw)
+                        scriptPath(jenkinsfile_path)
+                        extensions { }  // required as otherwise it may try to tag the repo, which you may not want
+                    }
+                }
+            }
+        }
+    }
+}
+
 def templateMultibranchPipeline(String job_path, String display_name, String desc, String jenkinsfile_path, String branch_filter_regex='.*', String auto_build_regex='.*' ) {
     try {
         multibranchPipelineJob(job_path)
@@ -203,10 +234,13 @@ boolean createTenantJobs() {
                     }
 
                     job_list.each { job_name, job_data ->
-                        pipelineJob("${tenant_root_path}/${job_type}/${job_name}")
-                        {
+                        def job_display_name = job_data.get("displayName")
+                        def job_desc = job_data.get("description")
+                        def jenkinsfile_url = job_data.get("repoUrl")
+                        def jenkinsfile_path = job_data.get("pathJenkinsfile")
+                        def job_cred_id = job_data.get("credentialId")
+                        templatePipelineJob("${tenant_root_path}/${job_type}/${job_name}", job_display_name, job_desc, jenkinsfile_url, jenkinsfile_path, job_cred_id)
 
-                        }
                     }
                 }
             }
