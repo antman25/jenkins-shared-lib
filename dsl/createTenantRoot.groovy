@@ -203,7 +203,7 @@ boolean createTenantJobs() {
                     }
 
                     job_list.each { job_name, job_data ->
-                        pipelineJob(job_name)
+                        pipelineJob("${tenant_root_path}/${job_type}/${job_name}")
                         {
 
                         }
