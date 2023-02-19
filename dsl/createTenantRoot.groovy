@@ -154,9 +154,12 @@ boolean createTenantJobs() {
 
     try {
         def artifactory_url = ""
+        def common_jobs = null
         if (config_yaml.containsKey('common') == true) {
             def common_cfg = config_yaml['common']
             bitbucket_url = common_cfg.get('urlBitbucket')
+            common_jobs = common_cfg.get('jobs')
+
         }
 
         if (config_yaml.containsKey('tenants') == true) {
@@ -184,6 +187,7 @@ boolean createTenantJobs() {
                 }
 
                 def unique_job_types = cur_tenant.get('jobs')
+                println("Common Jobs = ${common_jobs}")
                 println("Unique Jobs = ${unique_job_types}")
             }
         }
