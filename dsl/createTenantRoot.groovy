@@ -246,8 +246,10 @@ boolean createTenantJobs() {
                         def jenkinsfile_url = job_data.get("repoUrl")
                         def jenkinsfile_path = job_data.get("pathJenkinsfile")
                         def job_cred_id = job_data.get("credentialId")
+                        def branch_filter_regex = job_data.get("branchFilterRegex")
+                        def branh_build_regex = job_data.get("branchBuildRegex")
                         //templatePipelineJob("${tenant_root_path}/${job_type}/${job_name}", job_display_name, job_desc, jenkinsfile_url, jenkinsfile_path, job_cred_id)
-                        templateMultibranchPipeline("${tenant_root_path}/${job_type}/${job_name}", job_display_name, job_desc, jenkinsfile_url, jenkinsfile_path, job_cred_id)
+                        templateMultibranchPipeline("${tenant_root_path}/${job_type}/${job_name}", job_display_name, job_desc, jenkinsfile_url, jenkinsfile_path, job_cred_id, branch_filter_regex, branh_build_regex)
                     }
                 }
             }
