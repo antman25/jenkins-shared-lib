@@ -203,6 +203,16 @@ def createCommonUtilityJobs(config, tools_url):
                                                                                   job_env_vars={'EnvVar2' : 'blah', 'EnvaVar3' : False}
                                                             ))
 
+    # Demo
+    setCommonJob(config, "DemoType", "common-demo-job1", templateMultiBranchJob(display_name='Demo Job One',
+                                                                                      desc='Demo Job One',
+                                                                                      repo_url=tools_url,
+                                                                                      jenkinsfile_path='jenkinsfile/common/utilities/task-one/Jenkinsfile',
+                                                                                      credential_id=TENANT_CRED_BITBUCKET_RO,
+                                                                                      job_env_vars={'EnvVar1' : True}
+                                                                ))
+
+
 def main():
     #try:
     output_path = 'config/config.yaml'
