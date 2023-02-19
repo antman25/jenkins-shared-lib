@@ -134,7 +134,7 @@ def templateMultibranchPipeline(String job_path, String display_name, String des
     try {
         multibranchPipelineJob(job_path)
         {
-            displayName(displayName)
+            displayName(display_name)
             description(desc)
 
             branchSources {
