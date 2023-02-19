@@ -29,7 +29,7 @@ TENANT_CRED_BITBUCKET_RO='tenant-bitbucket-ro-cred'
 TENANT_CRED_ARTIFACTORY_RW='tenant-artifactory-rw-cred'
 TENANT_CRED_ARTIFACTORY_RO='tenant-artifactory-ro-cred'
 
-TENANT_PIPELINE='PIPELINE'
+TENANT_PIPELINE='pipeline'
 TENANT_GROUP_A="group-a"
 TENANT_GROUP_B="group-b"
 TENANT_TEST_1="test-1"
