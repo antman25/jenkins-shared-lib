@@ -183,7 +183,7 @@ def createCommonUtilityJobs(config, tools_url):
     setCommonJob(config, KEY_UTILITIES, "release-management", templateMultiBranchJob(display_name='Release Management',
                                                                   desc='Release sw',
                                                                   repo_url=tools_url,
-                                                                  jenkinsfile_path='jenkinsfiles/common/utilities/release-management/Jenkinsfile',
+                                                                  jenkinsfile_path='jenkinsfile/common/utilities/release-management/Jenkinsfile',
                                                                   credential_id=TENANT_CRED_BITBUCKET_RO,
                                                                   job_env_vars={'REL_MGMT' : True}
                                                         ))
@@ -191,14 +191,14 @@ def createCommonUtilityJobs(config, tools_url):
     setCommonJob(config, KEY_UTILITIES, "common-util-job1", templateMultiBranchJob(display_name='Util Job One',
                                                                   desc='Util Job One',
                                                                   repo_url=tools_url,
-                                                                  jenkinsfile_path='jenkinsfiles/common/utilities/release-management/Jenkinsfile',
+                                                                  jenkinsfile_path='jenkinsfile/common/utilities/release-management/Jenkinsfile',
                                                                   credential_id=TENANT_CRED_BITBUCKET_RO,
                                                                   job_env_vars={'EnvVar1' : True}
                                                         ))
     setCommonJob(config, KEY_UTILITIES, "common-util-job2", templateMultiBranchJob(display_name='Release Management',
                                                                   desc='Release sw',
                                                                   repo_url=tools_url,
-                                                                  jenkinsfile_path='jenkinsfiles/common/utilities/release-management/Jenkinsfile',
+                                                                  jenkinsfile_path='jenkinsfile/common/utilities/release-management/Jenkinsfile',
                                                                   credential_id=TENANT_CRED_BITBUCKET_RO,
                                                                   job_env_vars={'EnvVar2' : 'blah', 'EnvaVar3' : False}
                                                         ))
