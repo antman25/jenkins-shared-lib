@@ -6,8 +6,8 @@ def call() {
     podTemplates.pythonTemplate {
         node(POD_LABEL) {
             def params = [:]
-            String sanitized_branch_name = utils.sanitizeBranchName("${BRANCH_NAME}")
-
+            String branch_name = env.getEnvironment().getOrDefault('BRANCH_NAME', 'main')
+            String sanitized_branch_name = utils.sanitizeBranchName(branch_name)
 
             println("Sanitized branch name: ${sanitized_branch_name}")
 
