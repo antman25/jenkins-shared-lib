@@ -26,7 +26,7 @@ boolean createTenantFolder(String path_prefix, String tenant_name, String displa
         }
 
         folder(folder_path) {
-            displayName(tenant_name)
+            displayName(display_name)
             properties {
                 authorizationMatrix {
                     inheritanceStrategy { nonInheriting() }
