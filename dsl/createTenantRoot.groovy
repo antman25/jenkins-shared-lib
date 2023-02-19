@@ -4,6 +4,13 @@ import groovy.transform.Field
 //@Field final String UTILITIES_PATH = 'utilities'
 @Field final String SANDBOX_PATH = 'sandbox'
 
+Map mergeMaps(Map lhs, Map rhs) {
+    rhs.each { k, v ->
+        lhs[k] = (lhs[k] in Map ? mergeMaps(lhs[k], v) : v)
+    }
+    return lhs
+}
+
 List<String> permissionDeveloper(String group) {
     return ["hudson.model.Item.Read:${group}",
             "hudson.model.Item.Cancel:${group}",
@@ -186,9 +193,8 @@ boolean createTenantJobs() {
                     createTentantProjectFolder("${tenant_root_path}/${BUILDJOB_PATH}", bitbucket_url, cur_proj_key)
                 }
 
-                def unique_job_types = cur_tenant.get('jobs')
-                println("Common Jobs = ${common_jobs}")
-                println("Unique Jobs = ${unique_job_types}")
+                Map combined_jobs = mergeMaps(cur_tenant.get('jobs'), common_jobs)
+                println("Combined: ${combined_jobs}")
             }
         }
     }
