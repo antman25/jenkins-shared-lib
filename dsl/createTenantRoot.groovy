@@ -184,7 +184,7 @@ def templateMultibranchPipeline(String job_path, String display_name, String des
     }
     catch (Exception ex)
     {
-        println("Exception: {ex}")
+        println("Exception: ${ex.toString()}")
         return false
     }
     return true
