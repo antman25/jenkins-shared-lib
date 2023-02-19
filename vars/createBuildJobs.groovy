@@ -52,9 +52,9 @@ def call() {
                                   'workspace_path' : "${WORKSPACE}",
                                   'tools_url' : "${TOOLS_URL}",
                                    'bootstrap_password' :"${PASSWORD}" ]
-                        //'dsl/tenants/createTenantRoot.groovy',
+                        //'
                         jobDsl targets: [   'dsl/createTestingRoot.groovy',
-
+                                            'dsl/tenants/createTenantRoot.groovy'
 
                                             ].join('\n'),
                                 removedJobAction: 'DELETE',
