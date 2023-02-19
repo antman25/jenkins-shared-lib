@@ -130,7 +130,7 @@ def templatePipelineJob(String job_path, String display_name, String desc, Strin
     }
 }
 
-def templateMultibranchPipeline(String job_path, String display_name, String desc, String jenkinsfile_path, String branch_filter_regex='.*', String auto_build_regex='.*' ) {
+def templateMultibranchPipeline(String job_path, String display_name, String desc, String jenkinsfile_url, String jenkinsfile_path, String cred_id, String branch_filter_regex='.*', String auto_build_regex='.*' ) {
     try {
         multibranchPipelineJob(job_path)
         {
@@ -141,16 +141,19 @@ def templateMultibranchPipeline(String job_path, String display_name, String des
                 branchSource {
                     source {
                         git {
-                            remote(tools_url)
+                            remote(jenkinsfile_url)
                             // all id's must be unique according to docs
                             //id('deploy-production-jobs-source-id')
+                            if (cred_id != "")
+                                credentialsId(cred_id)
                             traits {
                                 gitBranchDiscovery()
 
                                 headRegexFilter
-                                        {
-                                            regex('^(.*main).*$')
-                                        }
+                                {
+                                    //regex('^(.*main).*$')
+                                    regex(branch_filter_regex)
+                                }
                             }
                         }
                     }
@@ -158,7 +161,8 @@ def templateMultibranchPipeline(String job_path, String display_name, String des
                         allBranchesSame {
                             props {
                                 suppressAutomaticTriggering {
-                                    triggeredBranchesRegex('^(.*main).*$')
+                                    //triggeredBranchesRegex('^(.*main).*$')
+                                    triggeredBranchesRegex(auto_build_regex)
                                 }
                             }
                         }
@@ -239,8 +243,8 @@ boolean createTenantJobs() {
                         def jenkinsfile_url = job_data.get("repoUrl")
                         def jenkinsfile_path = job_data.get("pathJenkinsfile")
                         def job_cred_id = job_data.get("credentialId")
-                        templatePipelineJob("${tenant_root_path}/${job_type}/${job_name}", job_display_name, job_desc, jenkinsfile_url, jenkinsfile_path, job_cred_id)
-
+                        //templatePipelineJob("${tenant_root_path}/${job_type}/${job_name}", job_display_name, job_desc, jenkinsfile_url, jenkinsfile_path, job_cred_id)
+                        templateMultibranchPipeline("${tenant_root_path}/${job_type}/${job_name}", job_display_name, job_desc, jenkinsfile_url, jenkinsfile_path, job_cred_id)
                     }
                 }
             }
