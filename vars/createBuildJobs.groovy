@@ -54,7 +54,7 @@ def call() {
                                    'bootstrap_password' :"${PASSWORD}" ]
                         //'
                         jobDsl targets: [   'dsl/createTestingRoot.groovy',
-                                            'dsl/tenants/createTenantRoot.groovy'
+                                            'dsl/createTenantRoot.groovy'
 
                                             ].join('\n'),
                                 removedJobAction: 'DELETE',
