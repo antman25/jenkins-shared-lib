@@ -136,7 +136,7 @@ def templateMultibranchPipeline(String job_path, String display_name, String des
         {
             displayName(display_name)
             description(desc)
-
+            disabled()
             branchSources {
                 branchSource {
                     source {
