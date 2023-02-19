@@ -9,6 +9,7 @@ String getPathPrefix(boolean is_delivery_branch) {
 
 boolean main()
 {
+    String delivery_branch = config_yaml['common']['branchDelivery']
     boolean is_delivery_branch = branch_name == delivery_branch
     String path_prefix = getPathPrefix(is_delivery_branch)
 
@@ -17,7 +18,6 @@ boolean main()
 
         if (branch_name != delivery_branch)
         {
-
             folder("/${job_testing_folder}/${branch_name}")
             {
                 displayName("${branch_name_raw}")
@@ -36,11 +36,6 @@ boolean main()
                 }
             }
         }
-
-
-
-
-
     }
     catch (Exception ex)
     {

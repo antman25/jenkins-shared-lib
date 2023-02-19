@@ -41,19 +41,13 @@ def call() {
                         params = ['config_yaml'       : config_yaml,
                                   'branch_name'       : sanitized_branch_name,
                                   'branch_name_raw'   : "${BRANCH_NAME}",
-                                  'delivery_branch'   : "${DELIVERY_BRANCH}",
-                                  'job_testing_folder': "${JOB_TESTING_ROOT}",
                                   'workspace_path'    : "${WORKSPACE}",
                                   'tools_url'         : "${TOOLS_URL}",
                                    'bootstrap_password' :"${PASSWORD}" ]
-                        //
-                        //'dsl/createJenkinsJobDeploy.groovy',
-                        //                                     'dsl/jenkins-admin/createJobs.groovy',
-                        //'dsl/test-pipelines/createRoot.groovy',
-                        //                                     'dsl/test-pipelines/createTestJobs.groovy'
-                        jobDsl targets: [   'dsl/job-testing/createRoot.groovy',
+
+                        jobDsl targets: [   'dsl/createTestingRoot.groovy',
                                             'dsl/tenants/createTenantRoot.groovy',
-                                            'dsl/tenants/pipeline/createJobs.groovy'
+
                                             ].join('\n'),
                                 removedJobAction: 'DELETE',
                                 removedViewAction: 'DELETE',

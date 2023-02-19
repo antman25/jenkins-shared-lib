@@ -145,8 +145,6 @@ Map getConfig(key = null) {
                                 branchDelivery: delivery_branch,
                                 isDeliveryBranch: branch_name == delivery_branch,
                                 tenant : tenant,
-                                helmCredentiasl : "${tenant}_ARTIFACTORY_CRED}",
-                                dockerfilePath: dockerfile_path,
                                 agentPvcName: agent_pvc_name,
                                 folderPipelineRoot: pipeline_root
                             ]

@@ -26,14 +26,14 @@ jenkins:
   globalNodeProperties:
     - envVars:
         env:
-          - key: "DELIVERY_BRANCH"
-            value: "main"
-          - key: "JOB_TESTING_ROOT"
-            value: "job-testing"
           - key: "TOOLS_URL"
             value: "https://github.com/antman25/jenkins-shared-lib.git"
-          - key: "TOOLS_URL_TESTING"
-            value: "http://10.0.0.35/scm/pip/jenkins-shared-lib.git"
+          - key: "ARTIFACTORY_HOST"
+            value: "nexus.antlinux.local"
+          - key: "ARTIFACTORY_PORT"
+            value: "8443"
+          - key: "ARTIFACTORY_CONTEXT"
+            value: ""
   labelAtoms:
     - name: "built-in"
     - name: "jenkins-jenkins-agent"

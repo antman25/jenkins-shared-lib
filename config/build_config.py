@@ -9,7 +9,9 @@ class NoAliasDumper(yaml.SafeDumper):
 KEY_TENANTS='tenants'
 KEY_COMMON='common'
 KEY_UTILITIES='utilities'
-
+KEY_SANDBOX='sandbox'
+KEY_JOBS='jobs'
+KEY_ENVVARS='envVars'
 
 REGEX_MATCH_ALL=".*"
 REGEX_EXCLUDE_ALL="^(?!.*).*$"
@@ -30,101 +32,84 @@ TENANT_GROUP_B="group-b"
 TENANT_TEST_1="test-1"
 TENANT_TEST_2="test-2"
 
-NO_UTILITY_JOBS = { }
+DEFAULT_ENV_VARS = {}
 
-def setCommon(config, var_name, val):
-    if KEY_COMMON not in config:
-        config[KEY_COMMON] = {}
-    config[KEY_COMMON][var_name] = val
+
+def setConfig(config, config_key, var_name, var_value):
+    if config_key not in config:
+        config[config_key] = {}
+    config[config_key][var_name] = var_value
+
+def setCommonJobEnvVar(config, var_name, var_value):
+    setConfig(config[KEY_COMMON], KEY_ENVVARS, var_name, var_value)
+
+def setCommonJob(config, job_type, job_name, job_data):
+    if KEY_JOBS not in config[KEY_COMMON]:
+        setConfig(config, KEY_COMMON, KEY_JOBS, {})
+    setConfig(config[KEY_COMMON][KEY_JOBS], job_type, job_name, job_data)
 
 def setBitbucketUrl(config, bitbucket_url):
-    setCommon(config, 'bitbucket_url', bitbucket_url)
+    setConfig(config, KEY_COMMON, 'urlBitbucket', bitbucket_url)
+
+def setDeliveryBranch(config, delivery_branch):
+    setConfig(config, KEY_COMMON, 'branchDelivery', delivery_branch)
+
+def setRootTestingFolder(config, test_path):
+    setConfig(config, KEY_COMMON, 'rootTestingFolder', test_path)
 
 
-
-
-def templateJob(display_name, desc, repo_url, jenkinsfile_path, credential_id, job_env_vars, branch_filter_regex=REGEX_MATCH_ALL, branch_build_regex=REGEX_MATCH_ALL):
-    return { 'display_name' : display_name,
+def templateJob(display_name, desc, repo_url, jenkinsfile_path, credential_id, job_env_vars=DEFAULT_ENV_VARS, branch_filter_regex=REGEX_MATCH_ALL, branch_build_regex=REGEX_MATCH_ALL):
+    return { 'displayName' : display_name,
              'description' : desc,
-             'repo_url' : repo_url,
-             'jenkinsfile_path' : jenkinsfile_path,
-             'credential_id' : credential_id,
-             'job_env_vars' : job_env_vars,
-             'branch_filter_regex' : branch_filter_regex,
-             'branch_build_regex' : branch_build_regex,
+             'repoUrl' : repo_url,
+             'pathJenkinsfile' : jenkinsfile_path,
+             'credentialId' : credential_id,
+             'jobEnvVars' : job_env_vars,
+             'branchFilterRegex' : branch_filter_regex,
+             'branchBuildRegex' : branch_build_regex,
             }
 
-def templateTenant (tenant_name, tenant_display_name, perm_groups, project_list, utilities, filter_repo_regex):
-
+def templateTenant (tenant_name, tenant_display_name, perm_groups, build_project_list, filter_repo_regex):
     if type(perm_groups) != list:
         raise Exception('Invalid permission group type passed')
-    if type(project_list) != list:
+    if type(build_project_list) != list:
         raise Exception('Invalid project list type passed')
-    #print(type(utilities))
-    if type(utilities) != dict:
-        raise Exception('Invalid utilties type passed')
     tenant_config = { 'tenant_display_name' : tenant_display_name,
                       'perm_groups' : perm_groups,
-                      'project_list' : project_list,
-                      'utilities' : utilities,
+                      'build_project_list' : build_project_list,
                       'filter_repo_regex' : filter_repo_regex,
+                      'jobs' : {},
                     }
     return tenant_config
 
-def addTenant(config, tenant_name, tenant_display_name, perm_groups, project_list, utilities, filter_repo_regex = REGEX_MATCH_ALL):
+def addTenant(config, tenant_name, tenant_display_name, perm_groups, build_project_list, filter_repo_regex = REGEX_MATCH_ALL):
 
     tenant_name = tenant_name.lower()
     if KEY_TENANTS not in config:
         config[KEY_TENANTS] = {}
     if tenant_name in config[KEY_TENANTS]:
         raise ("Attempted to add a duplicate tenant config")
-    config[KEY_TENANTS][tenant_name] = templateTenant(tenant_name, tenant_display_name, perm_groups, project_list, utilities, filter_repo_regex)
+    config[KEY_TENANTS][tenant_name] = templateTenant(tenant_name, tenant_display_name, perm_groups, build_project_list, filter_repo_regex)
     print(f'Creating Tentant {tenant_name}')
     dump_config(config[KEY_TENANTS][tenant_name] )
 
-def createCommonUtilityJobs(config, tools_url):
-    utility_jobs = {}
+def getCommonInfoJobs(config, tools_url):
+    jobs = {}
 
-    utility_jobs['release-management'] = templateJob(display_name='Release Management',
-                                                     desc='Release sw',
-                                                     repo_url=tools_url,
-                                                     jenkinsfile_path='jenkinsfile/common/release-management/Jenkinsfile',
-                                                     credential_id=TENANT_CRED_BITBUCKET_RO,
-                                                     job_env_vars={'REL_MGMT' : True},
-                                                     branch_filter_regex=REGEX_ONLY_MAIN,
-                                                     branch_build_regex=REGEX_EXCLUDE_ALL
-                                        )
-
-
-    utility_jobs['common-task-1'] = templateJob(display_name='Common Task 1',
-                                                desc='common task 1',
-                                                repo_url=tools_url,
-                                                jenkinsfile_path='jenkinsfile/common/task-one/Jenkinsfile',
-                                                credential_id=TENANT_CRED_BITBUCKET_RO,
-                                                job_env_vars={},
-                                                branch_filter_regex=REGEX_ONLY_MAIN,
-                                                branch_build_regex=REGEX_EXCLUDE_ALL
+    jobs['info'] = templateJob(display_name='Deploy Application',
+                                             desc='Release sw',
+                                             repo_url=tools_url,
+                                             jenkinsfile_path='jenkinsfile/common/release-management/Jenkinsfile',
+                                             credential_id=TENANT_CRED_BITBUCKET_RO,
                                     )
-
-    utility_jobs['common-task-2'] = templateJob(display_name='Common Task 2',
-                                                desc='common task 2',
-                                                repo_url=tools_url,
-                                                jenkinsfile_path='jenkinsfile/common/task-two/Jenkinsfile',
-                                                credential_id=TENANT_CRED_BITBUCKET_RO,
-                                                job_env_vars={},
-                                                branch_filter_regex=REGEX_ONLY_MAIN,
-                                                branch_build_regex=REGEX_EXCLUDE_ALL
-                                        )
-
-    setCommon(config, KEY_UTILITIES, utility_jobs)
+    return jobs
 
 def createAllTenants(config):
     addTenant(config=config,
                tenant_name=TENANT_PIPELINE,
                tenant_display_name='Pipeline Team',
                perm_groups=['pipline','admin'],
-               project_list=['PIP','PIPAPP'],
-               utilities=NO_UTILITY_JOBS,
+               build_project_list=['PIP','PIPAPP'],
                filter_repo_regex='^(?!.*(jenkins-shared-lib))'
     )
 
@@ -132,32 +117,28 @@ def createAllTenants(config):
                tenant_name=TENANT_GROUP_A,
                tenant_display_name=TENANT_GROUP_A,
                perm_groups=['groupa'],
-               project_list=['prjA'],
-               utilities=NO_UTILITY_JOBS
+               build_project_list=['prjA']
     )
 
     addTenant(config=config,
                tenant_name=TENANT_GROUP_B,
                tenant_display_name=TENANT_GROUP_B,
                perm_groups=['groupb'],
-               project_list=['prjB'],
-               utilities=NO_UTILITY_JOBS
+               build_project_list=['prjB']
     )
 
     addTenant(config=config,
                tenant_name=TENANT_TEST_1,
                tenant_display_name="Team One",
                perm_groups=['test1'],
-               project_list=['prjC'],
-               utilities=NO_UTILITY_JOBS
+               build_project_list=['prjC']
     )
 
     addTenant(config=config,
                tenant_name=TENANT_TEST_2,
                tenant_display_name="Team Two",
                perm_groups=['test2'],
-               project_list=['prjD'],
-               utilities=NO_UTILITY_JOBS
+               build_project_list=['prjD']
     )
 
 
@@ -191,6 +172,41 @@ def getJenkinsBitbucketUrl(casc_config):
 def getJenkinsToolsUrl(casc_config):
     return getJenkinsGlobalEnvVar(casc_config, 'TOOLS_URL')
 
+def createCommonJobEnvVars(config):
+    setCommonJobEnvVar(config, 'COMMON_VAR1', 'TestValue2')
+    setCommonJobEnvVar(config, 'COMMON_VAR2', 'TestValue1')
+
+def createCommonUtilityJobs(config, tools_url):
+    # Utility Types
+    setCommonJob(config, KEY_UTILITIES, "release-management", templateJob(display_name='Release Management',
+                                                                  desc='Release sw',
+                                                                  repo_url=tools_url,
+                                                                  jenkinsfile_path='jenkinsfile/common/release-management/Jenkinsfile',
+                                                                  credential_id=TENANT_CRED_BITBUCKET_RO,
+                                                                  job_env_vars={'REL_MGMT' : True},
+                                                                  branch_filter_regex=REGEX_ONLY_MAIN,
+                                                                  branch_build_regex=REGEX_EXCLUDE_ALL
+                                                        ))
+
+    setCommonJob(config, KEY_UTILITIES, "common-util-job1", templateJob(display_name='Util Job One',
+                                                                  desc='Util Job One',
+                                                                  repo_url=tools_url,
+                                                                  jenkinsfile_path='jenkinsfile/common/release-management/Jenkinsfile',
+                                                                  credential_id=TENANT_CRED_BITBUCKET_RO,
+                                                                  job_env_vars={'EnvVar1' : True},
+                                                                  branch_filter_regex=REGEX_ONLY_MAIN,
+                                                                  branch_build_regex=REGEX_EXCLUDE_ALL
+                                                        ))
+    setCommonJob(config, KEY_UTILITIES, "common-util-job2", templateJob(display_name='Release Management',
+                                                                  desc='Release sw',
+                                                                  repo_url=tools_url,
+                                                                  jenkinsfile_path='jenkinsfile/common/release-management/Jenkinsfile',
+                                                                  credential_id=TENANT_CRED_BITBUCKET_RO,
+                                                                  job_env_vars={'EnvVar2' : 'blah', 'EnvaVar3' : False},
+                                                                  branch_filter_regex=REGEX_ONLY_MAIN,
+                                                                  branch_build_regex=REGEX_EXCLUDE_ALL
+                                                        ))
+
 def main():
     #try:
     output_path = 'config/config.yaml'
@@ -215,12 +231,16 @@ def main():
         exit(1)
 
     setBitbucketUrl(output_config, bitbucket_url)
+    setDeliveryBranch(output_config, 'main')
+    setRootTestingFolder(output_config, 'job-testing')
+
+    createCommonJobEnvVars(output_config)
     createCommonUtilityJobs(output_config, tools_url)
     createAllTenants(output_config)
-    #createTenantUtilityJobs(output_config)
+
 
     with open('config/config.yaml', 'w') as f:
-        yaml.dump(output_config, f, Dumper=NoAliasDumper)
+        yaml.dump(output_config, f, Dumper=NoAliasDumper,sort_keys=False)
 
 
 if __name__ == '__main__':
