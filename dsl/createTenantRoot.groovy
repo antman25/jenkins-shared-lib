@@ -145,7 +145,10 @@ def templateMultibranchPipeline(String job_path, String display_name, String des
                             // all id's must be unique according to docs
                             //id('deploy-production-jobs-source-id')
                             if (cred_id != "")
-                                credentialsId(cred_id)
+                            {
+                                //credentialsId(cred_id)
+                            }
+
                             traits {
                                 gitBranchDiscovery()
 
