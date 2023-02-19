@@ -237,9 +237,11 @@ boolean createTenantJobs() {
                 project_list.each { cur_proj_key ->
                     createTentantProjectFolder("${tenant_root_path}/${BUILDJOB_PATH}", bitbucket_url, cur_proj_key)
                 }
-
-                Map combined_jobs = mergeMaps(cur_tenant.get('jobs'), common_jobs)
-                //println("Combined: ${combined_jobs}")
+                def tenant_jobs = cur_tenant.get('jobs')
+                Map combined_jobs = mergeMaps(tenant_jobs, common_jobs)
+                println("Common Jobs: ${common_jobs}")
+                println("Tenant Jobs: ${tenant_jobs}")
+                println("Combined: ${combined_jobs}")
 
                 combined_jobs.each { job_type, job_list ->
                     folder("${tenant_root_path}/${job_type}")
