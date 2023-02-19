@@ -155,7 +155,7 @@ def createAllTenants(config):
                filter_repo_regex='^(?!.*(jenkins-shared-lib))'
     )
     print(config)
-    config[KEY_TENANTS][TENANT_PIPELINE] = {}
+    #config[KEY_TENANTS][TENANT_PIPELINE] = {}
     config[KEY_TENANTS][TENANT_PIPELINE][KEY_JOBS] = {}
     setTenantJob(config, TENANT_PIPELINE, "Demo", "test-job1", templateMultiBranchJob(display_name='K8S Template Pipeline',
                                                                                           desc='Demo Job One',
