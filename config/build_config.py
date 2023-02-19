@@ -46,10 +46,15 @@ def setConfig(config, config_key, var_name, var_value):
 def setCommonJobEnvVar(config, var_name, var_value):
     setConfig(config[KEY_COMMON], KEY_ENVVARS, var_name, var_value)
 
+
+
 def setCommonJob(config, job_type, job_name, job_data):
     if KEY_JOBS not in config[KEY_COMMON]:
         setConfig(config, KEY_COMMON, KEY_JOBS, {})
     setConfig(config[KEY_COMMON][KEY_JOBS], job_type, job_name, job_data)
+
+def setTenantJob(config, tenant_name, job_type, job_name, job_data):
+    setConfig(config[KEY_TENANTS][tenant_name][KEY_JOBS], job_type, job_name, job_data)
 
 def setBitbucketUrl(config, bitbucket_url):
     setConfig(config, KEY_COMMON, 'urlBitbucket', bitbucket_url)
@@ -149,6 +154,17 @@ def createAllTenants(config):
                build_project_list=['PIP','PIPAPP'],
                filter_repo_regex='^(?!.*(jenkins-shared-lib))'
     )
+
+    config[KEY_TENANTS][TENANT_PIPELINE] = {}
+    config[KEY_TENANTS][TENANT_PIPELINE][KEY_JOBS] = {}
+    setTenantJob(config, TENANT_PIPELINE, "Demo", "test-job1", templateMultiBranchJob(display_name='K8S Template Pipeline',
+                                                                                          desc='Demo Job One',
+                                                                                          repo_url="",
+                                                                                          jenkinsfile_path='jenkinsfile/common/utilities/task-one/Jenkinsfile',
+                                                                                          credential_id=TENANT_CRED_BITBUCKET_RO,
+                                                                                          job_env_vars={'EnvVar1' : True}
+                                                                    ))
+
 
     addTenant(config=config,
                tenant_name=TENANT_GROUP_A,
