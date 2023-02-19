@@ -46,7 +46,7 @@ def call() {
                                   'is_delivery_branch' : is_delivery_branch,
                                   'config_yaml' : config_yaml,
                                   'branch_name' : sanitized_branch_name,
-                                  'branch_name_raw' : "${BRANCH_NAME}",
+                                  'branch_name_raw' : branch_name,
                                   'workspace_path' : "${WORKSPACE}",
                                   'tools_url' : "${TOOLS_URL}",
                                    'bootstrap_password' :"${PASSWORD}" ]
