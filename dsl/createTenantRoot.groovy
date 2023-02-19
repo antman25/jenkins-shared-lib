@@ -180,7 +180,7 @@ boolean createTenantJobs() {
                 }
 
                 project_list.each { cur_proj_key ->
-                    createTentantProjectFolder(tenant_root_path, bitbucket_url, cur_proj_key)
+                    createTentantProjectFolder("${tenant_root_path}/${BUILDJOB_PATH}", bitbucket_url, cur_proj_key)
                 }
 
             }
