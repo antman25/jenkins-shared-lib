@@ -168,8 +168,8 @@ boolean createTenantJobs() {
                 def project_list = cur_tenant.get('projectList')
                 createTenantFolder(path_prefix, tenant_name, display_name, groups)
 
-                def build_root_path = "${path_prefix}/${tenant_name}/builds"
-                folder(BUILDJOB_PATH)
+                def build_root_path = "${path_prefix}/${tenant_name}/${BUILDJOB_PATH}"
+                folder(build_root_path)
                 {
                     displayName("Builds")
                 }
