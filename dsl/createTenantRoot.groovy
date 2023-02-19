@@ -137,9 +137,13 @@ def templateMultibranchPipeline(String job_path, String display_name, String des
             displayName(display_name)
             description(desc)
 
-            configure {
-                it / disabled << 'true'
+            if (is_delivery_branch == false)
+            {
+                configure {
+                    it / disabled << 'true'
+                }
             }
+
 
             branchSources {
                 branchSource {
