@@ -165,7 +165,19 @@ boolean createTenantJobs() {
             tenants.each { tenant_name, cur_tenant ->
                 def groups = cur_tenant.get('groups')
                 def display_name = cur_tenant.get('displayName')
+                def project_list = cur_tenant.get('projectList')
                 createTenantFolder(path_prefix, tenant_name, display_name, groups)
+
+                def build_root_path = "${path_prefix}/${tenant_name}/builds"
+                folder(BUILDJOB_PATH)
+                {
+                    displayName("Builds")
+                }
+
+                project_list.each { cur_proj_key ->
+                    createTentantProjectFolder(build_root_path, bitbucket_url, cur_proj_key)
+                }
+
             }
         }
     }
@@ -179,10 +191,10 @@ boolean createTenantJobs() {
 
 
 
-boolean createTentantProjectFolder(String path, String bitbucket_url, String project, String tenant)
+boolean createTentantProjectFolder(String path, String bitbucket_url, String project)
 {
     try {
-        organizationFolder("${path}/${BUILDJOB_PATH}/${project}")
+        organizationFolder("${path}/${project}")
         {
             displayName(project)
             description("Project: ${project}\nBitbucket URL: ${bitbucket_url}")
