@@ -33,7 +33,7 @@ jenkins:
           - key: "ARTIFACTORY_PORT"
             value: "8443"
           - key: "DELIVERY_BRANCH"
-            value: ""
+            value: "main"
   labelAtoms:
     - name: "built-in"
     - name: "jenkins-jenkins-agent"
