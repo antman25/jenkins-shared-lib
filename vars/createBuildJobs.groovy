@@ -7,7 +7,7 @@ def call() {
         node(POD_LABEL) {
             def params = [:]
             String sanitized_branch_name = utils.sanitizeBranchName("${BRANCH_NAME}")
-            String path_prefix = utils.getPathPrefix(sanitized_branch_name,"${DELIVERY_BRANCH}")
+
 
             println("Sanitized branch name: ${sanitized_branch_name}")
 
@@ -37,16 +37,22 @@ def call() {
                         def config_data = readFile 'config/config.yaml'
                         def config_yaml = new Yaml().load(config_data)
 
+                        String delivery_branch = config_yaml['common']['branchDelivery']
+                        String path_prefix = utils.getPathPrefix(sanitized_branch_name,delivery_branch)
+                        String testing_folder = config_yaml['common']['branchDelivery']
+                        boolean is_delivery_branch = branch_name == delivery_branch
 
-                        params = ['config_yaml'       : config_yaml,
-                                  'branch_name'       : sanitized_branch_name,
-                                  'branch_name_raw'   : "${BRANCH_NAME}",
-                                  'workspace_path'    : "${WORKSPACE}",
-                                  'tools_url'         : "${TOOLS_URL}",
+                        params = ['path_prefix' : path_prefix,
+                                  'is_delivery_branch' : is_delivery_branch,
+                                  'config_yaml' : config_yaml,
+                                  'branch_name' : sanitized_branch_name,
+                                  'branch_name_raw' : "${BRANCH_NAME}",
+                                  'workspace_path' : "${WORKSPACE}",
+                                  'tools_url' : "${TOOLS_URL}",
                                    'bootstrap_password' :"${PASSWORD}" ]
-
+                        //'dsl/tenants/createTenantRoot.groovy',
                         jobDsl targets: [   'dsl/createTestingRoot.groovy',
-                                            'dsl/tenants/createTenantRoot.groovy',
+
 
                                             ].join('\n'),
                                 removedJobAction: 'DELETE',

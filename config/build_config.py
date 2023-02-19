@@ -172,6 +172,9 @@ def getJenkinsBitbucketUrl(casc_config):
 def getJenkinsToolsUrl(casc_config):
     return getJenkinsGlobalEnvVar(casc_config, 'TOOLS_URL')
 
+def getJenkinsDeliveryBranch(casc_config):
+    return getJenkinsGlobalEnvVar(casc_config, 'DELIVERY_BRANCH')
+
 def createCommonJobEnvVars(config):
     setCommonJobEnvVar(config, 'COMMON_VAR1', 'TestValue2')
     setCommonJobEnvVar(config, 'COMMON_VAR2', 'TestValue1')

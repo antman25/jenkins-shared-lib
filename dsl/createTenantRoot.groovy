@@ -4,16 +4,6 @@ import groovy.transform.Field
 //@Field final String UTILITIES_PATH = 'utilities'
 //@Field final String SANDBOX_PATH = 'sandbox'
 
-
-String getPathPrefix(boolean is_delivery_branch) {
-    if (is_delivery_branch) {
-        return ""
-    }
-    else {
-        return "/${job_testing_folder}/${branch_name}"
-    }
-}
-
 List<String> permissionDeveloper(String group) {
     return ["hudson.model.Item.Read:${group}",
             "hudson.model.Item.Cancel:${group}",
@@ -164,7 +154,7 @@ def templateMultibranchPipeline(String job_path, String display_name, String des
 boolean createTenantJobs() {
     boolean is_delivery_branch = branch_name == delivery_branch
     try {
-        String path_prefix = getPathPrefix(is_delivery_branch)
+
 
         def bitbucket_url = ""
         def artifactory_url = ""

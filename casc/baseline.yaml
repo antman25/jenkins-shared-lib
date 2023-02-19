@@ -32,7 +32,7 @@ jenkins:
             value: "nexus.antlinux.local"
           - key: "ARTIFACTORY_PORT"
             value: "8443"
-          - key: "ARTIFACTORY_CONTEXT"
+          - key: "DELIVERY_BRANCH"
             value: ""
   labelAtoms:
     - name: "built-in"
