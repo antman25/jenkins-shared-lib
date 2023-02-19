@@ -69,15 +69,15 @@ def templateJob(display_name, desc, repo_url, jenkinsfile_path, credential_id, j
              'branchBuildRegex' : branch_build_regex,
             }
 
-def templateTenant (tenant_name, tenant_display_name, perm_groups, build_project_list, filter_repo_regex):
+def templateTenant (tenant_display_name, perm_groups, build_project_list, filter_repo_regex):
     if type(perm_groups) != list:
         raise Exception('Invalid permission group type passed')
     if type(build_project_list) != list:
         raise Exception('Invalid project list type passed')
-    tenant_config = { 'tenant_display_name' : tenant_display_name,
-                      'perm_groups' : perm_groups,
-                      'build_project_list' : build_project_list,
-                      'filter_repo_regex' : filter_repo_regex,
+    tenant_config = { 'displayName' : tenant_display_name,
+                      'groups' : perm_groups,
+                      'projectList' : build_project_list,
+                      'repoFilterRegex' : filter_repo_regex,
                       'jobs' : {},
                     }
     return tenant_config
@@ -89,7 +89,7 @@ def addTenant(config, tenant_name, tenant_display_name, perm_groups, build_proje
         config[KEY_TENANTS] = {}
     if tenant_name in config[KEY_TENANTS]:
         raise ("Attempted to add a duplicate tenant config")
-    config[KEY_TENANTS][tenant_name] = templateTenant(tenant_name, tenant_display_name, perm_groups, build_project_list, filter_repo_regex)
+    config[KEY_TENANTS][tenant_name] = templateTenant(tenant_display_name, perm_groups, build_project_list, filter_repo_regex)
     print(f'Creating Tentant {tenant_name}')
     dump_config(config[KEY_TENANTS][tenant_name] )
 

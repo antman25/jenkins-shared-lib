@@ -153,19 +153,21 @@ def templateMultibranchPipeline(String job_path, String display_name, String des
 boolean createTenantJobs() {
 
     try {
-
-
-        def bitbucket_url = ""
         def artifactory_url = ""
         if (config_yaml.containsKey('common') == true) {
             def common_cfg = config_yaml['common']
-            bitbucket_url = common_cfg.get('bitbucket_url')
-
-
+            bitbucket_url = common_cfg.get('urlBitbucket')
         }
 
+        if (config_yaml.containsKey('tenants') == true) {
+            def tenants = config_yaml['tenants']
 
-
+            tenants.each { tenant_name, cur_tenant ->
+                def groups = cur_tenant.get('groups')
+                def display_name = cur_tenant.get('displayName')
+                createTenantFolder(path_prefix, tenant_name, display_name, groups)
+            }
+        }
     }
     catch (Exception ex) {
         println("createTenantRoot(): Exception ${ex.toString()}")
