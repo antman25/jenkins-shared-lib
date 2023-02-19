@@ -201,6 +201,13 @@ boolean createTenantJobs() {
                     {
                         displayName(job_type)
                     }
+
+                    job_list.each { job_name, job_data ->
+                        pipelineJob(job_name)
+                        {
+
+                        }
+                    }
                 }
             }
         }
