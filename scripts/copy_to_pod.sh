@@ -1,4 +1,4 @@
 #!/bin/bash
 
 
-kubectl cp -n workflow ../casc/baseline.yaml jenkins-0:/tmp -c jenkins
+kubectl cp -n jenkins ../casc/baseline.yaml jenkins-0:/tmp -c jenkins
