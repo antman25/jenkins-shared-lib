@@ -1,4 +1,4 @@
-import org.yaml.snakeyaml.Yaml
+//import org.yaml.snakeyaml.Yaml
 
 def call() {
     properties([disableConcurrentBuilds()])
@@ -6,7 +6,7 @@ def call() {
     podTemplates.pythonTemplate {
         node(POD_LABEL) {
             def params = [:]
-            String branch_name = env.getEnvironment().getOrDefault('BRANCH_NAME', 'main')
+            String branch_name = env.BRANCH_NAME
             String sanitized_branch_name = utils.sanitizeBranchName(branch_name)
 
             println("Sanitized branch name: ${sanitized_branch_name}")
@@ -34,8 +34,9 @@ def call() {
             withCredentials([usernamePassword(credentialsId: 'bitbucket-plugin-cred', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                 stage('Job DSL') {
                     try {
-                        def config_data = readFile 'config/config.yaml'
-                        def config_yaml = new Yaml().load(config_data)
+                        //def config_data = readFile 'config/config.yaml'
+                        //def config_yaml = new Yaml().load(config_data)
+                        def config_yaml = readYaml (file: 'config/config.yaml')
 
                         String delivery_branch = config_yaml['common']['branchDelivery']
                         String path_prefix = utils.getPathPrefix(sanitized_branch_name,delivery_branch)
