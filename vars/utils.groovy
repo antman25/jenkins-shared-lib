@@ -1,5 +1,5 @@
 String sanitizeBranchName(String branchName) {
-    def result =branchName.replaceAll(/[^\w\s-]/, '').trim().lower()
+    def result =branchName.replaceAll(/[^\w\s-]/, '').trim().toLowerCase()
     return branchName.replaceAll(/[-\s]+/, '-')
   //return branch_name.replaceAll(/[^\w]/, '-').toLowerCase()
 }
