@@ -31,22 +31,17 @@ def createTenantFolder(String tenantKey) {
 
 boolean main()
 {
-    try
-    {
-        boolean create_tenant_jobs_result = createTenantJobs()
+    try {
+        createTenantFolder('test')
+        /*boolean create_tenant_jobs_result = createTenantJobs()
 
-        if (create_tenant_jobs_result == true)
-        {
+        if (create_tenant_jobs_result == true) {
             println("Create tenant jobs: SUCCESS")
-        }
-        else
-        {
+        } else {
             println("Create tenant jobs: FAILURE")
             return false
-        }
-    }
-    catch (Exception ex)
-    {
+        }*/
+    } catch (Exception ex) {
         println("Exception: ${ex.toString()}")
         return false
     }
@@ -56,7 +51,7 @@ boolean main()
 boolean result = main()
 if (result == false)
 {
-    throw new Exception("Execution FAILURE")
+    throw new Exception("createTenantRoot.groovy - Execution FAILURE")
 }
 
 
