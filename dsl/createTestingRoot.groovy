@@ -2,8 +2,7 @@ boolean main()
 {
     try
     {
-
-        if (is_delivery_branch == false)
+        if (isPrimaryBranch == false)
         {
             folder("/${job_testing_folder}/${branch_name}")
             {
@@ -12,7 +11,7 @@ boolean main()
             }
         }
 
-        folder("${path_prefix}/${job_testing_folder}")
+        folder("${pathPrefix}/${job_testing_folder}")
         {
             displayName("000 - Testing Area")
             description("This is where a mirrored version of all the jobs in a branch folder for testing purposes")

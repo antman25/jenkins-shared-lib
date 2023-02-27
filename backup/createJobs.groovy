@@ -2,9 +2,9 @@ import groovy.transform.Field
 @Field final String TENANT = 'pipeline'
 @Field final String UTILITIES_PATH = 'utilities'
 
-String getPathPrefix(boolean is_delivery_branch)
+String getPathPrefix(boolean isPrimaryBranch)
 {
-    if (is_delivery_branch == true)
+    if (isPrimaryBranch == true)
     {
         return ""
     }
@@ -19,11 +19,11 @@ boolean createDeployJob(String path_prefix)
     try
     {
         def desc = "Runs all the JobDSL for job deployment"
-        def is_delivery_branch = branch_name == delivery_branch
+        def isPrimaryBranch = branch_name == delivery_branch
         multibranchPipelineJob("${path_prefix}/${TENANT}/${UTILITIES_PATH}/deploy-jobs-git")
         {
             displayName("000 - Deploy Jenkins Jobs - Gitlab")
-            if (is_delivery_branch) {
+            if (isPrimaryBranch) {
                 description(desc)
             }
             else {
@@ -51,7 +51,7 @@ boolean createDeployJob(String path_prefix)
                         allBranchesSame {
                             props {
                                 suppressAutomaticTriggering {
-                                    if (is_delivery_branch) {
+                                    if (isPrimaryBranch) {
                                         triggeredBranchesRegex ('^(.*main).*$')
                                     }
                                     else {
@@ -91,8 +91,8 @@ boolean createDeployJob(String path_prefix)
 
 boolean main()
 {
-    boolean is_delivery_branch = branch_name == delivery_branch
-    String path_prefix = getPathPrefix(is_delivery_branch)
+    boolean isPrimaryBranch = branch_name == delivery_branch
+    String path_prefix = getPathPrefix(isPrimaryBranch)
 
     boolean create_deploy_job_result = createDeployJob(path_prefix)
     if (create_deploy_job_result)

@@ -1,5 +1,7 @@
-String sanitizeBranchName(String branch_name) {
-  return branch_name.replaceAll(/[^\w]/, '-').toLowerCase()
+String sanitizeBranchName(String branchName) {
+    def result =branchName.replaceAll(/[^\w\s-]/, '').trim().lower()
+    return branchName.replaceAll(/[-\s]+/, '-')
+  //return branch_name.replaceAll(/[^\w]/, '-').toLowerCase()
 }
 
 Map envVarExists(String key) {

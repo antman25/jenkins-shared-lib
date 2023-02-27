@@ -1,9 +1,9 @@
 import groovy.transform.Field
 @Field final String TEST_PIPELINE_PATH = 'test-pipeline'
 
-String getPathPrefix(boolean is_delivery_branch)
+String getPathPrefix(boolean isPrimaryBranch)
 {
-    if (is_delivery_branch == true)
+    if (isPrimaryBranch == true)
     {
         return ""
     }
@@ -42,8 +42,8 @@ void templatePipelineJob(String job_path, String display_name, String jenkinsfil
 
 boolean main()
 {
-    boolean is_delivery_branch = branch_name == delivery_branch
-    String path_prefix = getPathPrefix(is_delivery_branch)
+    boolean isPrimaryBranch = branch_name == delivery_branch
+    String path_prefix = getPathPrefix(isPrimaryBranch)
 
     try {
         templatePipelineJob("${path_prefix}/${TEST_PIPELINE_PATH}/pod-template-python3", "podTemplate: pythonTemplate", "pipeline-tests/template-tests/python3/Jenkinsfile")
