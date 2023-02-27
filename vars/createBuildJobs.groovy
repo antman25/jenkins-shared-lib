@@ -1,4 +1,10 @@
-//import org.yaml.snakeyaml.Yaml
+String getPathPrefix(boolean isPriBranch, String rootPath, String branchName)
+{
+    def slugBranchName = utils.slugify(branchName)
+    if (isPriBranch == false)
+        return "/${rootPath}/${slugBranchName}"
+    return ""
+}
 
 def call() {
     properties([disableConcurrentBuilds()])
@@ -6,11 +12,10 @@ def call() {
     podTemplates.pythonTemplate {
         node(POD_LABEL) {
             def params = [:]
-            String branch_name = env.BRANCH_NAME
-            String sanitized_branch_name = utils.sanitizeBranchName(branch_name)
 
-            println("Sanitized branch name: ${sanitized_branch_name}")
+            String slugBranchName = utils.slugify(env.BRANCH_NAME)
 
+            println("Branch Name: ${env.BRANCH_NAME} -- Branch Name(Slug): ${slugBranchName}")
 
             stage('Clone code') {
                 checkout scm
@@ -34,28 +39,22 @@ def call() {
             withCredentials([usernamePassword(credentialsId: 'bitbucket-plugin-cred', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                 stage('Job DSL') {
                     try {
-                        //def config_data = readFile 'config/config.yaml'
-                        //def config_yaml = new Yaml().load(config_data)
-                        def config_yaml = readYaml (file: 'config/config.yaml')
+                        Map configYaml = readYaml (file: 'config/config.yaml')
+                        boolean isPrimaryBranch = utils.isPrimaryBranch(env.BRANCH_NAME)
+                        String pathTestingRoot = 'job-testing'
 
-                        String delivery_branch = config_yaml['common']['branchDelivery']
-                        String pathPrefix = utils.getPathPrefix(sanitized_branch_name,delivery_branch)
-                        String testing_folder = config_yaml['common']['branchDelivery']
-                        String job_testing_folder = config_yaml['common']['rootTestingFolder']
-                        boolean isPrimaryBranch = branch_name == delivery_branch
-
-                        params = ['pathPrefix' : pathPrefix,
-                                  'isPrimaryBranch' : isPrimaryBranch,
-                                  'job_testing_folder' : job_testing_folder,
-                                  'config_yaml' : config_yaml,
-                                  'branch_name' : sanitized_branch_name,
-                                  'branch_name_raw' : branch_name,
-                                  'workspace_path' : "${WORKSPACE}",
-                                  'tools_url' : "${TOOLS_URL}",
-                                   'bootstrap_password' :"${PASSWORD}" ]
-                        //'
+                        params = [ 'isPrimaryBranch' : isPrimaryBranch,
+                                   'rootJobTesting' : pathTestingRoot,
+                                   'pathPrefix' : getPathPrefix(isPrimaryBranch, getPathPrefix, env.BRANCH_NAME),
+                                   'configYaml' : configYaml,
+                                   'branchName' : env.BRANCH_NAME,
+                                   'branchNameSlug' : utils.slugify(env.BRANCH_NAME),
+                                   'pathWorkspace' : env.WORKSPACE,
+                                   'urlTools' : env.TOOLS_URL,
+                                   'passwordBootstrap' : env.PASSWORD ]
+                        //'dsl/createTenantRoot.groovy'
                         jobDsl targets: [   'dsl/createTestingRoot.groovy',
-                                            'dsl/createTenantRoot.groovy'
+
 
                                             ].join('\n'),
                                 removedJobAction: 'DELETE',

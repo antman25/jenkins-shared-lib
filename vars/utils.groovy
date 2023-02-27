@@ -1,7 +1,12 @@
-String sanitizeBranchName(String branchName) {
-    def result =branchName.replaceAll(/[^\w\s-]/, '').trim().toLowerCase()
-    return branchName.replaceAll(/[-\s]+/, '-')
-  //return branch_name.replaceAll(/[^\w]/, '-').toLowerCase()
+String slugify(String input) {
+    def result =input.replaceAll(/[^\w\s-]/, '').trim().toLowerCase()
+    return input.replaceAll(/[-\s]+/, '-')
+}
+
+String isPrimaryBranch(String branchName) {
+    if (branchName == 'main' || branchName == 'master' || branchName.startsWith('release'))
+        return true
+    return false
 }
 
 Map envVarExists(String key) {
@@ -11,56 +16,6 @@ Map envVarExists(String key) {
 String getLongCommit()
 {
     return sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
-}
-
-String getShortCommit()
-{
-    //return sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
-    return getLongCommit().take(8)
-}
-
-def getRemoteHEAD(url, branch)
-{
-    def cmd = "git ls-remote ${url} ${branch}"
-    //print("cmd = ${cmd}")
-    def output = cmd.execute().text.trim()
-    //print("output = ${output}")
-    return output
-}
-
-def getRemoteBranches(url)
-{
-    def cmd = "git ls-remote ${url} refs/heads/*"
-    def output = cmd.execute().text.trim()
-    def result = []
-    //print("Output raw: ${output}")
-    def output_lines = output.split('\n')
-    //print ("Output Lines: ${output_lines}")
-    output_lines.each { line ->
-        //print("Line: ${line}")
-        def line_split = line.split('\t')
-        //print("Line Split: ${line_split}")
-
-        if (line_split.size() == 2)
-        {
-            def ref_name =line_split[1]
-            def ref_name_split = ref_name.split('/')
-            //print("Ref Name Split: ${ref_name_split}")
-            if (ref_name_split.size() == 3)
-            {
-                result.add(ref_name_split[2])
-            }
-
-        }
-    }
-    return result
-}
-
-def getLocalHEAD()
-{
-    def cmd = "git rev-parse HEAD"
-    def output = cmd.execute().text.trim()
-    return output
 }
 
 def getModifiedFiles(commit_id)
@@ -74,24 +29,11 @@ def getModifiedFiles(commit_id)
     return output
 }
 
-
-
 boolean toBoolean(def value) {
   return (value instanceof java.lang.String) ? value.toBoolean() : value
 }
 
-String getPathPrefix(String branch_name, String delivery_branch)
-{
-  if (branch_name == delivery_branch)
-  {
-    return ""
-  }
-  else
-  {
-    def job_testing_root = env.getEnvironment().getOrDefault('JOB_TESTING_ROOT', 'job-testing')
-    return "${job_testing_root}/${branch_name}"
-  }
-}
+
 
 def default_stages(Closure body)
 {
